@@ -1,7 +1,7 @@
 # io_tmp
 
 ## Where to find the recent release?
-See our app on [Heroku](https://io-tmp.herokuapp.com/).
+See our app on [Heroku](https://adhoc-prod.herokuapp.com/).
 
 ## How to build and run the app locally?
 ### Prerequisites:
