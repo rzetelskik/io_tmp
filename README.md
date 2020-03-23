@@ -1,6 +1,17 @@
 # Na tym branchu znajduje się działający system logowania. Jak korzystać z API?
 
 ## Rejestracja użytkownika:
+POST http://localhost:8000/api/account/register/
+
+Należy wysłać JSON w takim formacie:
+{
+    "username": "jane",
+    "email": "janedoe@mail.mail",
+    "first_name": "Jane",
+    "last_name": "Doe",
+    "password": "pass",
+    "password2": "pass"
+}
 
 
 
