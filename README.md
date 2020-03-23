@@ -33,15 +33,17 @@ POST http://localhost:8000/api/account/logout/
 
 Tu nie umieszczamy nic w body.
 
-
-## Dane zalogowanego użytkownika:
-GET http://localhost:8000/api/account/user/
-
-Body puste. W headerze, w Authorization należy umieścić string w postaci
+W headerze, w Authorization należy umieścić string w postaci
 ```
 Token 8ebf047befe5ef3a5366598dfab08ab993ee83cc7cbbafea1797f074b97bee82
 ```
 Odpowiedni ciąg znaków otrzymujemy po zarejestrowaniu/zalogowaniu.
+
+
+## Dane zalogowanego użytkownika:
+GET http://localhost:8000/api/account/user/
+
+Body puste. W headerze token.
 
 
 ## Zmiana hasła:
@@ -79,7 +81,9 @@ JSON:
 password1 to aktualne hasło konta (nie ulega tu zmianie, jest podawane dla potwierdzenia).
 
 
-
+____________
+____________________
+___________________________
 
 
 # io_tmp
