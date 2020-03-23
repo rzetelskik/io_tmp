@@ -45,7 +45,9 @@ W headerze, w Authorization należy umieścić string w postaci
 ```
 Token 8ebf047befe5ef3a5366598dfab08ab993ee83cc7cbbafea1797f074b97bee82
 ```
-Odpowiedni ciąg znaków otrzymujemy po zarejestrowaniu/zalogowaniu.
+(Odpowiedni ciąg znaków otrzymujemy po zarejestrowaniu/zalogowaniu).
+
+Wylogowanie, z konkretnym tokenem w headerze spowoduje usunięcie tego tokenu z bazy - od tej pory nie będzie on akceptowany.
 
 
 ## Dane zalogowanego użytkownika:
