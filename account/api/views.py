@@ -5,6 +5,7 @@ from rest_framework.decorators import api_view, permission_classes
 from knox.models import AuthToken
 
 from .serializers import CustomUserSerializer, RegisterSerializer, LoginSerializer, PasswordUpdateSerializer, DetailsUpdateSerializer
+from account.models import CustomUser
 
 @api_view(['POST',])
 def registerView(request):
@@ -76,4 +77,12 @@ def detailsUpdateView(request):
         response_data = serializer.errors
     
     return Response(response_data)
+
+
+
+########## Wypisuje wszystkich CustomUserów - do testów
+class CustomUserListView(generics.ListAPIView):
+    serializer_class = CustomUserSerializer
+    queryset = CustomUser.objects.all()
+
 
