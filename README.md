@@ -1,5 +1,13 @@
 # Na tym branchu znajduje się działający system logowania. Jak korzystać z API?
 
+Na samym początku wywołać:
+```
+python manage.py makemigrations account
+python manage.py migrate
+```
+jeśli zrobimy to w odwrotnej kolejności wszystko się popsuje (zaaplikują się migracje dotyczące defaultowego Usera, a my korzystamy z customowego)
+
+
 ## Rejestracja użytkownika:
 POST http://localhost:8000/api/account/register/
 
