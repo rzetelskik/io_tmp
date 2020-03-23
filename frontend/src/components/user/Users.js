@@ -7,4 +7,3 @@ export class Users extends Component {
 }
 
 export default Users;
-REGISTER;
