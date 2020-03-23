@@ -4,6 +4,7 @@
 POST http://localhost:8000/api/account/register/
 
 Należy wysłać JSON w takim formacie:
+```
 {
     "username": "jane",
     "email": "janedoe@mail.mail",
@@ -12,7 +13,7 @@ Należy wysłać JSON w takim formacie:
     "password": "pass",
     "password2": "pass"
 }
-
+```
 
 
 # io_tmp
