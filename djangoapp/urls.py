@@ -20,5 +20,6 @@ from app.views import FrontendAppView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    re_path(r'^', FrontendAppView.as_view()),
+    re_path(r'frontend/', FrontendAppView.as_view()), ##### chwilowo zmienione, bo wszystkie URL pod to podchodziły
+    path('api/account/', include('account.api.urls')),
 ]
