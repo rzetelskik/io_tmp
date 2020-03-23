@@ -85,10 +85,9 @@ JSON:
     "email": "janedoe@mail.mail",
     "first_name": "Jane",
     "last_name": "Doe",
-    "password1": "pass",
+    "password1": "pass",                           // Aktualnie hasło podawane dla potwierdzenia, nie ulega zmianie
 }
 ```
-password1 to aktualne hasło konta (nie ulega tu zmianie, jest podawane dla potwierdzenia).
 
 
 ____________
