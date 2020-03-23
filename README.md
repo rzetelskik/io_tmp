@@ -3,7 +3,7 @@
 ## Rejestracja użytkownika:
 POST http://localhost:8000/api/account/register/
 
-Należy wysłać JSON w takim formacie:
+w body należy umieścić JSON w takim formacie:
 ```
 {
     "username": "jane",
@@ -14,6 +14,72 @@ Należy wysłać JSON w takim formacie:
     "password2": "pass"
 }
 ```
+
+
+## Logowanie:
+POST http://localhost:8000/api/account/login/
+
+JSON:
+```
+{
+    "username": "jane",
+    "password": "pass"  
+}
+```
+
+
+## Wylogowywanie:
+POST http://localhost:8000/api/account/logout/
+
+Tu nie umieszczamy nic w body.
+
+
+## Dane zalogowanego użytkownika:
+GET http://localhost:8000/api/account/user/
+
+Body puste. W headerze, w Authorization należy umieścić string w postaci
+```
+Token 8ebf047befe5ef3a5366598dfab08ab993ee83cc7cbbafea1797f074b97bee82
+```
+Odpowiedni ciąg znaków otrzymujemy po zarejestrowaniu/zalogowaniu.
+
+
+## Zmiana hasła:
+PUT http://localhost:8000/api/account/password-update/
+
+W headerze token.
+
+JSON:
+```
+{
+    "password1": "old",
+    "password2": "new",
+    "password3": "new"
+}
+```
+password1 to stare hasło, password2,3 to dwa razy powtórzone nowe hasło.
+
+
+
+## Aktualizacja danych konta:
+PUT http://localhost:8000/api/account/details-update/
+
+W headerze token.
+
+JSON:
+```
+{
+    "username": "jane",                            // Uaktualnione dane
+    "email": "janedoe@mail.mail",
+    "first_name": "Jane",
+    "last_name": "Doe",
+    "password1": "pass",
+}
+```
+password1 to aktualne hasło konta (nie ulega tu zmianie, jest podawane dla potwierdzenia).
+
+
+
 
 
 # io_tmp
