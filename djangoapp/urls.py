@@ -17,8 +17,9 @@ from django.contrib import admin
 from django.urls import path, include, re_path
 from app.views import FrontendAppView
 
-
 urlpatterns = [
     path('admin/', admin.site.urls),
-    re_path(r'^', FrontendAppView.as_view()),
+    path('', include('account.urls')),
+    # All the other paths come here.
+    re_path(r'', FrontendAppView.as_view()),  # This has to come last.
 ]
