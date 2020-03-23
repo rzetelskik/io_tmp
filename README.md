@@ -5,7 +5,7 @@ Na samym początku wywołać:
 python manage.py makemigrations account
 python manage.py migrate
 ```
-jeśli zrobimy to w odwrotnej kolejności wszystko się popsuje (zaaplikują się migracje dotyczące defaultowego Usera, a my korzystamy z customowego)
+jeśli zrobimy to w odwrotnej kolejności wszystko się popsuje (zaaplikują się migracje dotyczące defaultowego Usera, a my korzystamy z customowego, za którego odpowiada aplikacja 'account')
 
 
 ## Rejestracja użytkownika:
