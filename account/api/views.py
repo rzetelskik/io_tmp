@@ -16,8 +16,10 @@ def registerView(request):
     user = serializer.save()
     token = AuthToken.objects.create(user)[1] # getting the actual token, not an object
     response_data['response'] = 'Successfully created a new user.'
-    response_data['username'] = user.username
     response_data['token'] = token
+
+    user_serializer = CustomUserSerializer(user)
+    response_data['user'] = user_serializer.data
     
     return Response(response_data)
 
@@ -31,8 +33,10 @@ def loginView(request):
     user = serializer.validated_data
     token = AuthToken.objects.create(user)[1]  # getting the actual token, not an object
     response_data['response'] = 'Successfully logged in.'
-    response_data['username'] = user.username
     response_data['token'] = token
+
+    user_serializer = CustomUserSerializer(user)
+    response_data['user'] = user_serializer.data
     
     return Response(response_data)
         
