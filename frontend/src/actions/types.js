@@ -1,1 +1,2 @@
-export const GET_LEADS = "GET_LEADS";
+export const GET_USERS = "GET_USERS";
+export const ADD_USER = "ADD_USER";

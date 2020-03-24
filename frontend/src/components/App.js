@@ -10,8 +10,8 @@ class App extends Component {
       <Provider store={store}>
         <Fragment>
           <h1>
-            Tu był bardzo wulgarny napisa, ale musiałem go zmienić, bo
-            wyświetlam wszystko na telewizorze
+            Tu był bardzo wulgarny napis, ale musiałem go zmienić, bo wyświetlam
+            wszystko na telewizorze
           </h1>
           <Dashboard />
         </Fragment>
