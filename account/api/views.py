@@ -24,21 +24,23 @@ def registerView(request):
     return Response(response_data)
 
 
-@api_view(['POST',])
+@api_view(['POST', ])
 def loginView(request):
     serializer = LoginSerializer(data=request.data)
     response_data = {}
+    ret_status = status.HTTP_200_OK
 
     if serializer.is_valid():
         user = serializer.validated_data
-        token = AuthToken.objects.create(user)[1] # getting the actual token, not an object
+        token = AuthToken.objects.create(user)[1]  # getting the actual token, not an object
         response_data['response'] = 'Successfully logged in.'
         response_data['username'] = user.username
         response_data['token'] = token
     else:
         response_data = serializer.errors
-    
-    return Response(response_data)
+        ret_status = status.HTTP_400_BAD_REQUEST
+
+    return Response(response_data, status=ret_status)
         
 
 class CustomUserDetailView(generics.RetrieveAPIView):
