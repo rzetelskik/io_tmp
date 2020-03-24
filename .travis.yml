@@ -1,13 +1,23 @@
-language: python
+matrix:
+  include:
+  - language: node.js
+    node_js:
+      - 4.8
+    before_install:
+      - cd frontend/
+    install:
+      - yarn install
+      - yarn build
+  - language: python
+    python:
+      - 3.7
+    services:
+      - postgresql
+    before_install:
+      - pip3 install -r requirements.txt
+      - python3 manage.py collectstatic --noinput
+    script:
+      - python3 manage.py test
 
-python:
-  - 3.7
-
-services: postgresql
-
-install:
-  - pip3 install -r requirements.txt
-
-script:
-  - python3 manage.py collectstatic --noinput
-  - python3 manage.py test
+notifications:
+  email: false
