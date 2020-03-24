@@ -1,6 +1,7 @@
 from rest_framework import status, permissions, generics
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
+from rest_framework import status
 
 from knox.models import AuthToken
 
@@ -27,6 +28,7 @@ def registerView(request):
 def loginView(request):
     serializer = LoginSerializer(data=request.data)
     response_data = {}
+    ret_status = status.HTTP_200_OK
 
     if serializer.is_valid():
         user = serializer.validated_data
@@ -36,8 +38,9 @@ def loginView(request):
         response_data['token'] = token
     else:
         response_data = serializer.errors
+        ret_status = status.HTTP_400_BAD_REQUEST
     
-    return Response(response_data)
+    return Response(response_data, status=ret_status)
         
 
 class CustomUserDetailView(generics.RetrieveAPIView):
