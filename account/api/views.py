@@ -12,14 +12,12 @@ def registerView(request):
     serializer = RegisterSerializer(data=request.data)
     response_data = {}
 
-    if serializer.is_valid():
-        user = serializer.save()
-        token = AuthToken.objects.create(user)[1] # getting the actual token, not an object
-        response_data['response'] = 'Successfully created a new user.'
-        response_data['username'] = user.username
-        response_data['token'] = token
-    else:
-        response_data = serializer.errors
+    serializer.is_valid(raise_exception=True)
+    user = serializer.save()
+    token = AuthToken.objects.create(user)[1] # getting the actual token, not an object
+    response_data['response'] = 'Successfully created a new user.'
+    response_data['username'] = user.username
+    response_data['token'] = token
     
     return Response(response_data)
 
@@ -28,19 +26,15 @@ def registerView(request):
 def loginView(request):
     serializer = LoginSerializer(data=request.data)
     response_data = {}
-    ret_status = status.HTTP_200_OK
 
-    if serializer.is_valid():
-        user = serializer.validated_data
-        token = AuthToken.objects.create(user)[1]  # getting the actual token, not an object
-        response_data['response'] = 'Successfully logged in.'
-        response_data['username'] = user.username
-        response_data['token'] = token
-    else:
-        response_data = serializer.errors
-        ret_status = status.HTTP_400_BAD_REQUEST
-
-    return Response(response_data, status=ret_status)
+    serializer.is_valid(raise_exception=True)
+    user = serializer.validated_data
+    token = AuthToken.objects.create(user)[1]  # getting the actual token, not an object
+    response_data['response'] = 'Successfully logged in.'
+    response_data['username'] = user.username
+    response_data['token'] = token
+    
+    return Response(response_data)
         
 
 class CustomUserDetailView(generics.RetrieveAPIView):
@@ -57,12 +51,10 @@ def passwordUpdateView(request):
     serializer = PasswordUpdateSerializer(request.user, data=request.data)
     response_data = {}
 
-    if serializer.is_valid():
-        serializer.save()
-        response_data['response'] = 'Password successfully changed.'
-    else:
-        response_data = serializer.errors
-
+    serializer.is_valid(raise_exception=True)
+    serializer.save()
+    response_data['response'] = 'Password successfully changed.'
+    
     return Response(response_data)
 
 
@@ -72,12 +64,10 @@ def detailsUpdateView(request):
     serializer = DetailsUpdateSerializer(request.user, data=request.data)
     response_data = {}
 
-    if serializer.is_valid():
-        serializer.save()
-        response_data['response'] = 'Account details successfully updated.'
-    else:
-        response_data = serializer.errors
-    
+    serializer.is_valid(raise_exception=True)
+    serializer.save()
+    response_data['response'] = 'Account details successfully updated.'
+   
     return Response(response_data)
 
 
