@@ -48,7 +48,7 @@ export class Header extends Component {
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
         <div className="container">
           <Link to="/" className="navbar-brand">
-            Ad-Hoc
+            ad hoc
           </Link>
           <button
             className="navbar-toggler"
