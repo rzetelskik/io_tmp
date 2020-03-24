@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { addUser } from "../../actions/users";
-import { Link } from "react-router-dom";
+import { register } from "../../actions/auth";
+import { Link, Redirect } from "react-router-dom";
 
 export class RegisterForm extends Component {
   state = {
@@ -16,7 +16,8 @@ export class RegisterForm extends Component {
   };
 
   static propTypes = {
-    addUser: PropTypes.func.isRequired
+    isAuthenticated: PropTypes.bool,
+    register: PropTypes.func.isRequired
   };
 
   onChange = e =>
@@ -34,6 +35,9 @@ export class RegisterForm extends Component {
       password,
       password2
     } = this.state;
+    if (password !== password2) {
+      alert("passwords don't match!");
+    }
     const user = {
       username,
       email,
@@ -42,10 +46,14 @@ export class RegisterForm extends Component {
       password,
       password2
     };
-    this.props.addUser(user);
+    this.props.register(user);
   };
 
   render() {
+    if (this.props.isAuthenticated) {
+      return <Redirect to="/" />;
+    }
+
     const {
       username,
       email,
@@ -155,4 +163,8 @@ export class RegisterForm extends Component {
   }
 }
 
-export default connect(null, { addUser })(RegisterForm);
+const mapStateToProps = state => ({
+  isAuthenticated: state.auth.isAuthenticated
+});
+
+export default connect(mapStateToProps, { register })(RegisterForm);

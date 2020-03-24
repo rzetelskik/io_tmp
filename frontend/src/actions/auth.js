@@ -6,27 +6,16 @@ import {
   AUTH_ERROR,
   LOGIN_SUCCESS,
   LOGIN_FAIL,
-  LOGOUT_SUCCESS
+  LOGOUT_SUCCESS,
+  REGISTER_SUCCESS,
+  REGISTER_FAIL
 } from "./types";
 
 export const loadUser = () => (dispatch, getState) => {
   dispatch({ type: USER_LOADING });
 
-  const token = getState().auth.token;
-  console.log(token);
-
-  const config = {
-    headers: {
-      "Content-Type": "application/json"
-    }
-  };
-
-  if (token) {
-    config.headers["Authorization"] = `Token ${token}`;
-  }
-
   axios
-    .get("/api/account/user", config)
+    .get("/api/account/user", tokenConfig(getState))
     .then(res => {
       dispatch({
         type: USER_LOADED,
@@ -66,9 +55,47 @@ export const login = (username, password) => dispatch => {
     });
 };
 
+export const register = user => dispatch => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json"
+    }
+  };
+
+  const body = JSON.stringify(user);
+
+  axios
+    .post("/api/account/register/", body, config)
+    .then(res => {
+      dispatch({
+        type: REGISTER_SUCCESS,
+        payload: res.data
+      });
+    })
+    .catch(err => {
+      console.log("ERROR");
+      dispatch({
+        type: REGISTER_FAIL
+      });
+    });
+};
+
 export const logout = () => (dispatch, getState) => {
+  axios
+    .post("/api/account/logout/", null, tokenConfig(getState))
+    .then(res => {
+      dispatch({
+        type: LOGOUT_SUCCESS
+      });
+    })
+    .catch(err => {
+      console.log("LOGOUT ERROR");
+    });
+};
+
+// SETUP CONFIG WITH TOKEN - HELPER
+export const tokenConfig = getState => {
   const token = getState().auth.token;
-  console.log(token);
 
   const config = {
     headers: {
@@ -80,14 +107,5 @@ export const logout = () => (dispatch, getState) => {
     config.headers["Authorization"] = `Token ${token}`;
   }
 
-  axios
-    .get("/api/account/logout", null, config)
-    .then(res => {
-      dispatch({
-        type: LOGOUT_SUCCESS
-      });
-    })
-    .catch(err => {
-      console.log("LOGOUT ERROR");
-    });
+  return config;
 };
