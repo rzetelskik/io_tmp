@@ -1,4 +1,6 @@
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
+from django.contrib.auth.models import (
+    AbstractBaseUser, BaseUserManager, PermissionsMixin
+)
 from django.db import models
 from django.utils import timezone
 
@@ -9,7 +11,7 @@ class CustomUserManager(BaseUserManager):
             commit=True):
 
         if not username:
-            raise ValueError('Users must have a username')
+            raise ValueError('Users must have an username')
         if not email:
             raise ValueError('Users must have an email address')
         if not first_name:
@@ -48,11 +50,11 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(
         verbose_name='username', max_length=30, unique=True
     )
-
+    
     email = models.EmailField(
         verbose_name='email address', max_length=255, unique=True
     )
-
+    
     first_name = models.CharField('first name', max_length=30)
     last_name = models.CharField('last name', max_length=150)
 
@@ -60,15 +62,15 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         'active',
         default=True,
         help_text=
-        'Designates whether this user should be treated as active. '
-        'Deselect this instead of deleting accounts.'
+            'Designates whether this user should be treated as active. '
+            'Unselect this instead of deleting accounts.'
         ,
     )
     is_staff = models.BooleanField(
         'staff status',
         default=False,
         help_text=
-        'Designates whether the user can log into this admin site.'
+            'Designates whether the user can log into this admin site.'
         ,
     )
 
