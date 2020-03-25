@@ -14,6 +14,7 @@ import PrivateRoute from "./common/PrivateRoute";
 import { Provider } from "react-redux";
 import store from "../store";
 import { loadUser } from "../actions/auth";
+import MainPanel from "./user_interface/MainPanel";
 
 // Alert options
 const alertOptions = {
@@ -36,7 +37,12 @@ class App extends Component {
               <Alerts />
               <div className="container">
                 <Switch>
-                  <PrivateRoute exact path="/" component={EditForm} />
+                  <PrivateRoute
+                    exact
+                    path="/panel/change_password"
+                    component={EditForm}
+                  />
+                  <PrivateRoute exact path="/" component={MainPanel} />
                   <Route exact path="/register" component={RegisterForm} />
                   <Route exact path="/login" component={LoginForm} />
                 </Switch>
