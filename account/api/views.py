@@ -5,37 +5,38 @@ from rest_framework.decorators import api_view, permission_classes
 from knox.models import AuthToken
 
 from .serializers import CustomUserSerializer, RegisterSerializer, LoginSerializer, PasswordUpdateSerializer, DetailsUpdateSerializer
+from account.models import CustomUser
 
 @api_view(['POST',])
 def registerView(request):
     serializer = RegisterSerializer(data=request.data)
     response_data = {}
 
-    if serializer.is_valid():
-        user = serializer.save()
-        token = AuthToken.objects.create(user)[1] # getting the actual token, not an object
-        response_data['response'] = 'Successfully created a new user.'
-        response_data['username'] = user.username
-        response_data['token'] = token
-    else:
-        response_data = serializer.errors
+    serializer.is_valid(raise_exception=True)
+    user = serializer.save()
+    token = AuthToken.objects.create(user)[1] # getting the actual token, not an object
+    response_data['response'] = 'Successfully created a new user.'
+    response_data['token'] = token
+
+    user_serializer = CustomUserSerializer(user)
+    response_data['user'] = user_serializer.data
     
     return Response(response_data)
 
 
-@api_view(['POST',])
+@api_view(['POST', ])
 def loginView(request):
     serializer = LoginSerializer(data=request.data)
     response_data = {}
 
-    if serializer.is_valid():
-        user = serializer.validated_data
-        token = AuthToken.objects.create(user)[1] # getting the actual token, not an object
-        response_data['response'] = 'Successfully logged in.'
-        response_data['username'] = user.username
-        response_data['token'] = token
-    else:
-        response_data = serializer.errors
+    serializer.is_valid(raise_exception=True)
+    user = serializer.validated_data
+    token = AuthToken.objects.create(user)[1]  # getting the actual token, not an object
+    response_data['response'] = 'Successfully logged in.'
+    response_data['token'] = token
+
+    user_serializer = CustomUserSerializer(user)
+    response_data['user'] = user_serializer.data
     
     return Response(response_data)
         
@@ -54,12 +55,10 @@ def passwordUpdateView(request):
     serializer = PasswordUpdateSerializer(request.user, data=request.data)
     response_data = {}
 
-    if serializer.is_valid():
-        serializer.save()
-        response_data['response'] = 'Password successfully changed.'
-    else:
-        response_data = serializer.errors
-
+    serializer.is_valid(raise_exception=True)
+    serializer.save()
+    response_data['response'] = 'Password successfully changed.'
+    
     return Response(response_data)
 
 
@@ -69,11 +68,17 @@ def detailsUpdateView(request):
     serializer = DetailsUpdateSerializer(request.user, data=request.data)
     response_data = {}
 
-    if serializer.is_valid():
-        serializer.save()
-        response_data['response'] = 'Account details successfully updated.'
-    else:
-        response_data = serializer.errors
-    
+    serializer.is_valid(raise_exception=True)
+    serializer.save()
+    response_data['response'] = 'Account details successfully updated.'
+   
     return Response(response_data)
+
+
+
+########## Wypisuje wszystkich CustomUserów - do testów
+class CustomUserListView(generics.ListAPIView):
+    serializer_class = CustomUserSerializer
+    queryset = CustomUser.objects.all()
+
 
