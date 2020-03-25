@@ -4,7 +4,6 @@ import { HashRouter as Router, Route, Switch } from "react-router-dom";
 import { Provider as AlertProvider } from "react-alert";
 import AlertTemplate from "react-alert-template-basic";
 
-import EditForm from "./auth/EditForm";
 import Header from "./layout/Header";
 import LoginForm from "./auth/LoginForm";
 import RegisterForm from "./auth/RegisterForm";
@@ -37,11 +36,6 @@ class App extends Component {
               <Alerts />
               <div className="container">
                 <Switch>
-                  <PrivateRoute
-                    exact
-                    path="/panel/change_password"
-                    component={EditForm}
-                  />
                   <PrivateRoute exact path="/" component={MainPanel} />
                   <Route exact path="/register" component={RegisterForm} />
                   <Route exact path="/login" component={LoginForm} />

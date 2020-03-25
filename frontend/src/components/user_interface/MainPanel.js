@@ -15,7 +15,7 @@ export class MainPanel extends Component {
             <Switch>
               <PrivateRoute
                 exact
-                path="/panel/change_password"
+                path="/change_password"
                 component={EditForm}
               />
             </Switch>

@@ -21,16 +21,18 @@ export class Header extends Component {
         <tr>
           <th scope="col">
             <li className="nav-item active">
-              <Link to="/panel/change_password" className="btn btn-dark btn-sm">
+              <Link to="/change_password" className="btn btn-dark btn-sm">
                 change_password
               </Link>
             </li>
           </th>
         </tr>
         <li className="nav-item active">
-          <button onClick={this.props.logout} className="btn btn-light">
-            Logout
-          </button>
+          <Link to="/">
+            <button onClick={this.props.logout} className="btn btn-light">
+              Logout
+            </button>
+          </Link>
         </li>
       </ul>
     );

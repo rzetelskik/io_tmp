@@ -27,7 +27,7 @@ export class LoginForm extends Component {
 
   render() {
     if (this.props.isAuthenticated) {
-      return <Redirect to="/panel" />;
+      return <Redirect to="/" />;
     }
     const { username, password } = this.state;
 
