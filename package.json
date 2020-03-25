@@ -6,7 +6,9 @@
   "author": "Kacper Rzetelski",
   "license": "MIT",
   "private": true,
-  "scripts": {},
+  "scripts": {
+    "heroku-prebuild": "NODE_ENV=production cd frontend/ && yarn install && yarn build && cd .."
+  },
   "cacheDirectories": [
     "frontend/node_modules"
   ],

@@ -29,8 +29,8 @@ jobs:
           development: adhoc-development
           staging: adhoc-staging
           master: adhoc-prod
-        run:
-          - python manage.py collectstatic --noinput
-          - python manage.py migrate
+      after_deploy:
+        - python manage.py migrate
+
 notifications:
   email: false
