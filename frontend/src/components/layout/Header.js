@@ -22,7 +22,7 @@ export class Header extends Component {
           <th scope="col">
             <li className="nav-item active">
               <Link to="/change_password" className="btn btn-dark btn-sm">
-                change_password
+                Change password
               </Link>
             </li>
           </th>

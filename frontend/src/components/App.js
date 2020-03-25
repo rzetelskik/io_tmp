@@ -9,6 +9,7 @@ import LoginForm from "./auth/LoginForm";
 import RegisterForm from "./auth/RegisterForm";
 import Alerts from "./layout/Alerts";
 import PrivateRoute from "./common/PrivateRoute";
+import EditForm from "./auth/EditForm";
 
 import { Provider } from "react-redux";
 import store from "../store";
@@ -36,9 +37,14 @@ class App extends Component {
               <Alerts />
               <div className="container">
                 <Switch>
-                  <PrivateRoute exact path="/" component={MainPanel} />
+                  <PrivateRoute
+                    exact
+                    path="/change_password"
+                    component={EditForm}
+                  />
                   <Route exact path="/register" component={RegisterForm} />
                   <Route exact path="/login" component={LoginForm} />
+                  <PrivateRoute path="/" component={MainPanel} />
                 </Switch>
               </div>
             </Fragment>

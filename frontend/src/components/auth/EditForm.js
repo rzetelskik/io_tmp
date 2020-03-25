@@ -10,8 +10,13 @@ export class EditForm extends Component {
     password3: ""
   };
 
+  componentDidMount() {
+    console.log(this.props);
+  }
+
   static propTypes = {
-    username: PropTypes.string.isRequired
+    username: PropTypes.string.isRequired,
+    changePassword: PropTypes.func.isRequired
   };
 
   onChange = e =>
