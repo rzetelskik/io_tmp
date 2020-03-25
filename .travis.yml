@@ -1,12 +1,36 @@
-language: python
+jobs:
+  include:
+    - stage: build_front
+      language: node_js
+      node_js:
+        - 8
+      before_install:
+        - cd frontend
+      install:
+        - yarn install
+        - yarn build
+      script:
+        - yarn test --passWithNoTests
+    - stage: build_deploy
+      language: python
+      python:
+        - 3.7
+      services:
+        - postgresql
+      before_install:
+        - pip3 install -r requirements.txt
+      script:
+        - python3 manage.py test
+      deploy:
+        provider: heroku
+        api_key:
+          secure: CuY8YNQi8Qma4iI7oaYfbMWuy6wCrAu1QL2H2w2nmdfPTUCfglsQNVuiF8YDWHbTJDxxqJIWN4+9KX8FC0YUrGbuNW6oWovLOGty7QCNSkpbhOAtVmkBgZt7e7Gj2HGFsuvlZBn7gl8kVsD7gN5N/CfhIjIF2gG6HYYxJGoWc3CiV0BtuFQPfLBH7oInfxgSDEQyb75JEWtuSpggrFB57tAiTzJ5p0SuYMzKsa1uEqMEmOh3k/tyuwFAZ4cUBBmn5KOjg6MQMiAzrobvsnyQ7W/I2elEwek2W+4qmfPnoYE24z5ePGw8jYRfG8z6GBSK8tR5GbmaJOw9y/Mgh6Apg9tYCNVPnPMyWkZxNIlbVAtChztcLLdvR+4TlXj7tzLzJltoZprNPx215CfjZpEt4zx5G5Qy/27ljnnhvM/MlgupHlkQMWcJGsvXGKVzwqCjgZebV0Jqm/LZmAUGZBeif2UD55qRDyaMxChc1/VImsIo9jBIZ6/EaTR+f3QHYYW/xLufMMrAgzZTwI5R+WxF2XwVy8DtmfY6W77HGcEtz90hlNkr/GxU1V3gG9/qwy9aNXV9eZredTa7NwbuIAyUqhsarcFetrfZnuDFJQ22nj3TwUgicTe2isO7qk7Ik5Kyh2ePN1DUQ2w20CZod6pz1swwh5+VqBN1N1qSpOW0GSA=
+        app:
+          development: adhoc-development
+          staging: adhoc-staging
+          master: adhoc-prod
+      after_deploy:
+        - python manage.py migrate
 
-python:
-  - 3.7
-
-services: postgresql
-
-install:
-  - pip3 install -r requirements.txt
-
-script:
-  - python3 manage.py test
+notifications:
+  email: false
