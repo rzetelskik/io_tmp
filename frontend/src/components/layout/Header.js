@@ -18,38 +18,53 @@ export class Header extends Component {
         <span className="navbar-text mr-3">
           <strong>{user ? `Welcome ${user.username}` : ""}</strong>
         </span>
+        <tr>
+          <th scope="col">
+            <li className="nav-item active">
+              <Link to="/change_password" className="btn btn-dark btn-sm">
+                Change password
+              </Link>
+            </li>
+          </th>
+        </tr>
         <li className="nav-item active">
-          <button
-            onClick={this.props.logout}
-            className="nav-link btn btn-info btn-sm text-light"
-          >
-            Logout
-          </button>
+          <Link to="/">
+            <button onClick={this.props.logout} className="btn btn-light">
+              Logout
+            </button>
+          </Link>
         </li>
       </ul>
     );
 
     const guestLinks = (
       <ul className="navbar-nav mr-auto">
-        <li className="nav-item active">
-          <Link to="/register" className="nav-link">
-            Register
-          </Link>
-        </li>
-        <li className="nav-item active">
-          <Link to="/login" className="nav-link">
-            Login
-          </Link>
-        </li>
+        <tr>
+          <th scope="col">
+            <li className="nav-item active">
+              <Link to="/register" className="btn btn-light">
+                Register
+              </Link>
+            </li>
+          </th>
+          <th scope="col">
+            <li className="nav-item active">
+              <Link to="/login" className="btn btn-dark btn-sm">
+                Login
+              </Link>
+            </li>
+          </th>
+        </tr>
       </ul>
     );
 
     return (
-      <nav className="navbar navbar-expand-lg navbar-light bg-light">
+      <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
         <div className="container">
           <Link to="/" className="navbar-brand">
-            ad hoc
+            <strong>ad hoc</strong>
           </Link>
+
           <button
             className="navbar-toggler"
             type="button"
