@@ -69,8 +69,8 @@ export class RegisterForm extends Component {
         <h2>Register</h2>
         <form onSubmit={this.onSubmit}>
           <div className="form-group">
-            <label htmlFor="first_name">First Name</label>
             <input
+              placeholder="First Name"
               type="text"
               className="form-control"
               name="first_name"
@@ -80,8 +80,8 @@ export class RegisterForm extends Component {
             />
           </div>
           <div className="form-group">
-            <label htmlFor="last_name">Last Name</label>
             <input
+              placeholder="Last Name"
               type="text"
               className="form-control"
               name="last_name"
@@ -91,8 +91,8 @@ export class RegisterForm extends Component {
             />
           </div>
           <div className="form-group">
-            <label htmlFor="username">User Name</label>
             <input
+              placeholder="Username"
               type="text"
               className="form-control"
               name="username"
@@ -102,8 +102,8 @@ export class RegisterForm extends Component {
             />
           </div>
           <div className="form-group">
-            <label htmlFor="email">Email address</label>
             <input
+              placeholder="Email"
               type="email"
               className="form-control"
               name="email"
@@ -117,8 +117,8 @@ export class RegisterForm extends Component {
             </small>
           </div>
           <div className="form-group">
-            <label htmlFor="exampleInputPassword1">Password</label>
             <input
+              placeholder="Password"
               type="password"
               className="form-control"
               name="password"
@@ -128,8 +128,8 @@ export class RegisterForm extends Component {
             />
           </div>
           <div className="form-group">
-            <label htmlFor="exampleInputPassword1">Repeat The Password</label>
             <input
+              placeholder="Repeat password"
               type="password"
               className="form-control"
               name="password2"
@@ -151,11 +151,15 @@ export class RegisterForm extends Component {
               I agree with Terms etc.
             </label>
           </div>
-          <button type="submit" className="btn btn-primary">
+          <button type="submit" className="btn btn-outline-primary">
             Register!
           </button>
           <p>
-            Already have an account?<Link to="/login"> Login</Link>
+            Already have an account?
+            <Link to="/login" className="text-secondary">
+              {" "}
+              Login
+            </Link>
           </p>
         </form>
       </div>
