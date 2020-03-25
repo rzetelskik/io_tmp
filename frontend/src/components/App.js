@@ -4,10 +4,10 @@ import { HashRouter as Router, Route, Switch } from "react-router-dom";
 import { Provider as AlertProvider } from "react-alert";
 import AlertTemplate from "react-alert-template-basic";
 
-import Dashboard from "./user/Dashboard";
+import EditForm from "./auth/EditForm";
 import Header from "./layout/Header";
-import LoginForm from "./user/LoginForm";
-import RegisterForm from "./user/RegisterForm";
+import LoginForm from "./auth/LoginForm";
+import RegisterForm from "./auth/RegisterForm";
 import Alerts from "./layout/Alerts";
 import PrivateRoute from "./common/PrivateRoute";
 
@@ -36,7 +36,7 @@ class App extends Component {
               <Alerts />
               <div className="container">
                 <Switch>
-                  <PrivateRoute exact path="/" component={Dashboard} />
+                  <PrivateRoute exact path="/" component={EditForm} />
                   <Route exact path="/register" component={RegisterForm} />
                   <Route exact path="/login" component={LoginForm} />
                 </Switch>

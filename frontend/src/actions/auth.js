@@ -8,7 +8,9 @@ import {
   LOGIN_FAIL,
   LOGOUT_SUCCESS,
   REGISTER_SUCCESS,
-  REGISTER_FAIL
+  REGISTER_FAIL,
+  PASSWORD_CHANGE_FAIL,
+  PASSWORD_CHANGE_SUCCESS
 } from "./types";
 
 export const loadUser = () => (dispatch, getState) => {
@@ -75,6 +77,27 @@ export const register = user => dispatch => {
       console.log("ERROR");
       dispatch({
         type: REGISTER_FAIL
+      });
+    });
+};
+
+export const changePassword = (password1, password2, password3) => (
+  dispatch,
+  getState
+) => {
+  const body = JSON.stringify({ password1, password2, password3 });
+
+  axios
+    .put("/api/account/password-update/", body, tokenConfig(getState))
+    .then(res => {
+      dispatch({
+        type: PASSWORD_CHANGE_SUCCESS,
+        payload: res.data
+      });
+    })
+    .catch(err => {
+      dispatch({
+        type: PASSWORD_CHANGE_FAIL
       });
     });
 };
