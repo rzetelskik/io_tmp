@@ -36,8 +36,8 @@ export class LoginForm extends Component {
         <h2>Login</h2>
         <form onSubmit={this.onSubmit}>
           <div className="form-group">
-            <label htmlFor="username">User Name</label>
             <input
+              placeholder="Username"
               type="text"
               className="form-control"
               name="username"
@@ -48,8 +48,8 @@ export class LoginForm extends Component {
           </div>
 
           <div className="form-group">
-            <label htmlFor="exampleInputPassword1">Password</label>
             <input
+              placeholder="Password"
               type="password"
               className="form-control"
               name="password"
@@ -59,12 +59,15 @@ export class LoginForm extends Component {
             />
           </div>
 
-          <button type="submit" className="btn btn-primary">
+          <button type="submit" className="btn btn-outline-primary">
             Login!
           </button>
           <p>
             Don't have an account?
-            <Link to="/register"> Register</Link>
+            <Link to="/register" className="text-secondary">
+              {" "}
+              Register
+            </Link>
           </p>
         </form>
       </div>
