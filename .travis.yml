@@ -1,6 +1,6 @@
 matrix:
   include:
-  - language: node.js
+  - language: node_js
     node_js:
       - 8
     before_install:
@@ -8,6 +8,8 @@ matrix:
     install:
       - yarn install
       - yarn build
+    script:
+      - yarn test --passWithNoTests
   - language: python
     python:
       - 3.7
@@ -15,7 +17,6 @@ matrix:
       - postgresql
     before_install:
       - pip3 install -r requirements.txt
-      - python3 manage.py collectstatic --noinput
     script:
       - python3 manage.py test
 
