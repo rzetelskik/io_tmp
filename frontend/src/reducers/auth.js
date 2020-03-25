@@ -6,7 +6,9 @@ import {
   LOGIN_SUCCESS,
   LOGOUT_SUCCESS,
   REGISTER_FAIL,
-  REGISTER_SUCCESS
+  REGISTER_SUCCESS,
+  PASSWORD_CHANGE_SUCCESS,
+  PASSWORD_CHANGE_FAIL
 } from "../actions/types";
 
 const initialState = {
@@ -32,6 +34,7 @@ export default function(state = initialState, action) {
       };
     case LOGIN_SUCCESS:
     case REGISTER_SUCCESS:
+    case PASSWORD_CHANGE_SUCCESS:
       localStorage.setItem("token", action.payload.token);
       return {
         ...state,
@@ -39,6 +42,8 @@ export default function(state = initialState, action) {
         isAuthenticated: true,
         isLoading: false
       };
+    case PASSWORD_CHANGE_FAIL:
+      return state;
     case AUTH_ERROR:
     case LOGIN_FAIL:
     case LOGOUT_SUCCESS:
