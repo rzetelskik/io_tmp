@@ -15,6 +15,6 @@ See our app on [Heroku](https://adhoc-prod.herokuapp.com/).
 2. Clone the repository ```git clone git@github.com:rzetelskik/io_tmp.git``` and change to its directory ```cd io_tmp```.
 3. Install the dependencies in your virtualenv: ```pip install -r requirements.txt```.
 4. To build the react app: ```cd frontend/ && yarn install && yarn build && cd ..```.\
-Now, to run the whole application simply run: ```python manage.py runserver```.\
+Now, to run the whole application simply run: ```python manage.py collectstatic --noinput && python manage.py migrate && python manage.py runserver```.\
 The app should now be running at localhost:8000.
 
