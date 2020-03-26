@@ -63,7 +63,7 @@ class PasswordUpdateSerializer(serializers.ModelSerializer):
 
     def update(self, instance, validated_data):
         if not instance.check_password(validated_data['password1']):
-            raise serializers.ValidationError("Incorrect password")
+            raise serializers.ValidationError("{'password1': 'Incorrect password'}")
         
         password2 = validated_data['password2']
         password3 = validated_data['password3']
