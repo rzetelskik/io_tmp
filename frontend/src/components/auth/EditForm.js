@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { changePassword } from "../../actions/auth";
+import { createMessage } from "../../actions/messages";
 
 export class EditForm extends Component {
   state = {
@@ -28,7 +29,8 @@ export class EditForm extends Component {
     e.preventDefault();
     const { password1, password2, password3 } = this.state;
     if (password2 !== password3) {
-      alert("passwords don't match!");
+      this.props.createMessage({ passwordNotMatch: "Passwords do not match" });
+      return;
     }
     this.props.changePassword(password1, password2, password3);
   };
@@ -86,4 +88,6 @@ const mapStateToProps = state => ({
   username: state.auth.user.username
 });
 
-export default connect(mapStateToProps, { changePassword })(EditForm);
+export default connect(mapStateToProps, { changePassword, createMessage })(
+  EditForm
+);
