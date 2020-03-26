@@ -12,6 +12,8 @@ import {
   PASSWORD_CHANGE_FAIL,
   PASSWORD_CHANGE_SUCCESS
 } from "./types";
+import { createMessage } from "./messages";
+import { createError } from "./errors";
 
 export const loadUser = () => (dispatch, getState) => {
   dispatch({ type: USER_LOADING });
@@ -49,7 +51,11 @@ export const login = (username, password) => dispatch => {
       });
     })
     .catch(err => {
-      console.log("ERROR");
+      const errors = {
+        msg: err.response.data,
+        status: err.response.status
+      };
+      dispatch(createError(errors));
       dispatch({
         type: LOGIN_FAIL
       });
@@ -68,13 +74,18 @@ export const register = user => dispatch => {
   axios
     .post("/api/account/register/", body, config)
     .then(res => {
+      dispatch(createMessage({ register: "User successfully registered" }));
       dispatch({
         type: REGISTER_SUCCESS,
         payload: res.data
       });
     })
     .catch(err => {
-      console.log("ERROR");
+      const errors = {
+        msg: err.response.data,
+        status: err.response.status
+      };
+      dispatch(createError(errors));
       dispatch({
         type: REGISTER_FAIL
       });
@@ -90,12 +101,18 @@ export const changePassword = (password1, password2, password3) => (
   axios
     .put("/api/account/password-update/", body, tokenConfig(getState))
     .then(res => {
+      dispatch(createMessage({ changePassword: "Password changed" }));
       dispatch({
         type: PASSWORD_CHANGE_SUCCESS,
         payload: res.data
       });
     })
     .catch(err => {
+      const errors = {
+        msg: err.response.data,
+        status: err.response.status
+      };
+      dispatch(createError(errors));
       dispatch({
         type: PASSWORD_CHANGE_FAIL
       });
@@ -106,12 +123,17 @@ export const logout = () => (dispatch, getState) => {
   axios
     .post("/api/account/logout/", null, tokenConfig(getState))
     .then(res => {
+      dispatch(createMessage({ logout: "Logged out" }));
       dispatch({
         type: LOGOUT_SUCCESS
       });
     })
     .catch(err => {
-      console.log("LOGOUT ERROR");
+      const errors = {
+        payload: err.response.data,
+        status: err.response.status
+      };
+      dispatch(createError(errors));
     });
 };
 
