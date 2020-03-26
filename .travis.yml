@@ -30,7 +30,7 @@ jobs:
           staging: adhoc-staging
           master: adhoc-prod
       after_deploy:
-        - python manage.py migrate
+        - python3 manage.py migrate
 
 notifications:
   email: false
