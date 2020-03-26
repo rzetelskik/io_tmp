@@ -1,6 +1,5 @@
 export const GET_USERS = "GET_USERS";
 export const ADD_USER = "ADD_USER";
-export const GET_ERRORS = "GET_ERRORS";
 export const USER_LOADING = "USER_LOADING";
 export const USER_LOADED = "USER_LOADED";
 export const AUTH_ERROR = "AUTH_ERROR";
@@ -11,3 +10,5 @@ export const REGISTER_SUCCESS = "REGISTER_SUCCESS";
 export const REGISTER_FAIL = "REGISTER_FAIL";
 export const PASSWORD_CHANGE_SUCCESS = "PASSWORD_CHANGE_SUCCESS";
 export const PASSWORD_CHANGE_FAIL = "PASSWORD_CHANGE_FAIL";
+export const CREATE_MESSAGE = "CREATE_MESSAGE";
+export const CREATE_ERROR = "CREATE_ERROR";
