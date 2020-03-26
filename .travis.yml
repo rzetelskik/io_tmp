@@ -29,8 +29,6 @@ jobs:
           development: adhoc-development
           staging: adhoc-staging
           master: adhoc-prod
-      after_deploy:
-        - python manage.py migrate
 
 notifications:
   email: false
