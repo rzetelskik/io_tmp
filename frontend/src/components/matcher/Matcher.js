@@ -12,13 +12,6 @@ export class Matcher extends Component {
 
   componentDidMount() {
     this.props.getGeolocation();
-    console.log(this.props.coords);
-  }
-
-  componentDidUpdate() {
-    console.log(this.props.coords);
-    const c = this.props.coords;
-    console.log(Object.entries(c));
   }
 
   render() {
