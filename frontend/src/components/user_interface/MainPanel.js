@@ -15,7 +15,7 @@ export default function MainPanel() {
         />
         <PrivateRoute path={`${match.path}matcher`} component={Matcher} />
         <Route path={match.path}>
-          <div class="border-top my-5"></div>
+          <div className="border-top my-5"></div>
           <div className="container ">
             <div className="row">
               <div className="col-lg">
