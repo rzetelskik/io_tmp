@@ -7,7 +7,6 @@ export const getGeolocation = () => dispatch => {
   }
 
   geolocation.getCurrentPosition(position => {
-    console.log(position.coords);
     dispatch(
       {
         type: GET_LOCATION,

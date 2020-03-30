@@ -6,37 +6,57 @@ import PropTypes from "prop-types";
 export class Matcher extends Component {
   static propTypes = {
     getGeolocation: PropTypes.func.isRequired,
-    geolocation: PropTypes.object.isRequired
+    coords: PropTypes.object.isRequired,
+    timestamp: PropTypes.number.isRequired
   };
 
   componentDidMount() {
     this.props.getGeolocation();
+    console.log(this.props.coords);
+  }
+
+  componentDidUpdate() {
+    console.log(this.props.coords);
+    const c = this.props.coords;
+    console.log(Object.entries(c));
   }
 
   render() {
     return (
       <div>
         <h1>Matcher</h1>
-        <h2>Oto co wiem o tobie:</h2>
+        <h2>Here's what I know about you:</h2>
         <table className="table table-dark">
+          <thead>
+            <tr>
+              <th scope="col">field</th>
+              <th scope="col">value</th>
+            </tr>
+          </thead>
           <tbody>
-            {Object.keys(this.props.geolocation).map(fieldName => {
-              return (
-                <tr>
-                  <td>{fieldName}</td>
-                  <td>{this.props.geolocation[fieldName]}</td>
-                </tr>
-              );
-            })}
+            <tr>
+              <td>latitude</td>
+              <td>{this.props.coords.latitude}</td>
+            </tr>
+            <tr>
+              <td>longitude</td>
+              <td>{this.props.coords.longitude}</td>
+            </tr>
+            <tr>
+              <td>accuracy</td>
+              <td>{this.props.coords.accuracy}</td>
+            </tr>
           </tbody>
         </table>
+        <p>Updated at: {this.props.timestamp}</p>
       </div>
     );
   }
 }
 
 const mapStateToProps = state => ({
-  geolocation: state.geolocation
+  coords: state.geolocation.coords,
+  timestamp: state.geolocation.timestamp
 });
 
 export default connect(mapStateToProps, { getGeolocation })(Matcher);
