@@ -6,15 +6,15 @@ export const getGeolocation = () => dispatch => {
     alert("allow geolocation");
   }
 
-  geolocation.getCurrentPosition(position => {
-    dispatch(
-      {
+  geolocation.getCurrentPosition(
+    position => {
+      dispatch({
         type: GET_LOCATION,
         payload: position
-      },
-      () => {
-        alert("dupa jakaś");
-      }
-    );
-  });
+      });
+    },
+    () => {
+      alert("dupa jakaś");
+    }
+  );
 };
