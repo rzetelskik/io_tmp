@@ -7,12 +7,12 @@ from account.models import CustomUser
 
 class RegisterSerializer(serializers.ModelSerializer):
     password2 = serializers.CharField(style={'input_type': 'password'}, write_only=True)
-    
+
     class Meta:
         model = CustomUser
         fields = ['username', 'email', 'first_name', 'last_name', 'password', 'password2']
         extra_kwargs = {
-            'password' : {'write_only': True}
+            'password': {'write_only': True}
         }
 
     def create(self, validated_data):
@@ -43,13 +43,13 @@ class LoginSerializer(serializers.Serializer):
         if user and user.is_active:
             return user
         else:
-            raise serializers.ValidationError("Incorrect Credentials")
+            raise serializers.ValidationError("Incorrect credentials provided.")
 
 
 class CustomUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
-        fields = ['username', 'email', 'first_name', 'last_name', 'date_joined']
+        fields = ['username', 'email', 'first_name', 'last_name', 'location_range', 'date_joined']
 
 
 class PasswordUpdateSerializer(serializers.ModelSerializer):
@@ -64,12 +64,12 @@ class PasswordUpdateSerializer(serializers.ModelSerializer):
     def update(self, instance, validated_data):
         if not instance.check_password(validated_data['password1']):
             raise serializers.ValidationError("{'password1': 'Incorrect password'}")
-        
+
         password2 = validated_data['password2']
         password3 = validated_data['password3']
 
         if password2 != password3:
-            raise serializers.ValidationError("Passwords must match")
+            raise serializers.ValidationError("Passwords have to match.")
 
         instance.set_password(password2)
         instance.save()
@@ -78,22 +78,19 @@ class PasswordUpdateSerializer(serializers.ModelSerializer):
 
 
 class DetailsUpdateSerializer(serializers.ModelSerializer):
-    password1 = serializers.CharField(style={'input_type': 'password'}, write_only=True)
-
     class Meta:
         model = CustomUser
-        fields = ['username', 'email', 'first_name', 'last_name', 'password1']
+        fields = ['first_name', 'last_name', 'location_range']
 
     def update(self, instance, validated_data):
-        # if not instance.check_password(validated_data['password1']):
-        #     raise serializers.ValidationError("Incorrect password")
+        if not (instance.first_name != validated_data['first_name']
+                or instance.last_name != validated_data['last_name']
+                or instance.location_range != validated_data['location_range']):
+            raise serializers.ValidationError("At least one field has to differ.")
 
-        instance.username = validated_data['username']
-        instance.email = validated_data['email']
         instance.first_name = validated_data['first_name']
         instance.last_name = validated_data['last_name']
+        instance.location_range = validated_data['location_range']
 
         instance.save()
         return instance
-
-

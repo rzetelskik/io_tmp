@@ -35,6 +35,7 @@ export class Alerts extends Component {
       if (errors.msg.non_field_errors) {
         alert.error(errors.msg.non_field_errors.join());
       }
+
     }
     if (messages !== prevProps.messages) {
       if (messages.logout) {
@@ -51,6 +52,9 @@ export class Alerts extends Component {
       }
       if (messages.passwordNotMatch) {
         alert.info(messages.passwordNotMatch);
+      }
+      if (messages.detailsNotChanged) {
+        alert.info(messages.detailsNotChanged);
       }
     }
   }

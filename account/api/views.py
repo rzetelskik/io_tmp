@@ -32,7 +32,7 @@ def login(request):
     serializer.is_valid(raise_exception=True)
     user = serializer.validated_data
     token = AuthToken.objects.create(user)[1]  # getting the actual token, not an object
-    response_data['response'] = 'Successfully logged in.'
+    response_data['response'] = 'Logged in successfully.'
     response_data['token'] = token
 
     user_serializer = CustomUserSerializer(user)
@@ -58,7 +58,7 @@ def password_update(request):
 
     serializer.is_valid(raise_exception=True)
     serializer.save()
-    response_data['response'] = 'Password successfully changed.'
+    response_data['response'] = 'Password changed successfully.'
 
     return Response(response_data)
 

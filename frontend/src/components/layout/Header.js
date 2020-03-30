@@ -20,8 +20,8 @@ export class Header extends Component {
         </span>
 
         <li className="nav-item active">
-          <Link to="/change_password" className="btn btn-dark btn-sm">
-            Change password
+          <Link to="/update-details" className="btn btn-dark btn-sm">
+            Edit profile
           </Link>
         </li>
 
