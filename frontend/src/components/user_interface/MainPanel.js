@@ -2,6 +2,7 @@ import React from "react";
 import { Switch, Route, Link, useRouteMatch } from "react-router-dom";
 import PrivateRoute from "../common/PrivateRoute";
 import EditForm from "../auth/EditForm";
+import Matcher from "../matcher/Matcher";
 
 export default function MainPanel() {
   let match = useRouteMatch();
