@@ -32,7 +32,7 @@ def login(request):
     serializer.is_valid(raise_exception=True)
     user = serializer.validated_data
     token = AuthToken.objects.create(user)[1]  # getting the actual token, not an object
-    response_data['response'] = 'Successfully logged in.'
+    response_data['response'] = 'Logged in successfully.'
     response_data['token'] = token
 
     user_serializer = CustomUserSerializer(user)
@@ -42,6 +42,7 @@ def login(request):
 
 
 class CustomUserDetailView(generics.RetrieveAPIView):
+    api_view = ['GET', ]
     permission_classes = [permissions.IsAuthenticated, ]
     serializer_class = CustomUserSerializer
 
@@ -57,7 +58,7 @@ def password_update(request):
 
     serializer.is_valid(raise_exception=True)
     serializer.save()
-    response_data['response'] = 'Password successfully changed.'
+    response_data['response'] = 'Password changed successfully.'
 
     return Response(response_data)
 
@@ -73,9 +74,3 @@ def details_update(request):
     response_data['response'] = 'Account details successfully updated.'
 
     return Response(response_data)
-
-
-########## Wypisuje wszystkich CustomUserów - do testów
-class CustomUserListView(generics.ListAPIView):
-    serializer_class = CustomUserSerializer
-    queryset = CustomUser.objects.all()
