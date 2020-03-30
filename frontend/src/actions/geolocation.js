@@ -1,4 +1,5 @@
 import { GET_LOCATION } from "./types";
+import { createMessage } from "./messages";
 
 export const getGeolocation = () => dispatch => {
   const geolocation = navigator.geolocation;
@@ -6,15 +7,15 @@ export const getGeolocation = () => dispatch => {
     alert("allow geolocation");
   }
 
-  geolocation.getCurrentPosition(position => {
-    dispatch(
-      {
+  geolocation.getCurrentPosition(
+    position => {
+      dispatch({
         type: GET_LOCATION,
         payload: position
-      },
-      () => {
-        alert("dupa jakaś");
-      }
-    );
-  });
+      });
+    },
+    () => {
+      dispatch(createMessage({ cantLocate: "Your location cannot be found" }));
+    }
+  );
 };

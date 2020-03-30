@@ -52,6 +52,9 @@ export class Alerts extends Component {
       if (messages.passwordNotMatch) {
         alert.info(messages.passwordNotMatch);
       }
+      if (messages.cantLocate) {
+        alert.error(messages.cantLocate);
+      }
     }
   }
 
