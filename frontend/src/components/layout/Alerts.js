@@ -53,6 +53,9 @@ export class Alerts extends Component {
       if (messages.passwordNotMatch) {
         alert.info(messages.passwordNotMatch);
       }
+      if (messages.updateDetails) {
+        alert.info(messages.updateDetails)
+      }
       if (messages.detailsNotChanged) {
         alert.info(messages.detailsNotChanged);
       }

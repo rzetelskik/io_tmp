@@ -9,7 +9,9 @@ export class UpdateDetailsForm extends Component {
   static propTypes = {
     first_name: PropTypes.string.isRequired,
     last_name: PropTypes.string.isRequired,
-    location_range: PropTypes.number.isRequired
+    location_range: PropTypes.number.isRequired,
+    updateDetails: PropTypes.func.isRequired,
+    createMessage: PropTypes.func.isRequired
   };
 
   state = {
