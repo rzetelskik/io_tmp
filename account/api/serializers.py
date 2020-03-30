@@ -85,8 +85,8 @@ class DetailsUpdateSerializer(serializers.ModelSerializer):
         fields = ['username', 'email', 'first_name', 'last_name', 'password1']
 
     def update(self, instance, validated_data):
-        if not instance.check_password(validated_data['password1']):
-            raise serializers.ValidationError("Incorrect password")
+        # if not instance.check_password(validated_data['password1']):
+        #     raise serializers.ValidationError("Incorrect password")
 
         instance.username = validated_data['username']
         instance.email = validated_data['email']

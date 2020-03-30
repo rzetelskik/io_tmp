@@ -42,6 +42,7 @@ def login(request):
 
 
 class CustomUserDetailView(generics.RetrieveAPIView):
+    api_view = ['GET', ]
     permission_classes = [permissions.IsAuthenticated, ]
     serializer_class = CustomUserSerializer
 
@@ -73,9 +74,3 @@ def details_update(request):
     response_data['response'] = 'Account details successfully updated.'
 
     return Response(response_data)
-
-
-########## Wypisuje wszystkich CustomUserów - do testów
-class CustomUserListView(generics.ListAPIView):
-    serializer_class = CustomUserSerializer
-    queryset = CustomUser.objects.all()
