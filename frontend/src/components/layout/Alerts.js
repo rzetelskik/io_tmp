@@ -22,8 +22,6 @@ export class Alerts extends Component {
       });
     }
     if (message !== prevProps.message) {
-      console.log("asdfsadfsadf");
-
       switch (message.messageType) {
         case MESSAGE_SUCCESS:
           alert.success(message.msg);
