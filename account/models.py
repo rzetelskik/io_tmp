@@ -71,7 +71,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         'date joined', default=timezone.now
     )
     location_range = models.IntegerField('location_range', default=3,
-                                         validators=[MinValueValidator(0), MaxValueValidator(50)])
+                                         validators=[MinValueValidator(1), MaxValueValidator(50)])
     objects = CustomUserManager()
 
     USERNAME_FIELD = 'username'
