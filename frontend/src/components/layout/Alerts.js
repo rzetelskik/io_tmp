@@ -59,6 +59,9 @@ export class Alerts extends Component {
       if (messages.detailsNotChanged) {
         alert.info(messages.detailsNotChanged);
       }
+      if (messages.cantLocate) {
+        alert.error(messages.cantLocate);
+      }
     }
   }
 

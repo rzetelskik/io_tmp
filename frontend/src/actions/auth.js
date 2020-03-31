@@ -153,7 +153,7 @@ export const logout = () => (dispatch, getState) => {
     })
     .catch(err => {
       const errors = {
-        payload: err.response.data,
+        msg: err.response.data,
         status: err.response.status
       };
       dispatch(createError(errors));
