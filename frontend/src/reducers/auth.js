@@ -8,7 +8,7 @@ import {
   REGISTER_FAIL,
   REGISTER_SUCCESS,
   PASSWORD_CHANGE_SUCCESS,
-  PASSWORD_CHANGE_FAIL, UPDATE_DETAILS_SUCCESS
+  PASSWORD_CHANGE_FAIL, UPDATE_DETAILS_SUCCESS, UPDATE_DETAILS_FAIL
 } from "../actions/types";
 
 const initialState = {
@@ -44,6 +44,7 @@ export default function(state = initialState, action) {
         isLoading: false
       };
     case PASSWORD_CHANGE_FAIL:
+    case UPDATE_DETAILS_FAIL:
       return state;
     case AUTH_ERROR:
     case LOGIN_FAIL:

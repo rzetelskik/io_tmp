@@ -1,6 +1,6 @@
-import React, { Component, Fragment } from "react";
-import { withAlert } from "react-alert";
-import { connect } from "react-redux";
+import React, {Component, Fragment} from "react";
+import {withAlert} from "react-alert";
+import {connect} from "react-redux";
 import PropTypes from "prop-types";
 
 export class Alerts extends Component {
@@ -8,8 +8,9 @@ export class Alerts extends Component {
     errors: PropTypes.object.isRequired,
     messages: PropTypes.object.isRequired
   };
+
   componentDidUpdate(prevProps) {
-    const { errors, alert, messages } = this.props;
+    const {errors, alert, messages} = this.props;
     if (errors !== prevProps.errors) {
       if (errors.msg.username) {
         alert.error(`Username: ${errors.msg.username.join()}`);
@@ -35,7 +36,6 @@ export class Alerts extends Component {
       if (errors.msg.non_field_errors) {
         alert.error(errors.msg.non_field_errors.join());
       }
-
     }
     if (messages !== prevProps.messages) {
       if (messages.logout) {
@@ -63,7 +63,7 @@ export class Alerts extends Component {
   }
 
   render() {
-    return <Fragment />;
+    return <Fragment/>;
   }
 }
 

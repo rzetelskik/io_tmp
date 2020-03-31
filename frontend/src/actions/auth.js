@@ -115,11 +115,11 @@ export const updateDetails = (first_name, last_name, location_range) => (dispatc
     });
 };
 
-export const changePassword = (password1, password2, password3) => (
+export const changePassword = (password, new_password, new_password_repeat) => (
   dispatch,
   getState
 ) => {
-  const body = JSON.stringify({password1, password2, password3});
+  const body = JSON.stringify({password, new_password, new_password_repeat});
 
   axios
     .put("/api/account/password-update/", body, tokenConfig(getState))

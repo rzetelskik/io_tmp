@@ -6,14 +6,19 @@ from account.models import CustomUser
 
 
 class RegisterSerializer(serializers.ModelSerializer):
-    password2 = serializers.CharField(style={'input_type': 'password'}, write_only=True)
+    password_repeat = serializers.CharField(style={'input_type': 'password'}, write_only=True)
 
     class Meta:
         model = CustomUser
-        fields = ['username', 'email', 'first_name', 'last_name', 'password', 'password2']
+        fields = ['username', 'email', 'first_name', 'last_name', 'password', 'password_repeat']
         extra_kwargs = {
             'password': {'write_only': True}
         }
+
+    def validate(self, attrs):
+        if attrs['password'] != attrs['password_repeat']:
+            raise serializers.ValidationError("Passwords do not match.")
+        return attrs
 
     def create(self, validated_data):
         user = CustomUser(
@@ -23,13 +28,7 @@ class RegisterSerializer(serializers.ModelSerializer):
             last_name=validated_data['last_name'],
         )
 
-        password = validated_data['password']
-        password2 = validated_data['password2']
-
-        if password != password2:
-            raise serializers.ValidationError({'password': 'passwords must match'})
-
-        user.set_password(password)
+        user.set_password(validated_data['password'])
         user.save()
         return user
 
@@ -40,10 +39,9 @@ class LoginSerializer(serializers.Serializer):
 
     def validate(self, data):
         user = authenticate(**data)
-        if user and user.is_active:
-            return user
-        else:
+        if not user or not user.is_active:
             raise serializers.ValidationError("Incorrect credentials provided.")
+        return user
 
 
 class CustomUserSerializer(serializers.ModelSerializer):
@@ -53,25 +51,28 @@ class CustomUserSerializer(serializers.ModelSerializer):
 
 
 class PasswordUpdateSerializer(serializers.ModelSerializer):
-    password1 = serializers.CharField(style={'input_type': 'password'}, write_only=True)
-    password2 = serializers.CharField(style={'input_type': 'password'}, write_only=True)
-    password3 = serializers.CharField(style={'input_type': 'password'}, write_only=True)
+    password = serializers.CharField(style={'input_type': 'password'}, write_only=True)
+    new_password = serializers.CharField(style={'input_type': 'password'}, write_only=True)
+    new_password_repeat = serializers.CharField(style={'input_type': 'password'}, write_only=True)
 
     class Meta:
         model = CustomUser
-        fields = ['password1', 'password2', 'password3']
+        fields = ['password', 'new_password', 'new_password_repeat']
 
-    def update(self, instance, validated_data):
-        if not instance.check_password(validated_data['password1']):
-            raise serializers.ValidationError("{'password1': 'Incorrect password'}")
+    def validate_password(self, value):
+        if not self.instance.check_password(value):
+            raise serializers.ValidationError("Incorrect password")
 
-        password2 = validated_data['password2']
-        password3 = validated_data['password3']
+        return value
 
-        if password2 != password3:
+    def validate(self, data):
+        if data['new_password'] != data['new_password_repeat']:
             raise serializers.ValidationError("Passwords have to match.")
 
-        instance.set_password(password2)
+        return data
+
+    def update(self, instance, validated_data):
+        instance.set_password(validated_data['new_password'])
         instance.save()
 
         return instance
@@ -82,12 +83,17 @@ class DetailsUpdateSerializer(serializers.ModelSerializer):
         model = CustomUser
         fields = ['first_name', 'last_name', 'location_range']
 
-    def update(self, instance, validated_data):
-        if not (instance.first_name != validated_data['first_name']
-                or instance.last_name != validated_data['last_name']
-                or instance.location_range != validated_data['location_range']):
+    def validate(self, data):
+        instance = self.instance
+
+        if not (instance.first_name != data['first_name']
+                or instance.last_name != data['last_name']
+                or instance.location_range != data['location_range']):
             raise serializers.ValidationError("At least one field has to differ.")
 
+        return data
+
+    def update(self, instance, validated_data):
         instance.first_name = validated_data['first_name']
         instance.last_name = validated_data['last_name']
         instance.location_range = validated_data['location_range']

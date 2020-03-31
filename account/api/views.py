@@ -52,7 +52,7 @@ class CustomUserDetailView(generics.RetrieveAPIView):
 @api_view(['PUT', ])
 @permission_classes([permissions.IsAuthenticated])
 def password_update(request):
-    serializer = PasswordUpdateSerializer(request.user, data=request.data)
+    serializer = PasswordUpdateSerializer(instance=request.user, data=request.data)
     response_data = {}
 
     serializer.is_valid(raise_exception=True)
@@ -65,7 +65,7 @@ def password_update(request):
 @api_view(['PUT', ])
 @permission_classes([permissions.IsAuthenticated])
 def details_update(request):
-    serializer = DetailsUpdateSerializer(request.user, data=request.data)
+    serializer = DetailsUpdateSerializer(instance=request.user, data=request.data)
     response_data = {}
 
     serializer.is_valid(raise_exception=True)

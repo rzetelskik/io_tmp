@@ -12,7 +12,7 @@ export class RegisterForm extends Component {
     first_name: "",
     last_name: "",
     password: "",
-    password2: "",
+    password_repeat: "",
     agree: ""
   };
 
@@ -34,9 +34,9 @@ export class RegisterForm extends Component {
       first_name,
       last_name,
       password,
-      password2
+      password_repeat
     } = this.state;
-    if (password !== password2) {
+    if (password !== password_repeat) {
       this.props.createMessage({ passwordNotMatch: "Passwords do not match" });
       return;
     }
@@ -46,7 +46,7 @@ export class RegisterForm extends Component {
       first_name,
       last_name,
       password,
-      password2
+      password_repeat
     };
     this.props.register(user);
   };
@@ -62,7 +62,7 @@ export class RegisterForm extends Component {
       first_name,
       last_name,
       password,
-      password2,
+      password_repeat,
       agree
     } = this.state;
 
@@ -134,10 +134,10 @@ export class RegisterForm extends Component {
               placeholder="Repeat password"
               type="password"
               className="form-control"
-              name="password2"
-              id="password2"
+              name="password_repeat"
+              id="password_repeat"
               onChange={this.onChange}
-              value={password2}
+              value={password_repeat}
             />
           </div>
           <div className="form-group form-check">
