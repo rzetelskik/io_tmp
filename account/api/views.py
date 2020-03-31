@@ -4,7 +4,6 @@ from rest_framework.decorators import api_view, permission_classes
 from knox.models import AuthToken
 from .serializers import CustomUserSerializer, RegisterSerializer, LoginSerializer, PasswordUpdateSerializer, \
     DetailsUpdateSerializer
-from account.models import CustomUser
 
 
 @api_view(['POST', ])
@@ -71,6 +70,6 @@ def details_update(request):
 
     serializer.is_valid(raise_exception=True)
     serializer.save()
-    response_data['response'] = 'Account details successfully updated.'
+    response_data['response'] = 'Account details updated successfully.'
 
     return Response(response_data)
