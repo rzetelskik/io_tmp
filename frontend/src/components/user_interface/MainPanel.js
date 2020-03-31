@@ -47,7 +47,7 @@ export default function MainPanel() {
                       Change your name, email or password
                     </h4>
                     <Link
-                      to="/change_password"
+                      to="/update-details"
                       className="btn btn-secondary btn-lg"
                     >
                       <i className="fas fa-clone left"></i> Edit profile!

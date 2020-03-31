@@ -1,9 +1,9 @@
-import React, {Component} from "react";
-import {connect} from "react-redux";
+import React, { Component } from "react";
+import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import {updateDetails} from "../../actions/auth";
-import {createMessage} from "../../actions/messages";
-import {Link} from "react-router-dom";
+import { updateDetails } from "../../actions/auth";
+import { createMessage, MESSAGE_ERROR } from "../../actions/messages";
+import { Link } from "react-router-dom";
 
 export class UpdateDetailsForm extends Component {
   static propTypes = {
@@ -22,9 +22,11 @@ export class UpdateDetailsForm extends Component {
   };
 
   detailsUpdated() {
-    return (!(this.state.first_name !== this.props.first_name ||
+    return !(
+      this.state.first_name !== this.props.first_name ||
       this.state.last_name !== this.props.last_name ||
-      this.state.location_range !== this.props.location_range))
+      this.state.location_range !== this.props.location_range
+    );
   }
 
   onChange = e =>
@@ -35,16 +37,19 @@ export class UpdateDetailsForm extends Component {
 
   onSubmit = e => {
     e.preventDefault();
-    const {first_name, last_name, location_range, disabled} = this.state;
+    const { first_name, last_name, location_range, disabled } = this.state;
     if (disabled) {
-      this.props.createMessage({detailsNotChanged: "At least one field has to differ."});
+      this.props.createMessage(
+        MESSAGE_ERROR,
+        "At least one field has to differ."
+      );
       return;
     }
     this.props.updateDetails(first_name, last_name, location_range);
   };
 
   render() {
-    const {first_name, last_name, location_range, disabled} = this.state;
+    const { first_name, last_name, location_range, disabled } = this.state;
     return (
       <div className="card card-body mt-4 mb-4">
         <h2 className="mx-auto">Account details</h2>
@@ -87,7 +92,14 @@ export class UpdateDetailsForm extends Component {
             />
           </div>
           <div className="d-flex flex-row justify-content-between">
-            <button type="submit" className={disabled ? "p-1 btn btn-primary disabled" : "p-1 btn btn-primary"}>
+            <button
+              type="submit"
+              className={
+                disabled
+                  ? "p-1 btn btn-primary disabled"
+                  : "p-1 btn btn-primary"
+              }
+            >
               Update
             </button>
             <Link to="/change-password" className="p-2 float-right">
@@ -108,4 +120,6 @@ const mapStateToProps = state => ({
   location_range: state.auth.user.location_range
 });
 
-export default connect(mapStateToProps, {updateDetails, createMessage})(UpdateDetailsForm);
+export default connect(mapStateToProps, { updateDetails, createMessage })(
+  UpdateDetailsForm
+);

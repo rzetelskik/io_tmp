@@ -1,5 +1,5 @@
 import { GET_LOCATION } from "./types";
-import { createMessage } from "./messages";
+import { createMessage, MESSAGE_INFO } from "./messages";
 
 export const getGeolocation = () => dispatch => {
   const geolocation = navigator.geolocation;
@@ -15,7 +15,7 @@ export const getGeolocation = () => dispatch => {
       });
     },
     () => {
-      dispatch(createMessage({ cantLocate: "Your location cannot be found" }));
+      dispatch(createMessage(MESSAGE_INFO, "Your location cannot be found"));
     }
   );
 };
