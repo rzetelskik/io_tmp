@@ -22,10 +22,8 @@ export default function(state = initialState, action) {
         accepted: "true"
       };
     case GET_LOCATION_LOADING:
-      localStorage.setItem("locationAccepted", false);
       return {
         ...state,
-        accepted: "false",
         isLoading: true
       };
     case GET_LOCATION_ACCEPT:

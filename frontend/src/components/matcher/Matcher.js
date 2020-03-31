@@ -13,6 +13,12 @@ export class Matcher extends Component {
     accepted: PropTypes.string.isRequired
   };
 
+  componentDidUpdate() {
+    if (this.props.accepted === "true" && this.props.timestamp === 0) {
+      this.props.getGeolocation();
+    }
+  }
+
   componentDidMount() {
     if (this.props.accepted === "true" && this.props.timestamp === 0) {
       this.props.getGeolocation();
