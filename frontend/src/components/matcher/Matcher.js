@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import Geolocator from "./Geolocator";
 import { getGeolocation } from "../../actions/geolocation";
+import { Card } from "./Card";
 
 export class Matcher extends Component {
   static propTypes = {
@@ -38,6 +39,7 @@ export class Matcher extends Component {
 
     const whenAccepted = (
       <Fragment>
+        <Card />
         <div>
           <h1>Matcher</h1>
           <h2>Here's what I know about you:</h2>
