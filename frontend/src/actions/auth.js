@@ -105,7 +105,7 @@ export const updateDetails = (first_name, last_name, location_range) => (dispatc
     })
     .catch(err => {
       const errors = {
-        msg: err.response.data,
+        msg: {detailsUpdate: err.response.data},
         status: err.response.status
       };
       dispatch(createError(errors));
