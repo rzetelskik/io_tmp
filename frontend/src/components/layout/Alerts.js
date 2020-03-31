@@ -33,6 +33,9 @@ export class Alerts extends Component {
       if (errors.msg.last_name) {
         alert.error(`Last name: ${errors.msg.last_name.join()}`);
       }
+      if (errors.msg.detailsUpdate) {
+        alert.error(`Details update: ${errors.msg.detailsUpdate.join()}`);
+      }
       if (errors.msg.non_field_errors) {
         alert.error(errors.msg.non_field_errors.join());
       }
@@ -54,7 +57,7 @@ export class Alerts extends Component {
         alert.info(messages.passwordNotMatch);
       }
       if (messages.updateDetails) {
-        alert.info(messages.updateDetails)
+        alert.info(messages.updateDetails);
       }
       if (messages.detailsNotChanged) {
         alert.info(messages.detailsNotChanged);
