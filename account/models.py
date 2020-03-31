@@ -72,6 +72,11 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     )
     location_range = models.IntegerField('location_range', default=3,
                                          validators=[MinValueValidator(1), MaxValueValidator(50)])
+    location_latitude = models.DecimalField('location_latitude', max_digits=11, decimal_places=9,
+                                            null=True, validators=[MinValueValidator(0), MaxValueValidator(90)])
+    location_longitude = models.DecimalField('location_longitude', max_digits=11, decimal_places=9,
+                                             null=True, validators=[MinValueValidator(0), MaxValueValidator(90)])
+    location_timestamp = models.DateTimeField("location_timestamp", auto_now=False, auto_now_add=False, null=True)
     objects = CustomUserManager()
 
     USERNAME_FIELD = 'username'

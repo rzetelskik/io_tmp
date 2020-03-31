@@ -1,9 +1,10 @@
 from rest_framework import status, permissions, generics
+from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
 from knox.models import AuthToken
 from .serializers import CustomUserSerializer, RegisterSerializer, LoginSerializer, PasswordUpdateSerializer, \
-    DetailsUpdateSerializer
+    DetailsUpdateSerializer, CustomUserLocationSerializer
 
 
 @api_view(['POST', ])
@@ -41,7 +42,6 @@ def login(request):
 
 
 class CustomUserDetailView(generics.RetrieveAPIView):
-    api_view = ['GET', ]
     permission_classes = [permissions.IsAuthenticated, ]
     serializer_class = CustomUserSerializer
 
@@ -70,6 +70,14 @@ def details_update(request):
 
     serializer.is_valid(raise_exception=True)
     serializer.save()
-    response_data['response'] = 'Account details updated successfully.'
+    response_data['response'] = 'User details updated successfully.'
 
     return Response(response_data)
+
+
+class CustomUserLocationView(generics.RetrieveUpdateAPIView):
+    permission_classes = [permissions.IsAuthenticated, ]
+    serializer_class = CustomUserLocationSerializer
+
+    def get_object(self):
+        return self.request.user
