@@ -1,7 +1,7 @@
+from datetime import datetime
+from django.utils import timezone
 from django.contrib.auth import authenticate
-
 from rest_framework import serializers
-
 from account.models import CustomUser
 
 
@@ -51,9 +51,8 @@ class CustomUserSerializer(serializers.ModelSerializer):
 
 
 class PasswordUpdateSerializer(serializers.ModelSerializer):
-    password = serializers.CharField(style={'input_type': 'password'}, write_only=True)
-    new_password = serializers.CharField(style={'input_type': 'password'}, write_only=True)
-    new_password_repeat = serializers.CharField(style={'input_type': 'password'}, write_only=True)
+    new_password = serializers.CharField(style={'input_type': 'password'}, write_only=True, required=True)
+    new_password_repeat = serializers.CharField(style={'input_type': 'password'}, write_only=True, required=True)
 
     class Meta:
         model = CustomUser
@@ -97,6 +96,25 @@ class DetailsUpdateSerializer(serializers.ModelSerializer):
         instance.first_name = validated_data['first_name']
         instance.last_name = validated_data['last_name']
         instance.location_range = validated_data['location_range']
+
+        instance.save()
+        return instance
+
+
+class CustomUserLocationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CustomUser
+        fields = ['location_latitude', 'location_longitude', 'location_timestamp']
+        extra_kwargs = {
+            'location_latitude': {'required': True},
+            'location_longitude': {'required': True},
+            'location_timestamp': {'read_only': True}
+        }
+
+    def update(self, instance, validated_data):
+        instance.location_latitude = validated_data['location_latitude']
+        instance.location_longitude = validated_data['location_longitude']
+        instance.location_timestamp = datetime.now(tz=timezone.get_current_timezone())
 
         instance.save()
         return instance
