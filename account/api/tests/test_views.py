@@ -13,9 +13,9 @@ class TestView(APITestCase):
     user_detail_url = reverse('custom-user-detail')
     register_data = {"username": "test1", "email": "test1@test.com",
                      "first_name": "test1", "last_name": "test1",
-                     "password": "test1", "password2": "test1"}
+                     "password": "test1", "password_repeat": "test1"}
     login_data = {"username": "test", "password": "test"}
-    password_change_data = {"password1": "test", "password2": "newtest", "password3": "newtest"}
+    password_change_data = {"password": "test", "new_password": "newtest", "new_password_repeat": "newtest"}
 
     def setUp(self):
         self.client = APIClient()
