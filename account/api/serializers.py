@@ -50,6 +50,12 @@ class CustomUserSerializer(serializers.ModelSerializer):
         fields = ['username', 'email', 'first_name', 'last_name', 'location_range', 'date_joined']
 
 
+class MatchingCustomUserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CustomUser
+        fields = ['username', 'email', 'first_name', 'last_name', 'latitude', 'longitude', 'location_timestamp', 'date_joined']
+
+
 class PasswordUpdateSerializer(serializers.ModelSerializer):
     new_password = serializers.CharField(style={'input_type': 'password'}, write_only=True, required=True)
     new_password_repeat = serializers.CharField(style={'input_type': 'password'}, write_only=True, required=True)
