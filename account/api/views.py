@@ -8,7 +8,7 @@ from django.db.models import Q, F, Value, DateTimeField, DurationField, Expressi
 from django.utils import timezone
 from django.contrib.gis.measure import Distance
 from .serializers import CustomUserSerializer, RegisterSerializer, LoginSerializer, PasswordUpdateSerializer, \
-    DetailsUpdateSerializer, CustomUserLocationSerializer
+    DetailsUpdateSerializer, CustomUserLocationSerializer, MatchingCustomUserSerializer
 from account.models import CustomUser
 
 
@@ -94,7 +94,7 @@ def custom_user_location_update(request):
 
 class ListMatchingUsersView(generics.ListAPIView):
     permission_classes = [permissions.IsAuthenticated, ]
-    serializer_class = CustomUserSerializer
+    serializer_class = MatchingCustomUserSerializer
 
     # Returns queryset of 10 users.
     # Each of them has shared his localization within a circle of
