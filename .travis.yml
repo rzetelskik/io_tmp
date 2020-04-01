@@ -1,5 +1,4 @@
 language: python
-dist: xenial
 jobs:
   include:
     - stage: build_front
@@ -14,6 +13,7 @@ jobs:
       script:
         - yarn test --passWithNoTests
     - stage: build_deploy
+      dist: xenial
       language: python
       python:
         - "3.7"

@@ -80,33 +80,36 @@ def details_update(request):
     return Response(response_data)
 
 
-class CustomUserLocationView(generics.RetrieveUpdateAPIView):
-    permission_classes = [permissions.IsAuthenticated, ]
-    serializer_class = CustomUserLocationSerializer
+@api_view(['PUT', ])
+@permission_classes([permissions.IsAuthenticated])
+def custom_user_location_update(request):
+    serializer = CustomUserLocationSerializer(instance=request.user, data=request.data)
+    response_data = {}
 
-    def get_object(self):
-        return self.request.user
+    serializer.is_valid(raise_exception=True)
+    serializer.save()
+    response_data['response'] = 'User\'s location updated successfully.'
+    return Response(response_data)
 
 
 class ListMatchingUsersView(generics.ListAPIView):
     permission_classes = [permissions.IsAuthenticated, ]
     serializer_class = CustomUserSerializer
-    
+
     # Returns queryset of 10 users.
     # Each of them has shared his localization within a circle of
     # radius equal to user's location_range, not earlier then 1 hour ago.
     def get_queryset(self):
-
         # TODO(?) checking timestamp of self.request.user
 
         point = self.request.user.location
         radius = self.request.user.location_range
-        
+
         delta = timedelta(seconds=3600)
         delta_expression = Value(timezone.now()) - F('location_timestamp')
 
         return CustomUser.objects.annotate(
-            delta=ExpressionWrapper(delta_expression, DurationField())  
+            delta=ExpressionWrapper(delta_expression, DurationField())
         ).filter(
             ~Q(pk=self.request.user.pk),
             delta__lte=delta,
