@@ -93,8 +93,7 @@ WSGI_APPLICATION = 'djangoapp.wsgi.application'
 #     }
 # }
 
-# db_from_env = dj_database_url.config(conn_max_age=600)
-# DATABASES['default'].update(db_from_env)
+
 
 # GeoDjango needs PostgreSQL database + PostGIS
 # Set here your database data
@@ -108,6 +107,9 @@ DATABASES = {
         'PORT': '5432'
     }
 }
+
+db_from_env = dj_database_url.config(conn_max_age=600)
+DATABASES['default'].update(db_from_env)
 
 
 # Password validation
