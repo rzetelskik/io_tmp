@@ -2,18 +2,14 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { changePassword } from "../../actions/auth";
-import { createMessage } from "../../actions/messages";
+import { createMessage, MESSAGE_ERROR } from "../../actions/messages";
 
-export class EditForm extends Component {
+export class ChangePasswordForm extends Component {
   state = {
     password1: "",
     password2: "",
     password3: ""
   };
-
-  componentDidMount() {
-    console.log(this.props);
-  }
 
   static propTypes = {
     username: PropTypes.string.isRequired,
@@ -29,7 +25,7 @@ export class EditForm extends Component {
     e.preventDefault();
     const { password1, password2, password3 } = this.state;
     if (password2 !== password3) {
-      this.props.createMessage({ passwordNotMatch: "Passwords do not match" });
+      this.props.createMessage(MESSAGE_ERROR, "Passwords do not match");
       return;
     }
     this.props.changePassword(password1, password2, password3);
@@ -42,7 +38,7 @@ export class EditForm extends Component {
         <h2 className="mx-auto">Change Password</h2>
         <form onSubmit={this.onSubmit}>
           <div className="form-group">
-            <label htmlFor="exampleInputPassword1">Password</label>
+            <label htmlFor="password1">Password</label>
             <input
               type="password"
               className="form-control"
@@ -53,7 +49,7 @@ export class EditForm extends Component {
             />
           </div>
           <div className="form-group">
-            <label htmlFor="exampleInputPassword1">New password</label>
+            <label htmlFor="password2">New password</label>
             <input
               type="password"
               className="form-control"
@@ -64,7 +60,7 @@ export class EditForm extends Component {
             />
           </div>
           <div className="form-group">
-            <label htmlFor="exampleInputPassword1">Repeat new password</label>
+            <label htmlFor="password3">Repeat new password</label>
             <input
               type="password"
               className="form-control"
@@ -89,5 +85,5 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps, { changePassword, createMessage })(
-  EditForm
+  ChangePasswordForm
 );

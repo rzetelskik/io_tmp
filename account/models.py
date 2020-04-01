@@ -1,8 +1,10 @@
 from django.contrib.auth.models import (
     AbstractBaseUser, BaseUserManager, PermissionsMixin
 )
-from django.db import models
+from django.contrib.gis.db import models # django.contrib.gis.db has additional features for GeoDjango
+from django.contrib.gis.geos import Point
 from django.utils import timezone
+from django.core.validators import MaxValueValidator, MinValueValidator
 
 
 class CustomUserManager(BaseUserManager):
@@ -47,37 +49,41 @@ class CustomUserManager(BaseUserManager):
 
 
 class CustomUser(AbstractBaseUser, PermissionsMixin):
-    username = models.CharField(
-        verbose_name='username', max_length=30, unique=True
-    )
-    
-    email = models.EmailField(
-        verbose_name='email address', max_length=255, unique=True
-    )
-    
+    username = models.CharField('username', max_length=30, unique=True)
+    email = models.EmailField('email address', max_length=255, unique=True)
     first_name = models.CharField('first name', max_length=30)
     last_name = models.CharField('last name', max_length=150)
-
     is_active = models.BooleanField(
         'active',
         default=True,
         help_text=
-            'Designates whether this user should be treated as active. '
-            'Unselect this instead of deleting accounts.'
+        'Designates whether this user should be treated as active. '
+        'Unselect this instead of deleting accounts.'
         ,
     )
     is_staff = models.BooleanField(
         'staff status',
         default=False,
         help_text=
-            'Designates whether the user can log into this admin site.'
+        'Designates whether the user can log into this admin site.'
         ,
     )
-
     date_joined = models.DateTimeField(
         'date joined', default=timezone.now
     )
+    location_range = models.IntegerField('location_range', default=3,
+                                         validators=[MinValueValidator(1), MaxValueValidator(50)])
+    location = models.PointField(geography=True, default=Point(0.0, 0.0)) # Instead of separate coordinates, use PointField
+    
+    @property
+    def longitude(self):
+        return self.location.x
+    
+    @property
+    def latitude(self):
+        return self.location.y
 
+    location_timestamp = models.DateTimeField("location_timestamp", auto_now=False, auto_now_add=False, null=True)
     objects = CustomUserManager()
 
     USERNAME_FIELD = 'username'

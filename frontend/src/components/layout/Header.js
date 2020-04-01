@@ -18,15 +18,13 @@ export class Header extends Component {
         <span className="navbar-text mr-3">
           <strong>{user ? `Welcome ${user.username}` : ""}</strong>
         </span>
-        <tr>
-          <th scope="col">
-            <li className="nav-item active">
-              <Link to="/change_password" className="btn btn-dark btn-sm">
-                Change password
-              </Link>
-            </li>
-          </th>
-        </tr>
+
+        <li className="nav-item active">
+          <Link to="/update-details" className="btn btn-dark btn-sm">
+            Edit profile
+          </Link>
+        </li>
+
         <li className="nav-item active">
           <Link to="/">
             <button onClick={this.props.logout} className="btn btn-light">
@@ -39,22 +37,16 @@ export class Header extends Component {
 
     const guestLinks = (
       <ul className="navbar-nav mr-auto">
-        <tr>
-          <th scope="col">
-            <li className="nav-item active">
-              <Link to="/register" className="btn btn-light">
-                Register
-              </Link>
-            </li>
-          </th>
-          <th scope="col">
-            <li className="nav-item active">
-              <Link to="/login" className="btn btn-dark btn-sm">
-                Login
-              </Link>
-            </li>
-          </th>
-        </tr>
+        <li className="nav-item active">
+          <Link to="/register" className="btn btn-light">
+            Register
+          </Link>
+        </li>
+        <li className="nav-item active">
+          <Link to="/login" className="btn btn-dark btn-sm">
+            Login
+          </Link>
+        </li>
       </ul>
     );
 
