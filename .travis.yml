@@ -26,8 +26,8 @@ jobs:
             - postgresql-9.6-postgis-2.3
       before_install:
         - sudo apt-get -y install gdal-bin libgdal-dev python3-gdal
-        - sudo export CPLUS_INCLUDE_PATH=/usr/include/gdal
-        - sudo export C_INCLUDE_PATH=/usr/include/gdal
+        - export CPLUS_INCLUDE_PATH=/usr/include/gdal
+        - export C_INCLUDE_PATH=/usr/include/gdal
         - pip3 install -r requirements.txt
       script:
         - python3 manage.py test
