@@ -14,8 +14,7 @@ jobs:
     - stage: build_deploy
       env:
         global:
-        - CPLUS_INCLUDE_PATH=/usr/include/gdal
-        - C_INCLUDE_PATH=/usr/include/gdal
+
       dist: xenial
       language: python
       python:
@@ -30,7 +29,10 @@ jobs:
             - libgdal-dev
             - postgresql-9.6-postgis-2.3
       before_install:
+        - export CPLUS_INCLUDE_PATH=/usr/include/gdal
+        - export C_INCLUDE_PATH=/usr/include/gdal
         - pip3 install -r requirements.txt
+        - pip3 install GDAL==$(gdal-config --version)
       script:
         - python3 manage.py test
       deploy:
