@@ -14,8 +14,8 @@ jobs:
     - stage: build_deploy
       dist: xenial
       language: python
-      python:sud
-        - 3.7
+      python:
+        - "3.7"
       services:
         - postgresql
       addons:
@@ -24,7 +24,7 @@ jobs:
           packages:
             - postgresql-9.6-postgis-2.3
       before_install:
-        - apt-get install gdal-bin libgdal-dev python3-gdal binutils libproj-dev
+        - sudo apt-get -y install gdal-bin libgdal-dev python3-gdal
         - pip3 install -r requirements.txt
         - pip3 install GDAL==$(gdal-config --version | awk -F'[.]' '{print $1"."$2}')
       script:
