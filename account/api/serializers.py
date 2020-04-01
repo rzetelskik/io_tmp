@@ -108,9 +108,9 @@ class DetailsUpdateSerializer(serializers.ModelSerializer):
 
 
 class CustomUserLocationSerializer(serializers.ModelSerializer):
-    latitude = serializers.DecimalField(max_digits=11, decimal_places=9,
+    latitude = serializers.DecimalField(max_digits=20, decimal_places=18,
                                         min_value=0, max_value=90, write_only=True, required=True)
-    longitude = serializers.DecimalField(max_digits=11, decimal_places=9,
+    longitude = serializers.DecimalField(max_digits=20, decimal_places=18,
                                          min_value=0, max_value=90, write_only=True, required=True)
     location_timestamp = serializers.IntegerField(required=True)
 
