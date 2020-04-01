@@ -43,15 +43,11 @@ export const getGeolocation = () => dispatch => {
 };
 
 export const sendLocation = location => (dispatch, getState) => {
+  const body = JSON.stringify(location);
+
   axios
-    .get("/api/account/user-location/", tokenConfig(getState))
+    .put("/api/account/user-location/", body, tokenConfig(getState))
     .then(res => {
-      dispatch(
-        createMessage(
-          MESSAGE_ERROR,
-          "Sruty pierduty wysłałem swoja lokalizacje"
-        )
-      );
       dispatch({ type: SEND_LOCATION_SUCCESS });
     })
     .catch(err => {
