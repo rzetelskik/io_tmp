@@ -15,14 +15,6 @@ export class Card extends Component {
             <li className="list-group-item">Distance</li>
             <li className="list-group-item">Tags</li>
           </ul>
-          {/* <div className="card-body">
-            <a href="#" className="card-link text-secondary text-left">
-              Maybe not...
-            </a>
-            <a href="#" className="card-link text-right">
-              Meet them!
-            </a>
-          </div> */}
           <div className="modal-footer">
             <button type="button" className="btn btn-secondary">
               Maybe not...
