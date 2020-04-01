@@ -1,11 +1,8 @@
-from datetime import datetime
-
-from django.core.validators import MinValueValidator, MaxValueValidator
-from django.utils import timezone
 from django.contrib.auth import authenticate
 from rest_framework import serializers
 from account.models import CustomUser
 from django.contrib.gis.geos import Point
+import time
 
 
 class RegisterSerializer(serializers.ModelSerializer):
@@ -109,6 +106,7 @@ class CustomUserLocationSerializer(serializers.ModelSerializer):
                                         min_value=0, max_value=90, write_only=True, required=True)
     longitude = serializers.DecimalField(max_digits=11, decimal_places=9,
                                          min_value=0, max_value=90, write_only=True, required=True)
+    location_timestamp = serializers.IntegerField(required=True)
 
     class Meta:
         model = CustomUser
@@ -116,7 +114,8 @@ class CustomUserLocationSerializer(serializers.ModelSerializer):
 
     def update(self, instance, validated_data):
         instance.location = Point((validated_data['latitude'], validated_data['longitude']))
-        instance.location_timestamp = validated_data['location_timestamp']
+        instance.location_timestamp = time.strftime('%Y-%m-%d %H:%M:%S',
+                                                    time.localtime(validated_data['location_timestamp']))
 
         instance.save()
         return instance
