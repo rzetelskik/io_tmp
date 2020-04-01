@@ -1,8 +1,3 @@
-language: python
-dist: xenial
-
-
-
 jobs:
   include:
     - stage: build_front
@@ -17,6 +12,11 @@ jobs:
       script:
         - yarn test --passWithNoTests
     - stage: build_deploy
+      env:
+        global:
+        - CPLUS_INCLUDE_PATH=/usr/include/gdal
+        - C_INCLUDE_PATH=/usr/include/gdal
+      dist: xenial
       language: python
       python:
         - 3.7
