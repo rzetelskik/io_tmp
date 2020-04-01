@@ -2,9 +2,12 @@ import {
   GET_LOCATION_SUCCESS,
   GET_LOCATION_LOADING,
   GET_LOCATION_ACCEPT,
-  GET_LOCATION_FAILED
+  GET_LOCATION_FAILED,
+  SEND_LOCATION_SUCCESS
 } from "./types";
 import { createMessage, MESSAGE_INFO, MESSAGE_ERROR } from "./messages";
+import { tokenConfig } from "./auth";
+import axios from "axios";
 
 export const acceptGeolocation = () => dispatch => {
   dispatch({
@@ -37,4 +40,23 @@ export const getGeolocation = () => dispatch => {
       });
     }
   );
+};
+
+export const sendLocation = location => (dispatch, getState) => {
+  axios
+    .get("/api/account/user-location/", tokenConfig(getState))
+    .then(res => {
+      dispatch(
+        createMessage(
+          MESSAGE_ERROR,
+          "Sruty pierduty wysłałem swoja lokalizacje"
+        )
+      );
+      dispatch({ type: SEND_LOCATION_SUCCESS });
+    })
+    .catch(err => {
+      dispatch(
+        createMessage(MESSAGE_ERROR, "Error when connecting to the server")
+      );
+    });
 };

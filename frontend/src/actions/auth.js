@@ -43,9 +43,13 @@ export const login = (username, password) => dispatch => {
 
   const body = JSON.stringify({ username, password });
 
+  console.log("before loging");
+
   axios
     .post("/api/account/login/", body, config)
     .then(res => {
+      console.log("logged in");
+
       dispatch({
         type: LOGIN_SUCCESS,
         payload: res.data
@@ -61,6 +65,7 @@ export const login = (username, password) => dispatch => {
         type: LOGIN_FAIL
       });
     });
+  console.log("after axios");
 };
 
 export const register = user => dispatch => {
