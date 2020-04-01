@@ -5,23 +5,31 @@ export class Card extends Component {
   render() {
     return (
       <Fragment>
-        <p>dupa</p>
-        <div className="card" style={{ width: "18rem" }}>
-          <img src={example_img} className="card-img-top" alt="..." />
-          <div className="card-body">
-            <h5 className="card-title">First name</h5>
-          </div>
+        <div className="card w-50  border-secondary ">
+          <h3 className="card-header ">First name</h3>
+          <div className="card-body"></div>
+          <img className="card-img-top" src={example_img} alt="Card image" />
+          <div className="card-body"></div>
           <ul className="list-group list-group-flush">
+            <li className="list-group-item"></li>
             <li className="list-group-item">Distance</li>
             <li className="list-group-item">Tags</li>
           </ul>
-          <div className="card-body">
-            <a href="#" className="card-link text-secondary">
+          {/* <div className="card-body">
+            <a href="#" className="card-link text-secondary text-left">
               Maybe not...
             </a>
-            <a href="#" className="card-link ">
+            <a href="#" className="card-link text-right">
               Meet them!
             </a>
+          </div> */}
+          <div className="modal-footer">
+            <button type="button" className="btn btn-secondary">
+              Maybe not...
+            </button>
+            <button type="button" className="btn btn-primary">
+              Meet them!
+            </button>
           </div>
         </div>
       </Fragment>
