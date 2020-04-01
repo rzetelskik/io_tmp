@@ -8,7 +8,7 @@ export class Card extends Component {
         <div className="card w-50  border-secondary ">
           <h3 className="card-header ">First name</h3>
           <div className="card-body"></div>
-          <img className="card-img-top" src={example_img} alt="Card image" />
+          <img className="card-img-top" src={example_img} alt="Card" />
           <div className="card-body"></div>
           <ul className="list-group list-group-flush">
             <li className="list-group-item"></li>
