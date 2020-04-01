@@ -1,3 +1,5 @@
+language: python
+dist: xenial
 jobs:
   include:
     - stage: build_front
@@ -12,7 +14,6 @@ jobs:
       script:
         - yarn test --passWithNoTests
     - stage: build_deploy
-      dist: xenial
       language: python
       python:
         - "3.7"
@@ -27,7 +28,7 @@ jobs:
         - sudo apt-get -y install gdal-bin libgdal-dev python3-gdal
         - sudo export CPLUS_INCLUDE_PATH=/usr/include/gdal
         - sudo export C_INCLUDE_PATH=/usr/include/gdal
-        - pip3 install GDAL==$(gdal-config --version | awk -F'[.]' '{print $1"."$2}')
+#        - pip3 install GDAL==$(gdal-config --version | awk -F'[.]' '{print $1"."$2}')
         - pip3 install -r requirements.txt
       script:
         - python3 manage.py test
