@@ -1,19 +1,24 @@
 from django.contrib.auth import authenticate
-
 from rest_framework import serializers
-
 from account.models import CustomUser
+from django.contrib.gis.geos import Point
+import datetime
 
 
 class RegisterSerializer(serializers.ModelSerializer):
-    password2 = serializers.CharField(style={'input_type': 'password'}, write_only=True)
-    
+    password_repeat = serializers.CharField(style={'input_type': 'password'}, write_only=True)
+
     class Meta:
         model = CustomUser
-        fields = ['username', 'email', 'first_name', 'last_name', 'password', 'password2']
+        fields = ['username', 'email', 'first_name', 'last_name', 'password', 'password_repeat']
         extra_kwargs = {
-            'password' : {'write_only': True}
+            'password': {'write_only': True}
         }
+
+    def validate(self, attrs):
+        if attrs['password'] != attrs['password_repeat']:
+            raise serializers.ValidationError("Passwords do not match.")
+        return attrs
 
     def create(self, validated_data):
         user = CustomUser(
@@ -23,13 +28,7 @@ class RegisterSerializer(serializers.ModelSerializer):
             last_name=validated_data['last_name'],
         )
 
-        password = validated_data['password']
-        password2 = validated_data['password2']
-
-        if password != password2:
-            raise serializers.ValidationError({'password': 'passwords must match'})
-
-        user.set_password(password)
+        user.set_password(validated_data['password'])
         user.save()
         return user
 
@@ -40,60 +39,91 @@ class LoginSerializer(serializers.Serializer):
 
     def validate(self, data):
         user = authenticate(**data)
-        if user and user.is_active:
-            return user
-        else:
-            raise serializers.ValidationError("Incorrect Credentials")
+        if not user or not user.is_active:
+            raise serializers.ValidationError("Incorrect credentials provided.")
+        return user
 
 
 class CustomUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
-        fields = ['username', 'email', 'first_name', 'last_name', 'date_joined']
+        fields = ['username', 'email', 'first_name', 'last_name', 'location_range', 'date_joined']
+
+
+class MatchingCustomUserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CustomUser
+        fields = ['username', 'email', 'first_name', 'last_name', 'latitude', 'longitude', 'location_timestamp', 'date_joined']
 
 
 class PasswordUpdateSerializer(serializers.ModelSerializer):
-    password1 = serializers.CharField(style={'input_type': 'password'}, write_only=True)
-    password2 = serializers.CharField(style={'input_type': 'password'}, write_only=True)
-    password3 = serializers.CharField(style={'input_type': 'password'}, write_only=True)
+    new_password = serializers.CharField(style={'input_type': 'password'}, write_only=True, required=True)
+    new_password_repeat = serializers.CharField(style={'input_type': 'password'}, write_only=True, required=True)
 
     class Meta:
         model = CustomUser
-        fields = ['password1', 'password2', 'password3']
+        fields = ['password', 'new_password', 'new_password_repeat']
+
+    def validate_password(self, value):
+        if not self.instance.check_password(value):
+            raise serializers.ValidationError("Incorrect password")
+
+        return value
+
+    def validate(self, data):
+        if data['new_password'] != data['new_password_repeat']:
+            raise serializers.ValidationError("Passwords have to match.")
+
+        return data
 
     def update(self, instance, validated_data):
-        if not instance.check_password(validated_data['password1']):
-            raise serializers.ValidationError("Incorrect password")
-        
-        password2 = validated_data['password2']
-        password3 = validated_data['password3']
-
-        if password2 != password3:
-            raise serializers.ValidationError("Passwords must match")
-
-        instance.set_password(password2)
+        instance.set_password(validated_data['new_password'])
         instance.save()
 
         return instance
 
 
 class DetailsUpdateSerializer(serializers.ModelSerializer):
-    password1 = serializers.CharField(style={'input_type': 'password'}, write_only=True)
-
     class Meta:
         model = CustomUser
-        fields = ['username', 'email', 'first_name', 'last_name', 'password1']
+        fields = ['first_name', 'last_name', 'location_range']
+
+    def validate(self, data):
+        instance = self.instance
+
+        if not (instance.first_name != data['first_name']
+                or instance.last_name != data['last_name']
+                or instance.location_range != data['location_range']):
+            raise serializers.ValidationError("At least one field has to differ.")
+
+        return data
 
     def update(self, instance, validated_data):
-        if not instance.check_password(validated_data['password1']):
-            raise serializers.ValidationError("Incorrect password")
-
-        instance.username = validated_data['username']
-        instance.email = validated_data['email']
         instance.first_name = validated_data['first_name']
         instance.last_name = validated_data['last_name']
+        instance.location_range = validated_data['location_range']
 
         instance.save()
         return instance
 
 
+class CustomUserLocationSerializer(serializers.ModelSerializer):
+    latitude = serializers.DecimalField(max_digits=20, decimal_places=18,
+                                        min_value=0, max_value=90, write_only=True, required=True)
+    longitude = serializers.DecimalField(max_digits=20, decimal_places=18,
+                                         min_value=0, max_value=90, write_only=True, required=True)
+    location_timestamp = serializers.IntegerField(required=True)
+
+    class Meta:
+        model = CustomUser
+        fields = ['latitude', 'longitude', 'location_timestamp']
+
+    def validate_location_timestamp(self, data):
+        return data / 1000
+
+    def update(self, instance, validated_data):
+        instance.location = Point((validated_data['latitude'], validated_data['longitude']))
+        instance.location_timestamp = datetime.datetime.utcfromtimestamp(validated_data['location_timestamp'])
+
+        instance.save()
+        return instance
