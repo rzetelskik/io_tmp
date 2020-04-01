@@ -1,8 +1,8 @@
-import React, {Component} from "react";
-import {connect} from "react-redux";
+import React, { Component } from "react";
+import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import {changePassword} from "../../actions/auth";
-import {createMessage} from "../../actions/messages";
+import { changePassword } from "../../actions/auth";
+import { createMessage, MESSAGE_ERROR } from "../../actions/messages";
 
 export class ChangePasswordForm extends Component {
   state = {
@@ -23,16 +23,16 @@ export class ChangePasswordForm extends Component {
 
   onSubmit = e => {
     e.preventDefault();
-    const {password1, password2, password3} = this.state;
+    const { password1, password2, password3 } = this.state;
     if (password2 !== password3) {
-      this.props.createMessage({passwordNotMatch: "Passwords do not match"});
+      this.props.createMessage(MESSAGE_ERROR, "Passwords do not match");
       return;
     }
     this.props.changePassword(password1, password2, password3);
   };
 
   render() {
-    const {password1, password2, password3} = this.state;
+    const { password1, password2, password3 } = this.state;
     return (
       <div className="card card-body mt-4 mb-4">
         <h2 className="mx-auto">Change Password</h2>
@@ -84,6 +84,6 @@ const mapStateToProps = state => ({
   username: state.auth.user.username
 });
 
-export default connect(mapStateToProps, {changePassword, createMessage})(
+export default connect(mapStateToProps, { changePassword, createMessage })(
   ChangePasswordForm
 );

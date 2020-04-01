@@ -1,8 +1,8 @@
 from django.contrib.auth import authenticate
-
 from rest_framework import serializers
-
 from account.models import CustomUser
+from django.contrib.gis.geos import Point
+import datetime
 
 
 class RegisterSerializer(serializers.ModelSerializer):
@@ -50,10 +50,15 @@ class CustomUserSerializer(serializers.ModelSerializer):
         fields = ['username', 'email', 'first_name', 'last_name', 'location_range', 'date_joined']
 
 
+class MatchingCustomUserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CustomUser
+        fields = ['username', 'email', 'first_name', 'last_name', 'latitude', 'longitude', 'location_timestamp', 'date_joined']
+
+
 class PasswordUpdateSerializer(serializers.ModelSerializer):
-    password = serializers.CharField(style={'input_type': 'password'}, write_only=True)
-    new_password = serializers.CharField(style={'input_type': 'password'}, write_only=True)
-    new_password_repeat = serializers.CharField(style={'input_type': 'password'}, write_only=True)
+    new_password = serializers.CharField(style={'input_type': 'password'}, write_only=True, required=True)
+    new_password_repeat = serializers.CharField(style={'input_type': 'password'}, write_only=True, required=True)
 
     class Meta:
         model = CustomUser
@@ -97,6 +102,28 @@ class DetailsUpdateSerializer(serializers.ModelSerializer):
         instance.first_name = validated_data['first_name']
         instance.last_name = validated_data['last_name']
         instance.location_range = validated_data['location_range']
+
+        instance.save()
+        return instance
+
+
+class CustomUserLocationSerializer(serializers.ModelSerializer):
+    latitude = serializers.DecimalField(max_digits=11, decimal_places=9,
+                                        min_value=0, max_value=90, write_only=True, required=True)
+    longitude = serializers.DecimalField(max_digits=11, decimal_places=9,
+                                         min_value=0, max_value=90, write_only=True, required=True)
+    location_timestamp = serializers.IntegerField(required=True)
+
+    class Meta:
+        model = CustomUser
+        fields = ['latitude', 'longitude', 'location_timestamp']
+
+    def validate_location_timestamp(self, data):
+        return data / 1000
+
+    def update(self, instance, validated_data):
+        instance.location = Point((validated_data['latitude'], validated_data['longitude']))
+        instance.location_timestamp = datetime.datetime.utcfromtimestamp(validated_data['location_timestamp'])
 
         instance.save()
         return instance

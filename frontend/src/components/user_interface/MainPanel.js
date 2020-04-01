@@ -15,7 +15,7 @@ export default function MainPanel() {
         />
         <PrivateRoute path={`${match.path}matcher`} component={Matcher} />
         <Route path={match.path}>
-          <div class="border-top my-5"></div>
+          <div className="border-top my-5"></div>
           <div className="container ">
             <div className="row">
               <div className="col-lg">
@@ -47,7 +47,7 @@ export default function MainPanel() {
                       Change your name, email or password
                     </h4>
                     <Link
-                      to="/change_password"
+                      to="/update-details"
                       className="btn btn-secondary btn-lg"
                     >
                       <i className="fas fa-clone left"></i> Edit profile!

@@ -1,13 +1,67 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import Geolocator from "./Geolocator";
+import { getGeolocation } from "../../actions/geolocation";
+import ActualMatcher from "./ActualMatcher";
 
 export class Matcher extends Component {
+  static propTypes = {
+    getGeolocation: PropTypes.func.isRequired,
+    coords: PropTypes.object.isRequired,
+    timestamp: PropTypes.number.isRequired,
+    isLoading: PropTypes.bool.isRequired,
+    accepted: PropTypes.string.isRequired
+  };
+
+  componentDidMount() {
+    if (this.props.accepted === "true" && this.props.timestamp === 0) {
+      this.props.getGeolocation();
+    }
+  }
+
   render() {
-    return (
-      <div>
-        <h1>Matcher</h1>
-      </div>
+    const { accepted, isLoading } = this.props;
+
+    const whenLoading = (
+      <Fragment>
+        <div className="border-top my-5"></div>
+        <h1>Loading...</h1>
+      </Fragment>
     );
+
+    const whenNotAccepted = (
+      <Fragment>
+        <div className="border-top my-5"></div>
+        <Geolocator />
+      </Fragment>
+    );
+
+    const whenAccepted = (
+      <Fragment>
+        <div className="border-top my-5"></div>
+        <ActualMatcher />
+      </Fragment>
+    );
+
+    let currentView = {};
+    if (isLoading) {
+      currentView = whenLoading;
+    } else if (accepted === "true") {
+      currentView = whenAccepted;
+    } else {
+      currentView = whenNotAccepted;
+    }
+
+    return <Fragment>{currentView}</Fragment>;
   }
 }
 
-export default Matcher;
+const mapStateToProps = state => ({
+  coords: state.geolocation.coords,
+  timestamp: state.geolocation.timestamp,
+  isLoading: state.geolocation.isLoading,
+  accepted: state.geolocation.accepted
+});
+
+export default connect(mapStateToProps, { getGeolocation })(Matcher);

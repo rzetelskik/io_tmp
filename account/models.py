@@ -1,7 +1,8 @@
 from django.contrib.auth.models import (
     AbstractBaseUser, BaseUserManager, PermissionsMixin
 )
-from django.db import models
+from django.contrib.gis.db import models # django.contrib.gis.db has additional features for GeoDjango
+from django.contrib.gis.geos import Point
 from django.utils import timezone
 from django.core.validators import MaxValueValidator, MinValueValidator
 
@@ -72,6 +73,17 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     )
     location_range = models.IntegerField('location_range', default=3,
                                          validators=[MinValueValidator(1), MaxValueValidator(50)])
+    location = models.PointField(geography=True, default=Point(0.0, 0.0)) # Instead of separate coordinates, use PointField
+    
+    @property
+    def longitude(self):
+        return self.location.x
+    
+    @property
+    def latitude(self):
+        return self.location.y
+
+    location_timestamp = models.DateTimeField("location_timestamp", auto_now=False, auto_now_add=False, null=True)
     objects = CustomUserManager()
 
     USERNAME_FIELD = 'username'

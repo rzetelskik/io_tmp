@@ -9,13 +9,15 @@ import {
   REGISTER_SUCCESS,
   REGISTER_FAIL,
   PASSWORD_CHANGE_FAIL,
-  PASSWORD_CHANGE_SUCCESS, UPDATE_DETAILS_SUCCESS, UPDATE_DETAILS_FAIL
+  PASSWORD_CHANGE_SUCCESS,
+  UPDATE_DETAILS_SUCCESS,
+  UPDATE_DETAILS_FAIL
 } from "./types";
-import {createMessage} from "./messages";
-import {createError} from "./errors";
+import { createMessage, MESSAGE_SUCCESS, MESSAGE_INFO } from "./messages";
+import { createError } from "./errors";
 
 export const loadUser = () => (dispatch, getState) => {
-  dispatch({type: USER_LOADING});
+  dispatch({ type: USER_LOADING });
 
   axios
     .get("/api/account/user", tokenConfig(getState))
@@ -39,7 +41,7 @@ export const login = (username, password) => dispatch => {
     }
   };
 
-  const body = JSON.stringify({username, password});
+  const body = JSON.stringify({ username, password });
 
   axios
     .post("/api/account/login/", body, config)
@@ -73,7 +75,7 @@ export const register = user => dispatch => {
   axios
     .post("/api/account/register/", body, config)
     .then(res => {
-      dispatch(createMessage({register: "User successfully registered"}));
+      dispatch(createMessage(MESSAGE_SUCCESS, "User successfully registered"));
       dispatch({
         type: REGISTER_SUCCESS,
         payload: res.data
@@ -91,13 +93,18 @@ export const register = user => dispatch => {
     });
 };
 
-export const updateDetails = (first_name, last_name, location_range) => (dispatch, getState) => {
-  const body = JSON.stringify({first_name, last_name, location_range});
+export const updateDetails = (first_name, last_name, location_range) => (
+  dispatch,
+  getState
+) => {
+  const body = JSON.stringify({ first_name, last_name, location_range });
 
   axios
-    .put('/api/account/details-update/', body, tokenConfig(getState))
+    .put("/api/account/details-update/", body, tokenConfig(getState))
     .then(res => {
-      dispatch(createMessage({updateDetails: "Details updated successfully."}));
+      dispatch(
+        createMessage(MESSAGE_SUCCESS, "Account details updated successfully.")
+      );
       dispatch({
         type: UPDATE_DETAILS_SUCCESS,
         payload: res.data
@@ -119,12 +126,14 @@ export const changePassword = (password, new_password, new_password_repeat) => (
   dispatch,
   getState
 ) => {
-  const body = JSON.stringify({password, new_password, new_password_repeat});
+  const body = JSON.stringify({ password, new_password, new_password_repeat });
 
   axios
     .put("/api/account/password-update/", body, tokenConfig(getState))
     .then(res => {
-      dispatch(createMessage({changePassword: "Password changed successfully."}));
+      dispatch(
+        createMessage(MESSAGE_SUCCESS, "Password changed successfully.")
+      );
       dispatch({
         type: PASSWORD_CHANGE_SUCCESS,
         payload: res.data
@@ -146,14 +155,14 @@ export const logout = () => (dispatch, getState) => {
   axios
     .post("/api/account/logout/", null, tokenConfig(getState))
     .then(res => {
-      dispatch(createMessage({logout: "Logged out."}));
+      dispatch(createMessage(MESSAGE_INFO, "Logged out."));
       dispatch({
         type: LOGOUT_SUCCESS
       });
     })
     .catch(err => {
       const errors = {
-        payload: err.response.data,
+        msg: err.response.data,
         status: err.response.status
       };
       dispatch(createError(errors));

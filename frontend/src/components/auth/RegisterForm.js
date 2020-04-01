@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { register } from "../../actions/auth";
 import { Link, Redirect } from "react-router-dom";
-import { createMessage } from "../../actions/messages";
+import { createMessage, MESSAGE_ERROR } from "../../actions/messages";
 
 export class RegisterForm extends Component {
   state = {
@@ -37,7 +37,7 @@ export class RegisterForm extends Component {
       password_repeat
     } = this.state;
     if (password !== password_repeat) {
-      this.props.createMessage({ passwordNotMatch: "Passwords do not match" });
+      this.props.createMessage(MESSAGE_ERROR, "Passwords do not match");
       return;
     }
     const user = {
