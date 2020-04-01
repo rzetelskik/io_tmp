@@ -75,6 +75,14 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
                                          validators=[MinValueValidator(1), MaxValueValidator(50)])
     location = models.PointField(geography=True, default=Point(0.0, 0.0)) # Instead of separate coordinates, use PointField
     
+    @property
+    def longitude(self):
+        return self.location.x
+    
+    @property
+    def latitude(self):
+        return self.location.y
+
     location_timestamp = models.DateTimeField("location_timestamp", auto_now=False, auto_now_add=False, null=True)
     objects = CustomUserManager()
 
