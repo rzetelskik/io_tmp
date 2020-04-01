@@ -63,4 +63,22 @@ class TestView(APITestCase):
 
         self.assertEquals(response.status_code, status.HTTP_200_OK)
         self.assertEquals(CustomUser.objects.get(username=response.data["username"]), self.user)
+        
+        
+      def test_location_update(self):
+        self.api_authenticate()
+        response = self.client.put(self.location_update_url, self.location_update_data)
+
+        self.assertEquals(response.status_code, status.HTTP_200_OK)
+
+        self.user.refresh_from_db()
+
+        self.assertEquals(self.user.location_timestamp, datetime.utcfromtimestamp(self.location_update_data['location_timestamp']/1000).replace(tzinfo='UTC'))
+
+
+    def test_location_update_unauthtenticated(self):
+        self.client.force_authenticate(user=None)
+        response = self.client.put(self.location_update_url, self.location_update_data)
+
+        self.assertEquals(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
