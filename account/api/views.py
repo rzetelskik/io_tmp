@@ -1,10 +1,15 @@
+from datetime import timedelta
 from rest_framework import status, permissions, generics
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
 from knox.models import AuthToken
+from django.db.models import Q, F, Value, DateTimeField, DurationField, ExpressionWrapper
+from django.utils import timezone
+from django.contrib.gis.measure import Distance
 from .serializers import CustomUserSerializer, RegisterSerializer, LoginSerializer, PasswordUpdateSerializer, \
     DetailsUpdateSerializer, CustomUserLocationSerializer
+from account.models import CustomUser
 
 
 @api_view(['POST', ])
@@ -81,3 +86,29 @@ class CustomUserLocationView(generics.RetrieveUpdateAPIView):
 
     def get_object(self):
         return self.request.user
+
+
+class ListMatchingUsersView(generics.ListAPIView):
+    permission_classes = [permissions.IsAuthenticated, ]
+    serializer_class = CustomUserSerializer
+    
+    # Returns queryset of 10 users.
+    # Each of them has shared his localization within a circle of
+    # radius equal to user's location_range, not earlier then 1 hour ago.
+    def get_queryset(self):
+
+        # TODO(?) checking timestamp of self.request.user
+
+        point = self.request.user.location
+        radius = self.request.user.location_range
+        
+        delta = timedelta(seconds=3600)
+        delta_expression = Value(timezone.now()) - F('location_timestamp')
+
+        return CustomUser.objects.annotate(
+            delta=ExpressionWrapper(delta_expression, DurationField())  
+        ).filter(
+            ~Q(pk=self.request.user.pk),
+            delta__lte=delta,
+            location__distance_lte=(point, Distance(km=radius))
+        )[:10]
