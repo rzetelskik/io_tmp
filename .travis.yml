@@ -12,12 +12,9 @@ jobs:
       script:
         - yarn test --passWithNoTests
     - stage: build_deploy
-      env:
-        global:
-
       dist: xenial
       language: python
-      python:
+      python:sud
         - 3.7
       services:
         - postgresql
@@ -27,12 +24,11 @@ jobs:
           packages:
             - gdal-bin
             - libgdal-dev
+            - python3-gdal
+            - binutils libproj-dev
             - postgresql-9.6-postgis-2.3
       before_install:
-        - export CPLUS_INCLUDE_PATH=/usr/include/gdal
-        - export C_INCLUDE_PATH=/usr/include/gdal
         - pip3 install -r requirements.txt
-        - pip3 install GDAL==$(gdal-config --version)
       script:
         - python3 manage.py test
       deploy:
