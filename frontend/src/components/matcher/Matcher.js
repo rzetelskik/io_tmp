@@ -14,12 +14,6 @@ export class Matcher extends Component {
     accepted: PropTypes.string.isRequired
   };
 
-  // componentDidUpdate() {
-  //   if (this.props.accepted === "true" && this.props.timestamp === 0) {
-  //     this.props.getGeolocation();
-  //   }
-  // }
-
   componentDidMount() {
     if (this.props.accepted === "true" && this.props.timestamp === 0) {
       this.props.getGeolocation();
@@ -29,30 +23,37 @@ export class Matcher extends Component {
   render() {
     const { accepted, isLoading } = this.props;
 
-    const whenLoading = <h1>Loading...</h1>;
+    const whenLoading = (
+      <Fragment>
+        <div className="border-top my-5"></div>
+        <h1>Loading...</h1>
+      </Fragment>
+    );
 
     const whenNotAccepted = (
       <Fragment>
+        <div className="border-top my-5"></div>
         <Geolocator />
       </Fragment>
     );
 
     const whenAccepted = (
       <Fragment>
+        <div className="border-top my-5"></div>
         <ActualMatcher />
       </Fragment>
     );
 
-    let current = {};
+    let currentView = {};
     if (isLoading) {
-      current = whenLoading;
+      currentView = whenLoading;
     } else if (accepted === "true") {
-      current = whenAccepted;
+      currentView = whenAccepted;
     } else {
-      current = whenNotAccepted;
+      currentView = whenNotAccepted;
     }
 
-    return <Fragment>{current}</Fragment>;
+    return <Fragment>{currentView}</Fragment>;
   }
 }
 
