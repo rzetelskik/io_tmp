@@ -23,7 +23,7 @@ jobs:
         postgresql: "9.6"
         apt:
           packages:
-            - postgresql-9.6-postgis-2.3
+            - postgresql-9.6-postgis-2.4
       before_install:
         - sudo apt-get -y install gdal-bin libgdal-dev python3-gdal
         - export CPLUS_INCLUDE_PATH=/usr/include/gdal
