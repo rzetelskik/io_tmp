@@ -2,7 +2,7 @@ from django.contrib.auth import authenticate
 from rest_framework import serializers
 from account.models import CustomUser
 from django.contrib.gis.geos import Point
-import time
+import datetime
 
 
 class RegisterSerializer(serializers.ModelSerializer):
@@ -112,10 +112,12 @@ class CustomUserLocationSerializer(serializers.ModelSerializer):
         model = CustomUser
         fields = ['latitude', 'longitude', 'location_timestamp']
 
+    def validate_location_timestamp(self, data):
+        return data / 1000
+
     def update(self, instance, validated_data):
         instance.location = Point((validated_data['latitude'], validated_data['longitude']))
-        instance.location_timestamp = time.strftime('%Y-%m-%d %H:%M:%S',
-                                                    time.localtime(validated_data['location_timestamp']))
+        instance.location_timestamp = datetime.datetime.utcfromtimestamp(validated_data['location_timestamp'])
 
         instance.save()
         return instance
