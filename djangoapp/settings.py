@@ -85,16 +85,16 @@ WSGI_APPLICATION = 'djangoapp.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
+DATABASES = {}
+
 if 'TRAVIS' in os.environ:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.contrib.gis.db.backends.postgis',
-            'NAME': 'postgres',
-            'USER': 'postgres',
-            'PASSWORD': '',
-            'HOST': 'localhost',
-            'PORT': os.getenv('PGPORT'),
-        },
+    DATABASES['default'] = {
+        'ENGINE': 'django.contrib.gis.db.backends.postgis',
+        'NAME': 'postgres',
+        'USER': 'postgres',
+        'PASSWORD': '',
+        'HOST': 'localhost',
+        'PORT': os.getenv('PGPORT'),
     }
 elif 'HEROKU' in os.environ:
     DATABASES['default'] = dj_database_url.config(conn_max_age=600)
@@ -102,15 +102,13 @@ elif 'HEROKU' in os.environ:
     GDAL_LIBRARY_PATH = os.environ.get('GDAL_LIBRARY_PATH')
     GEOS_LIBRARY_PATH = os.environ.get('GEOS_LIBRARY_PATH')
 else:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.contrib.gis.db.backends.postgis',
-            'NAME': 'gis',
-            'USER': 'user001',
-            'PASSWORD': '123456789',
-            'HOST': 'localhost',
-            'PORT': '5432'
-        }
+    DATABASES['default'] = {
+        'ENGINE': 'django.contrib.gis.db.backends.postgis',
+        'NAME': 'gis',
+        'USER': 'user001',
+        'PASSWORD': '123456789',
+        'HOST': 'localhost',
+        'PORT': '5432'
     }
 
 
