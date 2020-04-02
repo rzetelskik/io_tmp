@@ -28,17 +28,15 @@ jobs:
             - postgresql-9.6-postgis-2.4
             - postgresql-9.6-postgis-2.4-scripts
             - postgresql-client-9.6
+            - gdal-bin
+            - libgdal-env
+            - python3-gdal
       env:
         global:
           - PGPORT=5433
-      before_install:
-        - sudo apt-get -y install gdal-bin libgdal-dev python3-gdal
-        - export CPLUS_INCLUDE_PATH=/usr/include/gdal
-        - export C_INCLUDE_PATH=/usr/include/gdal
       install:
         - pip3 install -r requirements.txt
       before_script:
-        # - sudo psql -c 'create database postgres;' -U postgres
         - sudo psql -U postgres -c "create extension postgis"
       script:
         - python3 manage.py test
