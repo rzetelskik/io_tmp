@@ -6,7 +6,7 @@ from rest_framework.decorators import api_view, permission_classes
 from knox.models import AuthToken
 from django.db.models import Q, F, Value, DateTimeField, DurationField, ExpressionWrapper
 from django.utils import timezone
-from django.contrib.gis.measure import Distance
+from django.contrib.gis.db.models.functions import Distance
 from .serializers import CustomUserSerializer, RegisterSerializer, LoginSerializer, PasswordUpdateSerializer, \
     DetailsUpdateSerializer, CustomUserLocationSerializer, MatchingCustomUserSerializer
 from account.models import CustomUser
@@ -109,9 +109,10 @@ class ListMatchingUsersView(generics.ListAPIView):
         delta_expression = Value(timezone.now()) - F('location_timestamp')
 
         return CustomUser.objects.annotate(
-            delta=ExpressionWrapper(delta_expression, DurationField())
+            delta=ExpressionWrapper(delta_expression, DurationField()),
+            distance=Distance('location', point)
         ).filter(
             ~Q(pk=self.request.user.pk),
             delta__lte=delta,
-            location__distance_lte=(point, Distance(km=radius))
+            distance__lte=radius*1000
         )[:10]

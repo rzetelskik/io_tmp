@@ -1,7 +1,5 @@
 import React, { Component, Fragment } from "react";
 import { Modal, Button } from "react-bootstrap";
-import { connect } from "react-redux";
-import { acceptGeolocation } from "../../actions/geolocation";
 
 export class Geolocator extends Component {
   state = {
@@ -10,7 +8,6 @@ export class Geolocator extends Component {
 
   understood = () => {
     this.setState({ modalShow: false });
-    this.props.acceptGeolocation();
   };
 
   render() {
@@ -44,4 +41,4 @@ export class Geolocator extends Component {
   }
 }
 
-export default connect(null, { acceptGeolocation })(Geolocator);
+export default Geolocator;
