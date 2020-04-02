@@ -54,6 +54,7 @@ export class ActualMatcher extends Component {
             onUserAccept={this.onUserAccept}
             onUserDeny={this.onUserAccept}
             first_name={users[0].first_name}
+            distance={users[0].distance}
           />
         </div>
       );
