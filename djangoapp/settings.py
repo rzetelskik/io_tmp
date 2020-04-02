@@ -96,6 +96,11 @@ if 'TRAVIS' in os.environ:
             'PORT': os.getenv('PGPORT'),
         },
     }
+elif 'HEROKU' in os.environ:
+    DATABASES['default'] = dj_database_url.config(conn_max_age=600)
+    DATABASES['default']['ENGINE'] = 'django.contrib.gis.db.backends.postgis'
+    GDAL_LIBRARY_PATH = os.environ.get('GDAL_LIBRARY_PATH')
+    GEOS_LIBRARY_PATH = os.environ.get('GEOS_LIBRARY_PATH')
 else:
     DATABASES = {
         'default': {
@@ -107,11 +112,6 @@ else:
             'PORT': '5432'
         }
     }
-
-db_from_env = dj_database_url.config(conn_max_age=600)
-DATABASES['default'].update(db_from_env)
-GDAL_LIBRARY_PATH = os.environ.get('GDAL_LIBRARY_PATH')
-GEOS_LIBRARY_PATH = os.environ.get('GEOS_LIBRARY_PATH')
 
 
 # Password validation
