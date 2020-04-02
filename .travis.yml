@@ -38,7 +38,8 @@ jobs:
       install:
         - pip3 install -r requirements.txt
       before_script:
-        - psql -c 'create database travis_ci_test;' -U postgres
+        - sudo psql -c 'create database postgres;' -U postgres
+        - sudo psql -U postgres -c "create extension postgis"
       script:
         - python3 manage.py test
       deploy:
