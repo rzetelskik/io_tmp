@@ -1,16 +1,16 @@
 import {
   GET_LOCATION_LOADING,
   GET_LOCATION_SUCCESS,
-  GET_LOCATION_ACCEPT,
   GET_LOCATION_FAILED,
-  SEND_LOCATION_SUCCESS
+  SEND_LOCATION_SUCCESS,
+  LOGOUT_SUCCESS
 } from "../actions/types";
 
 const initialState = {
-  accepted: localStorage.getItem("locationAccepted"),
+  accepted: false,
   isLoading: true,
   coords: {},
-  timestamp: 0,
+  timestamp: -1,
   locationSent: false
 };
 
@@ -22,32 +22,27 @@ export default function(state = initialState, action) {
         coords: action.payload.coords,
         timestamp: action.payload.timestamp,
         isLoading: false,
-        accepted: "true"
+        accepted: true
       };
     case GET_LOCATION_LOADING:
       return {
         ...state,
         isLoading: true
       };
-    case GET_LOCATION_ACCEPT:
-      localStorage.setItem("locationAccepted", true);
-      return {
-        ...state,
-        accepted: "true",
-        isLoading: true
-      };
     case GET_LOCATION_FAILED:
       localStorage.removeItem("locationAccepted");
       return {
         ...state,
-        accepted: "false",
-        isLoading: true
+        accepted: false,
+        isLoading: false
       };
     case SEND_LOCATION_SUCCESS:
       return {
         ...state,
         locationSent: true
       };
+    case LOGOUT_SUCCESS:
+      return initialState;
     default:
       return state;
   }

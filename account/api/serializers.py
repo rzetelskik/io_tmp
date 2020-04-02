@@ -51,9 +51,17 @@ class CustomUserSerializer(serializers.ModelSerializer):
 
 
 class MatchingCustomUserSerializer(serializers.ModelSerializer):
+    distance = serializers.SerializerMethodField()
+
+    def get_distance(self, obj):
+        return obj.distance.km
+
     class Meta:
         model = CustomUser
-        fields = ['username', 'email', 'first_name', 'last_name', 'latitude', 'longitude', 'location_timestamp', 'date_joined']
+        fields = [
+            'first_name', 
+            'distance'
+        ]
 
 
 class PasswordUpdateSerializer(serializers.ModelSerializer):

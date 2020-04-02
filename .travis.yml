@@ -1,4 +1,6 @@
-language: python
+language: generic
+dist: bionic
+sudo: true
 jobs:
   include:
     - stage: build_front
@@ -13,10 +15,9 @@ jobs:
       script:
         - yarn test --passWithNoTests
     - stage: build_deploy
-      dist: xenial
       language: python
       python:
-        - "3.7"
+        - 3.7
       services:
         - postgresql
       addons:
@@ -25,14 +26,19 @@ jobs:
           update: true
           packages:
             - postgresql-9.6-postgis-2.4
+            - postgresql-9.6-postgis-2.4-scripts
+            - postgresql-client-9.6
+      env:
+        global:
+          - PGPORT=5433
       before_install:
-        - sudo apt-get remove gdal-bin libgdal-dev
         - sudo apt-get -y install gdal-bin libgdal-dev python3-gdal
         - export CPLUS_INCLUDE_PATH=/usr/include/gdal
         - export C_INCLUDE_PATH=/usr/include/gdal
+      install:
         - pip3 install -r requirements.txt
       before_script:
-        - psql -U postgres -c "create extension postgis"
+        - sudo psql -U postgres -c "create extension postgis"
       script:
         - python3 manage.py test
       deploy:
@@ -46,3 +52,4 @@ jobs:
 
 notifications:
   email: false
+

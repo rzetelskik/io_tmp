@@ -1,19 +1,12 @@
 import {
   GET_LOCATION_SUCCESS,
   GET_LOCATION_LOADING,
-  GET_LOCATION_ACCEPT,
   GET_LOCATION_FAILED,
   SEND_LOCATION_SUCCESS
 } from "./types";
 import { createMessage, MESSAGE_INFO, MESSAGE_ERROR } from "./messages";
 import { tokenConfig } from "./auth";
 import axios from "axios";
-
-export const acceptGeolocation = () => dispatch => {
-  dispatch({
-    type: GET_LOCATION_ACCEPT
-  });
-};
 
 export const getGeolocation = () => dispatch => {
   dispatch({

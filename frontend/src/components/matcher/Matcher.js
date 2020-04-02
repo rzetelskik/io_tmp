@@ -15,7 +15,7 @@ export class Matcher extends Component {
   };
 
   componentDidMount() {
-    if (this.props.accepted === "true" && this.props.timestamp === 0) {
+    if (this.props.timestamp === -1) {
       this.props.getGeolocation();
     }
   }
@@ -47,7 +47,7 @@ export class Matcher extends Component {
     let currentView = {};
     if (isLoading) {
       currentView = whenLoading;
-    } else if (accepted === "true") {
+    } else if (!isLoading && accepted === true) {
       currentView = whenAccepted;
     } else {
       currentView = whenNotAccepted;

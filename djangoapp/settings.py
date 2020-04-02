@@ -85,20 +85,24 @@ WSGI_APPLICATION = 'djangoapp.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
+DATABASES = {}
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-#     }
-# }
-
-
-
-# GeoDjango needs PostgreSQL database + PostGIS
-# Set here your database data
-DATABASES = {
-    'default': {
+if 'TRAVIS' in os.environ:
+    DATABASES['default'] = {
+        'ENGINE': 'django.contrib.gis.db.backends.postgis',
+        'NAME': 'postgres',
+        'USER': 'postgres',
+        'PASSWORD': '',
+        'HOST': 'localhost',
+        'PORT': os.getenv('PGPORT'),
+    }
+elif 'HEROKU' in os.environ:
+    DATABASES['default'] = dj_database_url.config(conn_max_age=600)
+    DATABASES['default']['ENGINE'] = 'django.contrib.gis.db.backends.postgis'
+    GDAL_LIBRARY_PATH = os.environ.get('GDAL_LIBRARY_PATH')
+    GEOS_LIBRARY_PATH = os.environ.get('GEOS_LIBRARY_PATH')
+else:
+    DATABASES['default'] = {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
         'NAME': 'gis',
         'USER': 'user001',
@@ -106,10 +110,7 @@ DATABASES = {
         'HOST': 'localhost',
         'PORT': '5432'
     }
-}
 
-db_from_env = dj_database_url.config(conn_max_age=600)
-DATABASES['default'].update(db_from_env)
 
 
 # Password validation

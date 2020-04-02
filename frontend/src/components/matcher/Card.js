@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 
 export class Card extends Component {
   render() {
-    const { onUserAccept, onUserDeny, first_name } = this.props;
+    const { onUserAccept, onUserDeny, first_name, distance } = this.props;
     return (
       <Fragment>
         <div className="card w-50  border-secondary ">
@@ -14,7 +14,9 @@ export class Card extends Component {
           <div className="card-body"></div>
           <ul className="list-group list-group-flush">
             <li className="list-group-item"></li>
-            {/* <li className="list-group-item">Distance</li> */}
+            <li className="list-group-item">
+              Distance: {Math.round(distance)}km
+            </li>
             <li className="list-group-item">Tags</li>
           </ul>
           <div className="modal-footer">
@@ -41,6 +43,7 @@ export class Card extends Component {
 
 const mapStateToProps = (state, ownProps) => ({
   first_name: ownProps.first_name,
+  distance: ownProps.distance,
   onUserAccept: ownProps.onUserAccept,
   onUserDeny: ownProps.onUserDeny
 });
