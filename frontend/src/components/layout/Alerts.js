@@ -17,9 +17,13 @@ export class Alerts extends Component {
   componentDidUpdate(prevProps) {
     const { errors, alert, message } = this.props;
     if (errors !== prevProps.errors) {
-      Object.keys(errors.msg).forEach(error => {
-        alert.error(`${error}: ${errors.msg.error}`);
-      });
+      for (var errorName in errors.msg) {
+        if (errorName !== "non_field_errors") {
+          alert.error(`${errorName}: ${errors.msg[errorName].join()}`);
+        } else {
+          alert.error(errors.msg[errorName].join());
+        }
+      }
     }
     if (message !== prevProps.message) {
       switch (message.messageType) {

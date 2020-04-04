@@ -7,11 +7,7 @@ import {
   LOGIN_FAIL,
   LOGOUT_SUCCESS,
   REGISTER_SUCCESS,
-  REGISTER_FAIL,
-  PASSWORD_CHANGE_FAIL,
-  PASSWORD_CHANGE_SUCCESS,
-  UPDATE_DETAILS_SUCCESS,
-  UPDATE_DETAILS_FAIL
+  REGISTER_FAIL
 } from "./types";
 import { createMessage, MESSAGE_SUCCESS, MESSAGE_INFO } from "./messages";
 import { createError } from "./errors";
@@ -105,10 +101,6 @@ export const updateDetails = (first_name, last_name, location_range) => (
       dispatch(
         createMessage(MESSAGE_SUCCESS, "Account details updated successfully.")
       );
-      dispatch({
-        type: UPDATE_DETAILS_SUCCESS,
-        payload: res.data
-      });
     })
     .catch(err => {
       const errors = {
@@ -116,9 +108,6 @@ export const updateDetails = (first_name, last_name, location_range) => (
         status: err.response.status
       };
       dispatch(createError(errors));
-      dispatch({
-        type: UPDATE_DETAILS_FAIL
-      });
     });
 };
 
@@ -134,10 +123,6 @@ export const changePassword = (password, new_password, new_password_repeat) => (
       dispatch(
         createMessage(MESSAGE_SUCCESS, "Password changed successfully.")
       );
-      dispatch({
-        type: PASSWORD_CHANGE_SUCCESS,
-        payload: res.data
-      });
     })
     .catch(err => {
       const errors = {
@@ -145,9 +130,6 @@ export const changePassword = (password, new_password, new_password_repeat) => (
         status: err.response.status
       };
       dispatch(createError(errors));
-      dispatch({
-        type: PASSWORD_CHANGE_FAIL
-      });
     });
 };
 
