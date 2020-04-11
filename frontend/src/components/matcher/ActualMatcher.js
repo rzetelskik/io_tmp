@@ -13,7 +13,7 @@ export class ActualMatcher extends Component {
     coords: PropTypes.object.isRequired,
     locationSent: PropTypes.bool.isRequired,
     timestamp: PropTypes.number.isRequired,
-    users: PropTypes.array.isRequired,
+    users: PropTypes.object.isRequired,
     userCount: PropTypes.number.isRequired,
   };
 
