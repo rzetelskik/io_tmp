@@ -14,14 +14,14 @@ export class ActualMatcher extends Component {
     locationSent: PropTypes.bool.isRequired,
     timestamp: PropTypes.number.isRequired,
     users: PropTypes.array.isRequired,
-    userCount: PropTypes.number.isRequired
+    userCount: PropTypes.number.isRequired,
   };
 
   componentDidMount() {
     const location = {
       latitude: this.props.coords.latitude,
       longitude: this.props.coords.longitude,
-      location_timestamp: this.props.timestamp
+      location_timestamp: this.props.timestamp,
     };
 
     this.props.sendLocation(location);
@@ -45,6 +45,8 @@ export class ActualMatcher extends Component {
     const { users, userCount } = this.props;
 
     let currentView;
+    console.log(userCount);
+
     if (userCount === 0) {
       currentView = <h1>No more users in this distance ):</h1>;
     } else {
@@ -53,8 +55,8 @@ export class ActualMatcher extends Component {
           <Card
             onUserAccept={this.onUserAccept}
             onUserDeny={this.onUserAccept}
-            first_name={users[0].first_name}
-            distance={users[0].distance}
+            first_name={users.first().get("first_name")}
+            distance={users.first().get("distance")}
           />
         </div>
       );
@@ -64,16 +66,16 @@ export class ActualMatcher extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  coords: state.geolocation.coords,
-  locationSent: state.geolocation.locationSent,
-  timestamp: state.geolocation.timestamp,
-  users: state.matcher.users,
-  userCount: state.matcher.userCount
+const mapStateToProps = (state) => ({
+  coords: state.getIn(["geolocation", "coords"]),
+  locationSent: state.getIn(["geolocation", "locationSent"]),
+  timestamp: state.getIn(["geolocation", "timestamp"]),
+  users: state.getIn(["matcher", "users"]),
+  userCount: state.getIn(["matcher", "userCount"]),
 });
 
 export default connect(mapStateToProps, {
   getUserOffers,
   sendLocation,
-  nextUser
+  nextUser,
 })(ActualMatcher);

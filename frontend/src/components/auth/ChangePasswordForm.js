@@ -8,20 +8,20 @@ export class ChangePasswordForm extends Component {
   state = {
     password1: "",
     password2: "",
-    password3: ""
+    password3: "",
   };
 
   static propTypes = {
     username: PropTypes.string.isRequired,
-    changePassword: PropTypes.func.isRequired
+    changePassword: PropTypes.func.isRequired,
   };
 
-  onChange = e =>
+  onChange = (e) =>
     this.setState({
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
 
-  onSubmit = e => {
+  onSubmit = (e) => {
     e.preventDefault();
     const { password1, password2, password3 } = this.state;
     if (password2 !== password3) {
@@ -80,8 +80,8 @@ export class ChangePasswordForm extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  username: state.auth.user.username
+const mapStateToProps = (state) => ({
+  username: state.getIn(["auth", "user", "username"]),
 });
 
 export default connect(mapStateToProps, { changePassword, createMessage })(

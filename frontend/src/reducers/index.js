@@ -1,4 +1,4 @@
-import { combineReducers } from "redux";
+import { combineReducers } from "redux-immutable";
 import errors from "./errors";
 import auth from "./auth";
 import message from "./message";
