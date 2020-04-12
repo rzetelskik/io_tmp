@@ -45,7 +45,6 @@ export class ActualMatcher extends Component {
     const { users, userCount } = this.props;
 
     let currentView;
-    console.log(userCount);
 
     if (userCount === 0) {
       currentView = <h1>No more users in this distance ):</h1>;

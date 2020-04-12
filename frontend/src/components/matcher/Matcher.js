@@ -5,7 +5,20 @@ import Geolocator from "./Geolocator";
 import { getGeolocation } from "../../actions/geolocation";
 import ActualMatcher from "./ActualMatcher";
 
+import WebSocketClient from "../../services/WebSocketClient";
+
 export class Matcher extends Component {
+  constructor(props) {
+    super(props);
+
+    WebSocketClient.connect();
+    WebSocketClient.waitForSocketConnection(() => {
+      console.log(
+        "To funkcja ktora przekazuje do modulu obslugujacego polaczenia, wywola sie kiedy uda mi sie je nawiazac"
+      );
+    });
+  }
+
   static propTypes = {
     getGeolocation: PropTypes.func.isRequired,
     coords: PropTypes.object.isRequired,

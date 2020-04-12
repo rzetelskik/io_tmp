@@ -17,11 +17,8 @@ export class Alerts extends Component {
   componentDidUpdate(prevProps) {
     const { errors, alert, message } = this.props;
     if (errors !== prevProps.errors) {
-      console.log(errors);
       errors.get("msg").forEach((errorContent, errorName) => {
         if (errorName !== "non_field_errors") {
-          console.log(errorName);
-
           alert.error(`${errorName}: ${errorContent.join()}`);
         } else {
           alert.error(errorContent.join());
