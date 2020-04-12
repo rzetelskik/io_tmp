@@ -51,7 +51,10 @@ export class Header extends Component {
     );
 
     return (
-      <nav className="navbar navbar-expand-lg navbar-dark bg-primary header">
+      <nav
+        className="navbar navbar-expand-lg navbar-dark bg-primary"
+        data-test="header"
+      >
         <div className="container">
           <Link to="/" className="navbar-brand">
             <strong>ad hoc</strong>

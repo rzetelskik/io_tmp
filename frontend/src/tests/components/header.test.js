@@ -26,9 +26,19 @@ describe("Header Component", () => {
     const propsErr = checkProps(Header, expectedProps);
     expect(propsErr).toBeUndefined();
   });
-  //   it("Should render without errors", () => {
-  //     const component = shallow(<Header />);
-  //     const wrapper = component.find(".headerComponent");
-  //     expect(wrapper, length).toBe(1);
-  //   });
+  describe("Renders", () => {
+    let wrapper;
+    beforeEach(() => {
+      const props = {
+        auth: new Object(),
+        logout: jest.fn(),
+      };
+      wrapper = shallow(<Header {...props} />);
+    });
+
+    it("Should render a header", () => {
+      const header = findByTestAtrr(wrapper, "header");
+      expect(header.length).toBe(1);
+    });
+  });
 });
