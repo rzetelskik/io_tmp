@@ -7,7 +7,7 @@ import { logout } from "../../actions/auth";
 export class Header extends Component {
   static propTypes = {
     auth: PropTypes.object.isRequired,
-    logout: PropTypes.func.isRequired
+    logout: PropTypes.func.isRequired,
   };
 
   render() {
@@ -51,7 +51,7 @@ export class Header extends Component {
     );
 
     return (
-      <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
+      <nav className="navbar navbar-expand-lg navbar-dark bg-primary header">
         <div className="container">
           <Link to="/" className="navbar-brand">
             <strong>ad hoc</strong>
@@ -78,8 +78,8 @@ export class Header extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  auth: state.auth
+const mapStateToProps = (state) => ({
+  auth: state.auth,
 });
 
 export default connect(mapStateToProps, { logout })(Header);
