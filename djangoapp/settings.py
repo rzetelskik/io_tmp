@@ -37,8 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'whitenoise.runserver_nostatic',
     'django.contrib.staticfiles',
-    'django.contrib.gis', # GeoDjango
+    'django.contrib.gis',  # GeoDjango
     'rest_framework',
+    'channels',
     'knox',  # Token authentication.
     'app',  # Serving react files.
     'account',  # Custom user app.
@@ -111,7 +112,6 @@ else:
         'PORT': '5432'
     }
 
-
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
 
@@ -155,3 +155,14 @@ REACT_APP_DIR = os.path.join(BASE_DIR, 'frontend')
 STATICFILES_DIRS = [
     os.path.join(REACT_APP_DIR, 'build', 'static'),
 ]
+
+ASGI_APPLICATION = "djangoapp.routing.application"
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [os.environ.get('REDIS_URL', 'redis://localhost:6379')],
+        },
+    },
+}
