@@ -45,7 +45,7 @@ const mapStateToProps = (state, ownProps) => ({
   first_name: ownProps.first_name,
   distance: ownProps.distance,
   onUserAccept: ownProps.onUserAccept,
-  onUserDeny: ownProps.onUserDeny
+  onUserDeny: ownProps.onUserDeny,
 });
 
 export default connect(mapStateToProps)(Card);

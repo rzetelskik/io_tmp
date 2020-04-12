@@ -7,6 +7,6 @@ export const MESSAGE_ERROR = "MESSAGE_ERROR";
 export const createMessage = (messageType, msg) => {
   return {
     type: CREATE_MESSAGE,
-    payload: { msg, messageType }
+    payload: { msg, messageType },
   };
 };

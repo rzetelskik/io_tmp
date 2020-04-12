@@ -13,20 +13,20 @@ export class RegisterForm extends Component {
     last_name: "",
     password: "",
     password_repeat: "",
-    agree: ""
+    agree: "",
   };
 
   static propTypes = {
     isAuthenticated: PropTypes.bool,
-    register: PropTypes.func.isRequired
+    register: PropTypes.func.isRequired,
   };
 
-  onChange = e =>
+  onChange = (e) =>
     this.setState({
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
 
-  onSubmit = e => {
+  onSubmit = (e) => {
     e.preventDefault();
     const {
       username,
@@ -34,7 +34,7 @@ export class RegisterForm extends Component {
       first_name,
       last_name,
       password,
-      password_repeat
+      password_repeat,
     } = this.state;
     if (password !== password_repeat) {
       this.props.createMessage(MESSAGE_ERROR, "Passwords do not match");
@@ -46,7 +46,7 @@ export class RegisterForm extends Component {
       first_name,
       last_name,
       password,
-      password_repeat
+      password_repeat,
     };
     this.props.register(user);
   };
@@ -63,7 +63,7 @@ export class RegisterForm extends Component {
       last_name,
       password,
       password_repeat,
-      agree
+      agree,
     } = this.state;
 
     return (
@@ -169,8 +169,8 @@ export class RegisterForm extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  isAuthenticated: state.auth.isAuthenticated
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.getIn(["auth", "isAuthenticated"]),
 });
 
 export default connect(mapStateToProps, { register, createMessage })(

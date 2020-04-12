@@ -11,14 +11,14 @@ export class UpdateDetailsForm extends Component {
     last_name: PropTypes.string.isRequired,
     location_range: PropTypes.number.isRequired,
     updateDetails: PropTypes.func.isRequired,
-    createMessage: PropTypes.func.isRequired
+    createMessage: PropTypes.func.isRequired,
   };
 
   state = {
     first_name: this.props.first_name,
     last_name: this.props.last_name,
     location_range: this.props.location_range,
-    disabled: true
+    disabled: true,
   };
 
   detailsUpdated() {
@@ -29,13 +29,13 @@ export class UpdateDetailsForm extends Component {
     );
   }
 
-  onChange = e =>
+  onChange = (e) =>
     this.setState({
       [e.target.name]: e.target.value,
-      disabled: this.detailsUpdated()
+      disabled: this.detailsUpdated(),
     });
 
-  onSubmit = e => {
+  onSubmit = (e) => {
     e.preventDefault();
     const { first_name, last_name, location_range, disabled } = this.state;
     if (disabled) {
@@ -114,10 +114,10 @@ export class UpdateDetailsForm extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  first_name: state.auth.user.first_name,
-  last_name: state.auth.user.last_name,
-  location_range: state.auth.user.location_range
+const mapStateToProps = (state) => ({
+  first_name: state.getIn(["auth", "user", "first_name"]),
+  last_name: state.getIn(["auth", "user", "last_name"]),
+  location_range: state.getIn(["auth", "user", "location_range"]),
 });
 
 export default connect(mapStateToProps, { updateDetails, createMessage })(

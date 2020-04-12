@@ -3,7 +3,7 @@ import { Modal, Button } from "react-bootstrap";
 
 export class Geolocator extends Component {
   state = {
-    modalShow: true
+    modalShow: true,
   };
 
   understood = () => {

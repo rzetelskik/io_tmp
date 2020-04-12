@@ -6,21 +6,21 @@ import { GET_USERS, NEXT_USER } from "./types";
 export const getUserOffers = () => (dispatch, getState) => {
   axios
     .get("/api/account/list-matching-users/", tokenConfig(getState))
-    .then(res => {
+    .then((res) => {
       dispatch({
         type: GET_USERS,
-        payload: res.data
+        payload: res.data,
       });
     })
-    .catch(err => {
+    .catch((err) => {
       dispatch(
         createMessage(MESSAGE_ERROR, "Error when connecting to the server")
       );
     });
 };
 
-export const nextUser = () => dispatch => {
+export const nextUser = () => (dispatch) => {
   dispatch({
-    type: NEXT_USER
+    type: NEXT_USER,
   });
 };
