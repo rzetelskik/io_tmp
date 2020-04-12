@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'knox',  # Token authentication.
     'app',  # Serving react files.
     'account',  # Custom user app.
+    'matcher',
 ]
 
 AUTH_USER_MODEL = 'account.CustomUser'  # Set custom user as default user.
