@@ -6,6 +6,7 @@ import { middleware } from "./../src/store";
 
 export const findByTestAtrr = (component, attr) => {
   const wrapper = component.find(`[data-test='${attr}']`);
+  //console.log(component.debug());
   return wrapper;
 };
 

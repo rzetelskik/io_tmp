@@ -4,42 +4,7 @@ import Enzyme, { shallow } from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 Enzyme.configure({ adapter: new Adapter() });
 import { findByTestAtrr, checkProps } from "../../../Utils";
-import { Map } from "immutable";
-
-const setUp = (props = {}) => {
-  const component = shallow(<Header {...props} />);
-  return component;
-};
-
-// describe("Header Component", () => {
-//   describe("Checking PropTypes", () => {
-//     it("Should not throw a warning", () => {
-//       const expectedProps = {
-//         auth: new Object(),
-//         logout: jest.fn(),
-//       };
-//       const propsErr = checkProps(Header, expectedProps);
-//       expect(propsErr).toBeUndefined();
-//     });
-//   });
-//   describe("Renders", () => {
-//     // let wrapper;
-//     // beforeEach(() => {
-//     //   const props = {
-//     //     auth: new Object(),
-//     //     logout: jest.fn(),
-//     //   };
-//     //   wrapper = setUp(props);
-//     // });
-
-//     it("Should render a header", () => {
-//       let wrapper;
-//       wrapper = setUp();
-//       const header = wrapper.find("header");
-//       expect(header.length).toBe(1);
-//     });
-//   });
-// });
+import { Map, fromJS } from "immutable";
 
 describe("Header Component", () => {
   describe("Checking PropTypes", () => {
@@ -54,39 +19,45 @@ describe("Header Component", () => {
   });
 
   describe("Have props", () => {
-    let wrapper;
+    it("Should render without errors", () => {
+      let wrapper;
 
-    beforeEach(() => {
       const props = {
-        auth: new Map(),
+        auth: fromJS({}),
         logout: jest.fn(),
       };
       wrapper = shallow(<Header {...props} />);
-    });
 
-    it("Should render without errors", () => {
       const component = findByTestAtrr(wrapper, "header");
       expect(component.length).toBe(1);
     });
 
-    // it("Should render a H1", () => {
-    //   const h1 = findByTestAtrr(wrapper, "header");
-    //   expect(h1.length).toBe(1);
-    // });
+    it("Should render user panel and should NOT render guest links", () => {
+      let wrapper;
 
-    // it("Should render a desc", () => {
-    //   const desc = findByTestAtrr(wrapper, "desc");
-    //   expect(desc.length).toBe(1);
-    // });
+      const props = {
+        auth: fromJS({ isAuthenticated: true }),
+        logout: jest.fn(),
+      };
+      wrapper = shallow(<Header {...props} />);
+      const component1 = findByTestAtrr(wrapper, "authenticated");
+      expect(component1.length).toBe(1);
+      const component2 = findByTestAtrr(wrapper, "guest");
+      expect(component2.length).toBe(0);
+    });
+
+    it("Should NOT render user panel and should render guest links", () => {
+      let wrapper;
+
+      const props = {
+        auth: fromJS({ isAuthenticated: false }),
+        logout: jest.fn(),
+      };
+      wrapper = shallow(<Header {...props} />);
+      const component1 = findByTestAtrr(wrapper, "authenticated");
+      expect(component1.length).toBe(0);
+      const component2 = findByTestAtrr(wrapper, "guest");
+      expect(component2.length).toBe(1);
+    });
   });
-
-  // let component;
-  // beforeEach(() => {
-  //   component = setUp();
-  // });
-  // it("should render without errors", () => {
-  //   const component = setUp();
-  //   const wrapper = component.find("header");
-  //   expect(wrapper.length).toBe(1);
-  // });
 });

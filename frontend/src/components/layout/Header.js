@@ -15,7 +15,7 @@ export class Header extends Component {
     const user = this.props.auth.get("user");
 
     const authLinks = (
-      <ul className="navbar-nav mr-auto">
+      <ul className="navbar-nav mr-auto" data-test="authenticated">
         <span className="navbar-text mr-3">
           <strong>{user ? `Welcome ${user.username}` : ""}</strong>
         </span>
@@ -37,7 +37,7 @@ export class Header extends Component {
     );
 
     const guestLinks = (
-      <ul className="navbar-nav mr-auto">
+      <ul className="navbar-nav mr-auto" data-test="guest">
         <li className="nav-item active">
           <Link to="/register" className="btn btn-light">
             Register

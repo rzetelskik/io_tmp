@@ -7,7 +7,7 @@ export class Card extends Component {
     const { onUserAccept, onUserDeny, first_name, distance } = this.props;
     return (
       <Fragment>
-        <div className="card w-50  border-secondary ">
+        <div className="card w-50  border-secondary " data-test="card">
           <h3 className="card-header ">{first_name}</h3>
           <div className="card-body"></div>
           <img className="card-img-top" src={example_img} alt="Card" />
