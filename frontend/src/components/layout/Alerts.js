@@ -5,39 +5,42 @@ import PropTypes from "prop-types";
 import {
   MESSAGE_SUCCESS,
   MESSAGE_ERROR,
-  MESSAGE_INFO
+  MESSAGE_INFO,
 } from "../../actions/messages";
 
 export class Alerts extends Component {
   static propTypes = {
     errors: PropTypes.object.isRequired,
-    message: PropTypes.object.isRequired
+    message: PropTypes.object.isRequired,
   };
 
   componentDidUpdate(prevProps) {
     const { errors, alert, message } = this.props;
     if (errors !== prevProps.errors) {
-      for (var errorName in errors.msg) {
+      console.log(errors);
+      errors.get("msg").forEach((errorContent, errorName) => {
         if (errorName !== "non_field_errors") {
-          alert.error(`${errorName}: ${errors.msg[errorName].join()}`);
+          console.log(errorName);
+
+          alert.error(`${errorName}: ${errorContent.join()}`);
         } else {
-          alert.error(errors.msg[errorName].join());
+          alert.error(errorContent.join());
         }
-      }
+      });
     }
     if (message !== prevProps.message) {
-      switch (message.messageType) {
+      switch (message.get("messageType")) {
         case MESSAGE_SUCCESS:
-          alert.success(message.msg);
+          alert.success(message.get("msg"));
           break;
         case MESSAGE_ERROR:
-          alert.error(message.msg);
+          alert.error(message.get("msg"));
           break;
         case MESSAGE_INFO:
-          alert.info(message.msg);
+          alert.info(message.get("msg"));
           break;
         default:
-          alert.show(message.msg);
+          alert.show(message.get("msg"));
       }
     }
   }
@@ -47,9 +50,9 @@ export class Alerts extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  errors: state.errors,
-  message: state.message
+const mapStateToProps = (state) => ({
+  errors: state.get("errors"),
+  message: state.get("message"),
 });
 
 export default connect(mapStateToProps)(withAlert()(Alerts));

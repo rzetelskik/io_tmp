@@ -11,7 +11,8 @@ export class Header extends Component {
   };
 
   render() {
-    const { isAuthenticated, user } = this.props.auth;
+    const isAuthenticated = this.props.auth.get("isAuthenticated");
+    const user = this.props.auth.get("user");
 
     const authLinks = (
       <ul className="navbar-nav mr-auto">
@@ -82,7 +83,7 @@ export class Header extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  auth: state.auth,
+  auth: state.get("auth"),
 });
 
 export default connect(mapStateToProps, { logout })(Header);

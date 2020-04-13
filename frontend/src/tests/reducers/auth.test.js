@@ -1,113 +1,133 @@
 import reducer from "../../reducers/auth";
 import * as types from "../../actions/types";
+import { fromJS } from "immutable";
 
 describe("auth reducer", () => {
-  const initialState = {
+  const initialState = fromJS({
+    token: localStorage.getItem("token"),
+    isAuthenticated: null,
+    isLoading: false,
+    user: null,
+  });
+
+  it("should return the initial state", () => {
+    expect(reducer(undefined, {})).toEqual(initialState);
+  });
+
+  const initialStateWithToken = fromJS({
     token: "token value",
     isAuthenticated: null,
     isLoading: false,
     user: null,
-  };
-  it("should return the initial state", () => {
-    expect(reducer(undefined, {})).toEqual({
-      token: localStorage.getItem("token"),
-      isAuthenticated: null,
-      isLoading: false,
-      user: null,
-    });
   });
 
   it("should handle USER_LOADING", () => {
     expect(
-      reducer([], {
+      reducer(fromJS({}), {
         type: types.USER_LOADING,
       })
-    ).toEqual({
-      isLoading: true,
-    });
+    ).toEqual(
+      fromJS({
+        isLoading: true,
+      })
+    );
 
     expect(
-      reducer(initialState, {
+      reducer(initialStateWithToken, {
         type: types.USER_LOADING,
       })
-    ).toEqual({
-      token: "token value",
-      isAuthenticated: null,
-      user: null,
-      isLoading: true,
-    });
+    ).toEqual(
+      fromJS({
+        token: "token value",
+        isAuthenticated: null,
+        user: null,
+        isLoading: true,
+      })
+    );
   });
   it("should handle USER_LOADED", () => {
     expect(
-      reducer([], {
+      reducer(fromJS({}), {
         type: types.USER_LOADED,
         payload: "some value",
       })
-    ).toEqual({
-      isLoading: false,
-      isAuthenticated: true,
-      user: "some value",
-    });
+    ).toEqual(
+      fromJS({
+        isLoading: false,
+        isAuthenticated: true,
+        user: "some value",
+      })
+    );
 
     expect(
-      reducer(initialState, {
+      reducer(initialStateWithToken, {
         type: types.USER_LOADING,
         payload: "some value",
       })
-    ).toEqual({
-      token: "token value",
-      isAuthenticated: null,
-      user: null,
-      isLoading: true,
-    });
+    ).toEqual(
+      fromJS({
+        token: "token value",
+        isAuthenticated: null,
+        user: null,
+        isLoading: true,
+      })
+    );
   });
 
   it("should handle LOGIN_SUCCESS", () => {
     expect(
-      reducer([], {
+      reducer(fromJS({}), {
         type: types.LOGIN_SUCCESS,
-        payload: 21337,
+        payload: { token: "other value" },
       })
-    ).toEqual({
-      isAuthenticated: true,
-      isLoading: false,
-    });
-
+    ).toEqual(
+      fromJS({
+        token: "other value",
+        isAuthenticated: true,
+        isLoading: false,
+      })
+    );
     expect(
-      reducer(initialState, {
+      reducer(initialStateWithToken, {
         type: types.LOGIN_SUCCESS,
-        payload: 2137,
+        payload: { token: "another value" },
       })
-    ).toEqual({
-      isAuthenticated: true,
-      isLoading: false,
-      token: "token value",
-      user: null,
-      isLoading: false,
-    });
+    ).toEqual(
+      fromJS({
+        isAuthenticated: true,
+        isLoading: false,
+        token: "another value",
+        user: null,
+        isLoading: false,
+      })
+    );
   });
 
   it("should handle LOGIN_FAIL", () => {
     expect(
-      reducer([], {
+      reducer(fromJS({}), {
         type: types.LOGIN_FAIL,
       })
-    ).toEqual({
-      token: null,
-      user: null,
-      isAuthenticated: false,
-      isLoading: false,
-    });
+    ).toEqual(
+      fromJS({
+        token: null,
+        user: null,
+        isAuthenticated: false,
+        isLoading: false,
+      })
+    );
 
     expect(
-      reducer(initialState, {
+      reducer(initialStateWithToken, {
         type: types.LOGIN_FAIL,
       })
-    ).toEqual({
-      token: null,
-      user: null,
-      isAuthenticated: false,
-      isLoading: false,
-    });
+    ).toEqual(
+      fromJS({
+        token: null,
+        user: null,
+        isAuthenticated: false,
+        isLoading: false,
+      })
+    );
   });
 });

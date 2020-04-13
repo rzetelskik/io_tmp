@@ -11,7 +11,7 @@ export class Matcher extends Component {
     coords: PropTypes.object.isRequired,
     timestamp: PropTypes.number.isRequired,
     isLoading: PropTypes.bool.isRequired,
-    accepted: PropTypes.string.isRequired
+    accepted: PropTypes.bool.isRequired,
   };
 
   componentDidMount() {
@@ -57,11 +57,11 @@ export class Matcher extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  coords: state.geolocation.coords,
-  timestamp: state.geolocation.timestamp,
-  isLoading: state.geolocation.isLoading,
-  accepted: state.geolocation.accepted
+const mapStateToProps = (state) => ({
+  coords: state.getIn(["geolocation", "coords"]),
+  timestamp: state.getIn(["geolocation", "timestamp"]),
+  isLoading: state.getIn(["geolocation", "isLoading"]),
+  accepted: state.getIn(["geolocation", "accepted"]),
 });
 
 export default connect(mapStateToProps, { getGeolocation })(Matcher);

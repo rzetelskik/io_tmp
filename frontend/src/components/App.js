@@ -20,7 +20,7 @@ import ChangePasswordForm from "./auth/ChangePasswordForm";
 // Alert options
 const alertOptions = {
   timeout: 3000,
-  position: "top center"
+  position: "top center",
 };
 
 class App extends Component {
@@ -45,8 +45,16 @@ class App extends Component {
                 <Switch>
                   <Route exact path="/register" component={RegisterForm} />
                   <Route exact path="/login" component={LoginForm} />
-                  <PrivateRoute exact path="/update-details" component={UserDetailForm} />
-                  <PrivateRoute exact path="/change-password" component={ChangePasswordForm} />
+                  <PrivateRoute
+                    exact
+                    path="/update-details"
+                    component={UserDetailForm}
+                  />
+                  <PrivateRoute
+                    exact
+                    path="/change-password"
+                    component={ChangePasswordForm}
+                  />
                   <PrivateRoute path="/" component={MainPanel} />
                 </Switch>
               </div>
