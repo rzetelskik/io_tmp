@@ -19,7 +19,8 @@ class WebSocketClient {
   connect = () => {
     const token = store.getState().getIn(["auth", "token"], null);
     if (token) {
-      const path = "ws://localhost:8000/ws/matcher/?token=" + token;
+      const path =
+        "ws://" + window.location.host + "/ws/matcher/?token=" + token;
       this.socketRef = new WebSocket(path);
       this.socketRef.onopen = () => {
         console.log("WebSocket open");
