@@ -2,15 +2,15 @@ import {
   GET_LOCATION_SUCCESS,
   GET_LOCATION_LOADING,
   GET_LOCATION_FAILED,
-  SEND_LOCATION_SUCCESS
+  SEND_LOCATION_SUCCESS,
 } from "./types";
 import { createMessage, MESSAGE_INFO, MESSAGE_ERROR } from "./messages";
 import { tokenConfig } from "./auth";
 import axios from "axios";
 
-export const getGeolocation = () => dispatch => {
+export const getGeolocation = () => (dispatch) => {
   dispatch({
-    type: GET_LOCATION_LOADING
+    type: GET_LOCATION_LOADING,
   });
   const geolocation = navigator.geolocation;
   if (!geolocation) {
@@ -20,30 +20,30 @@ export const getGeolocation = () => dispatch => {
   }
 
   geolocation.getCurrentPosition(
-    position => {
+    (position) => {
       dispatch({
         type: GET_LOCATION_SUCCESS,
-        payload: position
+        payload: position,
       });
     },
     () => {
       dispatch(createMessage(MESSAGE_INFO, "Your location cannot be found"));
       dispatch({
-        type: GET_LOCATION_FAILED
+        type: GET_LOCATION_FAILED,
       });
     }
   );
 };
 
-export const sendLocation = location => (dispatch, getState) => {
+export const sendLocation = (location) => (dispatch, getState) => {
   const body = JSON.stringify(location);
 
   axios
     .put("/api/account/user-location/", body, tokenConfig(getState))
-    .then(res => {
+    .then((res) => {
       dispatch({ type: SEND_LOCATION_SUCCESS });
     })
-    .catch(err => {
+    .catch((err) => {
       dispatch(
         createMessage(MESSAGE_ERROR, "Error when connecting to the server")
       );
