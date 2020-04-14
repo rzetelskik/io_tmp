@@ -1,7 +1,6 @@
 language: python
 os: linux
 dist: bionic
-sudo: true
 jobs:
   include:
     - stage: build_front
@@ -34,13 +33,13 @@ jobs:
         global:
           - PGPORT=5433
       before_install:
-        - apt-get -y install gdal-bin python3-gdal
+        - sudo apt-get -y install gdal-bin python3-gdal
         - export CPLUS_INCLUDE_PATH=/usr/include/gdal
         - export C_INCLUDE_PATH=/usr/include/gdal
       install:
         - pip3 install -r requirements.txt
       before_script:
-        - psql -U postgres -c "create extension postgis"
+        - sudo psql -U postgres -c "create extension postgis"
       script:
         - python3 manage.py test
       deploy:
