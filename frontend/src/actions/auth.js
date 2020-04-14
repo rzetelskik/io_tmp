@@ -11,6 +11,7 @@ import {
 } from "./types";
 import { createMessage, MESSAGE_SUCCESS, MESSAGE_INFO } from "./messages";
 import { createError } from "./errors";
+import WebSocketClient from "../services/WebSocketClient";
 
 export const loadUser = () => (dispatch, getState) => {
   dispatch({ type: USER_LOADING });
@@ -138,6 +139,7 @@ export const logout = () => (dispatch, getState) => {
     .post("/api/account/logout/", null, tokenConfig(getState))
     .then((res) => {
       dispatch(createMessage(MESSAGE_INFO, "Logged out."));
+      WebSocketClient.closeConnection();
       dispatch({
         type: LOGOUT_SUCCESS,
       });

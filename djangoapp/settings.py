@@ -41,8 +41,9 @@ INSTALLED_APPS = [
     'rest_framework',
     'channels',
     'knox',  # Token authentication.
-    'app',  # Serving react files.
-    'account',  # Custom user app.
+    'app.apps.AppConfig',  # Serving react files.
+    'account.apps.AccountConfig',  # Custom user app.
+    'matcher.apps.MatcherConfig',  # User matching app.
 ]
 
 AUTH_USER_MODEL = 'account.CustomUser'  # Set custom user as default user.

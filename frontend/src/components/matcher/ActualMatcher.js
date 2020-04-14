@@ -28,7 +28,7 @@ export class ActualMatcher extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.locationSent === false && this.props.locationSent === true) {
+    if (this.props.locationSent === true && this.props.userCount === 0) {
       this.props.getUserOffers();
     }
   }
@@ -45,7 +45,6 @@ export class ActualMatcher extends Component {
     const { users, userCount } = this.props;
 
     let currentView;
-    console.log(userCount);
 
     if (userCount === 0) {
       currentView = <h1>No more users in this distance ):</h1>;

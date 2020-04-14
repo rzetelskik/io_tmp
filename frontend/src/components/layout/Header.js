@@ -17,7 +17,7 @@ export class Header extends Component {
     const authLinks = (
       <ul className="navbar-nav mr-auto">
         <span className="navbar-text mr-3">
-          <strong>{user ? `Welcome ${user.username}` : ""}</strong>
+          <strong>{user ? `Welcome ${user.get("username")}` : ""}</strong>
         </span>
 
         <li className="nav-item active">

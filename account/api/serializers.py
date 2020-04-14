@@ -59,6 +59,7 @@ class MatchingCustomUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
         fields = [
+            'username',
             'first_name', 
             'distance'
         ]

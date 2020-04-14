@@ -1,15 +1,19 @@
 from channels.routing import ProtocolTypeRouter, URLRouter
-from channels.auth import AuthMiddlewareStack
-from django.conf.urls import url
+from django.urls import path
+from matcher.routing import websocket_urlpatterns as matcher_urlpatterns
+from .auth_middleware import TokenAuthMiddlewareStack
+from channels.security.websocket import AllowedHostsOriginValidator
 
 websocket_urlpatterns = [
-    # url(r'^ws/match$', consumers.ChatConsumer),
+    path("ws/matcher/", URLRouter(matcher_urlpatterns)),
 ]
 
 application = ProtocolTypeRouter({
-    'websocket': AuthMiddlewareStack(
-        URLRouter(
-            websocket_urlpatterns
+    'websocket': AllowedHostsOriginValidator(
+        TokenAuthMiddlewareStack(
+            URLRouter(
+                websocket_urlpatterns
+            )
         )
-    ),
+    )
 })

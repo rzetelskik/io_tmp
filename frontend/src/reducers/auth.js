@@ -48,14 +48,7 @@ export default function (state = initialState, action) {
     case LOGOUT_SUCCESS:
     case REGISTER_FAIL:
       localStorage.removeItem("token");
-      return state.merge(
-        fromJS({
-          token: null,
-          user: null,
-          isAuthenticated: false,
-          isLoading: false,
-        })
-      );
+      return initialState;
     default:
       return state;
   }
