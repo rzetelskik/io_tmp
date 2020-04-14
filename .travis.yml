@@ -13,7 +13,7 @@ jobs:
         - yarn install
         - yarn build
       script:
-        - yarn test --passWithNoTests
+        - yarn test
     - stage: build_deploy
       language: python
       python:
