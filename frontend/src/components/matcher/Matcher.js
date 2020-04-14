@@ -25,7 +25,7 @@ export class Matcher extends Component {
       });
     }
   }
-  //dupa
+ 
   static propTypes = {
     getGeolocation: PropTypes.func.isRequired,
     createMessage: PropTypes.func.isRequired,
