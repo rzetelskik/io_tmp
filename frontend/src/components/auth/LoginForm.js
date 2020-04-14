@@ -27,12 +27,12 @@ export class LoginForm extends Component {
 
   render() {
     if (this.props.isAuthenticated) {
-      return <Redirect to="/" />;
+      return <Redirect data-test="redirect" to="/" />;
     }
     const { username, password } = this.state;
 
     return (
-      <div className="card card-body mt-4 mb-4">
+      <div className="card card-body mt-4 mb-4" data-test="login-form">
         <h2>Login</h2>
         <form onSubmit={this.onSubmit}>
           <div className="form-group">

@@ -6,7 +6,7 @@ import { Map } from "immutable";
 
 const initialState = Map();
 
-const middleware = [thunk];
+export const middleware = [thunk];
 
 const store = createStore(
   rootReducer,

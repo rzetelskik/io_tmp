@@ -108,26 +108,12 @@ describe("auth reducer", () => {
       reducer(fromJS({}), {
         type: types.LOGIN_FAIL,
       })
-    ).toEqual(
-      fromJS({
-        token: null,
-        user: null,
-        isAuthenticated: false,
-        isLoading: false,
-      })
-    );
+    ).toEqual(initialState);
 
     expect(
       reducer(initialStateWithToken, {
         type: types.LOGIN_FAIL,
       })
-    ).toEqual(
-      fromJS({
-        token: null,
-        user: null,
-        isAuthenticated: false,
-        isLoading: false,
-      })
-    );
+    ).toEqual(initialState);
   });
 });
