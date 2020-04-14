@@ -19,6 +19,23 @@ export const getUserOffers = () => (dispatch, getState) => {
     });
 };
 
+export const matcherAnswer = (agreed, recipient) => (dispatch, getState) => {
+  const body = JSON.stringify({ agreed, recipient });
+
+  axios
+    .post("api/matcher/answer/", body, tokenConfig(getState))
+    .then((res) => {
+      console.log("OK");
+      dispatch(nextUser());
+    })
+    .catch((err) => {
+      console.log("matcher answer error");
+      dispatch(
+        createMessage(MESSAGE_ERROR, "Error when connecting to the server")
+      );
+    });
+};
+
 export const nextUser = () => (dispatch) => {
   dispatch({
     type: NEXT_USER,

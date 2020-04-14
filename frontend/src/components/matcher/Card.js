@@ -3,8 +3,18 @@ import example_img from "../../data/images/example_img.jpeg";
 import { connect } from "react-redux";
 
 export class Card extends Component {
+  acceptMatch = () => {
+    const username = this.props.username;
+    this.props.decide(true, username);
+  };
+
+  rejectMatch = () => {
+    const username = this.props.username;
+    this.props.decide(false, username);
+  };
+
   render() {
-    const { onUserAccept, onUserDeny, first_name, distance } = this.props;
+    const { first_name, distance } = this.props;
     return (
       <Fragment>
         <div className="card w-50  border-secondary ">
@@ -21,14 +31,14 @@ export class Card extends Component {
           </ul>
           <div className="modal-footer">
             <button
-              onClick={onUserDeny}
+              onClick={this.rejectMatch}
               type="button"
               className="btn btn-secondary"
             >
               Maybe not...
             </button>
             <button
-              onClick={onUserAccept}
+              onClick={this.acceptMatch}
               type="button"
               className="btn btn-primary"
             >
@@ -42,10 +52,10 @@ export class Card extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => ({
+  username: ownProps.username,
   first_name: ownProps.first_name,
   distance: ownProps.distance,
-  onUserAccept: ownProps.onUserAccept,
-  onUserDeny: ownProps.onUserDeny,
+  decide: ownProps.decide,
 });
 
 export default connect(mapStateToProps)(Card);

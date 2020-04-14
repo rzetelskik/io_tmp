@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from "react";
 import Card from "./Card";
 import { sendLocation } from "../../actions/geolocation";
-import { getUserOffers, nextUser } from "../../actions/matcher";
+import { getUserOffers, matcherAnswer } from "../../actions/matcher";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
@@ -9,7 +9,7 @@ export class ActualMatcher extends Component {
   static propTypes = {
     getUserOffers: PropTypes.func.isRequired,
     sendLocation: PropTypes.func.isRequired,
-    nextUser: PropTypes.func.isRequired,
+    matcherAnswer: PropTypes.func.isRequired,
     coords: PropTypes.object.isRequired,
     locationSent: PropTypes.bool.isRequired,
     timestamp: PropTypes.number.isRequired,
@@ -52,10 +52,10 @@ export class ActualMatcher extends Component {
       currentView = (
         <div className="container d-flex justify-content-center">
           <Card
-            onUserAccept={this.onUserAccept}
-            onUserDeny={this.onUserAccept}
+            decide={this.props.matcherAnswer}
             first_name={users.first().get("first_name")}
             distance={users.first().get("distance")}
+            username={users.first().get("username")}
           />
         </div>
       );
@@ -76,5 +76,5 @@ const mapStateToProps = (state) => ({
 export default connect(mapStateToProps, {
   getUserOffers,
   sendLocation,
-  nextUser,
+  matcherAnswer,
 })(ActualMatcher);
