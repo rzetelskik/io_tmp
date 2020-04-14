@@ -11,6 +11,7 @@ describe("Matcher Component", () => {
     it("Should not throw a warning", () => {
       const expectedProps = {
         getGeolocation: jest.fn(),
+        createMessage: jest.fn(),
         coords: new Object(),
         timestamp: 0,
         isLoading: false,
@@ -31,6 +32,7 @@ describe("Matcher Component", () => {
         timestamp: 0,
         isLoading: true,
         accepted: false,
+        createMessage: jest.fn(),
       };
       wrapper = shallow(<Matcher {...props} />);
 
@@ -51,6 +53,7 @@ describe("Matcher Component", () => {
         timestamp: 0,
         isLoading: false,
         accepted: false,
+        createMessage: jest.fn(),
       };
       wrapper = shallow(<Matcher {...props} />);
 
@@ -69,6 +72,7 @@ describe("Matcher Component", () => {
         timestamp: 0,
         isLoading: false,
         accepted: true,
+        createMessage: jest.fn(),
       };
       wrapper = shallow(<Matcher {...props} />);
 
