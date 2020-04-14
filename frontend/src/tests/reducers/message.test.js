@@ -13,7 +13,14 @@ describe("message reducer", () => {
     expect(
       reducer(initialState, {
         type: types.CREATE_MESSAGE,
+        payload: {
+          key: "value",
+        },
       })
-    ).toEqual(fromJS({}));
+    ).toEqual(
+      fromJS({
+        key: "value",
+      })
+    );
   });
 });
