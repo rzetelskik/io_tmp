@@ -1,4 +1,5 @@
-language: generic
+language: python
+os: linux
 dist: bionic
 sudo: true
 jobs:
@@ -6,7 +7,7 @@ jobs:
     - stage: build_front
       language: node_js
       node_js:
-        - 8
+        - "8"
       before_install:
         - cd frontend
       install:
@@ -17,7 +18,7 @@ jobs:
     - stage: build_deploy
       language: python
       python:
-        - 3.7
+        - "3.7"
       services:
         - redis
         - postgresql
@@ -33,13 +34,13 @@ jobs:
         global:
           - PGPORT=5433
       before_install:
-        - sudo apt-get -y install gdal-bin python3-gdal
+        - apt-get -y install gdal-bin python3-gdal
         - export CPLUS_INCLUDE_PATH=/usr/include/gdal
         - export C_INCLUDE_PATH=/usr/include/gdal
       install:
         - pip3 install -r requirements.txt
       before_script:
-        - sudo psql -U postgres -c "create extension postgis"
+        - psql -U postgres -c "create extension postgis"
       script:
         - python3 manage.py test
       deploy:
