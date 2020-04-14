@@ -17,7 +17,6 @@ class WebSocketClient {
   addCallbacks = (...callbacks) => (this.callbacks = { ...callbacks });
 
   connect = () => {
-    // const path = "ws://localhost:8000/ws/matcher/?token=06331b2de75f38438798e0557e4b66248f20d10acd682dd2477ae245a2fe5d23";
     const token = store.getState().getIn(["auth", "token"], null);
     if (token) {
       const path = "ws://localhost:8000/ws/matcher/?token=" + token;
@@ -83,7 +82,9 @@ class WebSocketClient {
     if (this.socketRef === null) {
       return;
     }
-    this.socketRef.onclose = null;
+    this.socketRef.onclose = () => {
+      console.log("closing connection - closeConnection()");
+    };
     if (this.socketRef.readyState === 1 || this.socketRef.readyState === 0) {
       this.socketRef.close();
     }
