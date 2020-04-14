@@ -1,4 +1,4 @@
-import { GET_USERS, NEXT_USER } from "../actions/types";
+import { GET_USERS, NEXT_USER, LOGOUT_SUCCESS } from "../actions/types";
 import { fromJS } from "immutable";
 
 const initialState = fromJS({
@@ -22,6 +22,8 @@ export default function (state = initialState, action) {
           userCount: state.get("userCount") - 1,
         })
       );
+    case LOGOUT_SUCCESS:
+      return initialState;
     default:
       return state;
   }

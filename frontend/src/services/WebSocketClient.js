@@ -39,7 +39,7 @@ class WebSocketClient {
     };
   };
 
-  socketNewMessage(data) {
+  socketNewMessage = (data) => {
     const parsedData = JSON.parse(data);
     const command = parsedData.command;
     if (Object.keys(this.callbacks).length === 0) {
@@ -51,7 +51,7 @@ class WebSocketClient {
     if (command === "new_message") {
       this.callbacks[command](parsedData.message);
     }
-  }
+  };
 
   state = () => this.socketRef.readyState;
 
@@ -70,6 +70,16 @@ class WebSocketClient {
         recursion(callback);
       }
     }, 1);
+  };
+
+  closeConnection = () => {
+    if (this.socketRef === null) {
+      return;
+    }
+    this.socketRef.onclose = null;
+    if (this.socketRef.readyState === 1 || this.socketRef.readyState === 0) {
+      this.socketRef.close();
+    }
   };
 }
 
