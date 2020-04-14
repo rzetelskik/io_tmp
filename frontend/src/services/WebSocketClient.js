@@ -1,3 +1,5 @@
+import {tokenConfig} from "../actions/auth";
+
 class WebSocketClient {
   static instance = null;
   callbacks = {};
@@ -12,10 +14,10 @@ class WebSocketClient {
     this.socketRef = null;
   }
 
-  addCallbacks = (...callbacks) => (this.callbacks = { ...callbacks });
+  addCallbacks = (...callbacks) => (this.callbacks = {...callbacks});
 
   connect = () => {
-    const path = "ws://localhost:8000/ws/matcher/";
+    const path = "ws://localhost:8000/ws/matcher/?token=8365ec677589d0e176f1051c3d7f708be9e771ad455c0221ded1231d93fe5613";
     this.socketRef = new WebSocket(path);
     this.socketRef.onopen = () => {
       console.log("WebSocket open");

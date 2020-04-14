@@ -19,8 +19,8 @@ from matcher.views import HomeView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('matcher/', HomeView.as_view()),
     path('', include('account.urls')),
+    path('', include('matcher.urls')),
     # All the other paths come here.
     re_path(r'', include('app.urls')),  # This has to come last.
 ]

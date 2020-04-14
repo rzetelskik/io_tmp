@@ -1,6 +1,6 @@
 from django.urls import path
-from .consumers import PingPongConsumer
+from .consumers import MatcherConsumer
 
 websocket_urlpatterns = [
-    path("", PingPongConsumer),
+    path("", MatcherConsumer),
 ]

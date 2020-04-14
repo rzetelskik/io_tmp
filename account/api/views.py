@@ -114,5 +114,5 @@ class ListMatchingUsersView(generics.ListAPIView):
         ).filter(
             ~Q(pk=self.request.user.pk),
             delta__lte=delta,
-            distance__lte=radius*1000
+            distance__lte=radius * 1000
         )[:10]
