@@ -46,21 +46,21 @@ export class Matcher extends Component {
 
     const whenLoading = (
       <Fragment>
-        <div className="border-top my-5"></div>
+        <div className="border-top my-5" data-test="loading"></div>
         <h1>Loading...</h1>
       </Fragment>
     );
 
     const whenNotAccepted = (
       <Fragment>
-        <div className="border-top my-5"></div>
+        <div className="border-top my-5" data-test="not-accepted"></div>
         <Geolocator />
       </Fragment>
     );
 
     const whenAccepted = (
       <Fragment>
-        <div className="border-top my-5"></div>
+        <div className="border-top my-5" data-test="accepted"></div>
         <ActualMatcher />
       </Fragment>
     );

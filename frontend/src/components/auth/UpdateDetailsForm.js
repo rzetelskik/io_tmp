@@ -51,7 +51,7 @@ export class UpdateDetailsForm extends Component {
   render() {
     const { first_name, last_name, location_range, disabled } = this.state;
     return (
-      <div className="card card-body mt-4 mb-4">
+      <div className="card card-body mt-4 mb-4" data-test="form">
         <h2 className="mx-auto">Account details</h2>
         <form onSubmit={this.onSubmit}>
           <label htmlFor="first_name_group">First name</label>
