@@ -14,12 +14,13 @@ class WebSocketClient {
     this.socketRef = null;
   }
 
-  addCallbacks = (...callbacks) => (this.callbacks = { ...callbacks });
+  addCallbacks = (...callbacks) => (this.callbacks = {...callbacks});
 
   connect = () => {
     const token = store.getState().getIn(["auth", "token"], null);
     if (token) {
-      const path = "ws://localhost:8000/ws/matcher/?token=" + token;
+      const path = document.location.origin.replace(/^http/, 'ws')
+        + "/ws/matcher/?token=" + token;
       this.socketRef = new WebSocket(path);
       this.socketRef.onopen = () => {
         console.log("WebSocket open");
