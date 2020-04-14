@@ -1,4 +1,4 @@
-import {tokenConfig} from "../actions/auth";
+import store from "../store";
 
 class WebSocketClient {
   static instance = null;
@@ -14,29 +14,36 @@ class WebSocketClient {
     this.socketRef = null;
   }
 
-  addCallbacks = (...callbacks) => (this.callbacks = {...callbacks});
+  addCallbacks = (...callbacks) => (this.callbacks = { ...callbacks });
 
   connect = () => {
-    const path = "ws://localhost:8000/ws/matcher/?token=8365ec677589d0e176f1051c3d7f708be9e771ad455c0221ded1231d93fe5613";
-    this.socketRef = new WebSocket(path);
-    this.socketRef.onopen = () => {
-      console.log("WebSocket open");
-    };
+    // const path = "ws://localhost:8000/ws/matcher/?token=06331b2de75f38438798e0557e4b66248f20d10acd682dd2477ae245a2fe5d23";
+    const token = store.getState().getIn(["auth", "token"], null);
+    if (token) {
+      const path = "ws://localhost:8000/ws/matcher/?token=" + token;
+      this.socketRef = new WebSocket(path);
+      this.socketRef.onopen = () => {
+        console.log("WebSocket open");
+      };
 
-    this.socketRef.onmessage = (e) => {
-      console.log(e.data);
+      this.socketRef.onmessage = (e) => {
+        console.log(e.data);
 
-      // this.socketNewMessage(e.data);
-    };
+        // this.socketNewMessage(e.data);
+      };
 
-    this.socketRef.onerror = (e) => {
-      console.log(e.message);
-    };
+      this.socketRef.onerror = (e) => {
+        console.log(e.message);
+      };
 
-    this.socketRef.onclose = () => {
-      console.log("WebSocket closed let's reopen");
-      this.connect();
-    };
+      this.socketRef.onclose = () => {
+        console.log("WebSocket closed let's reopen");
+        this.connect();
+      };
+      return true;
+    } else {
+      return false;
+    }
   };
 
   socketNewMessage = (data) => {
