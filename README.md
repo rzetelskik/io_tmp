@@ -8,7 +8,9 @@ See our app on [Heroku](https://adhoc-prod.herokuapp.com/).
 - Python 3.6.9 or higher installed locally.
 - PostgreSQL installed locally.
 - Having a Python virtual environment created ```virtualenv [-p full_path_to_python] directory_name``` with Django and React installed.
-- Having yarn available on path.
+- Yarn available on path.
+- Geodjango dependencies installed ```sudo apt-get install gdal-bin libgdal-dev python3-gdal```
+- PostgreSQL with PostGIS extension as database. You can either install PostgreSQL locally and then add the PostGIS extension or better yet, you can use Docker to quickly create one using the image ```docker run --name=postgis -d -e POSTGRES_USER=user001 -e POSTGRES_PASS=123456789 -e POSTGRES_DBNAME=gis -p 5432:5432 kartoza/postgis:9.6-2.4```
 
 ### Steps:
 1. Source your virtualenv: ```source dirname/bin/activate```.
