@@ -25,11 +25,6 @@ export class Matcher extends Component {
       });
     }
   }
-<<<<<<< HEAD
-
-=======
- 
->>>>>>> 3d5f6587354c35f1c9599598428e83cd13fcaaba
   static propTypes = {
     getGeolocation: PropTypes.func.isRequired,
     createMessage: PropTypes.func.isRequired,
