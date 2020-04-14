@@ -1,7 +1,6 @@
 from channels.auth import AuthMiddlewareStack
 from channels.db import database_sync_to_async
 from rest_framework import HTTP_HEADER_ENCODING
-from rest_framework.authtoken.models import Token
 from django.contrib.auth.models import AnonymousUser
 from django.db import close_old_connections
 from urllib.parse import parse_qs
