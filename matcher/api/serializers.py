@@ -19,3 +19,11 @@ class AnswerSerializer(serializers.ModelSerializer):
         answer = Answer.objects.create(sender_id=user.pk, recipient_id=recipient.pk, agreed=agreed)
 
         return answer
+
+
+class CurrentMatchSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Match
+        fields = ['first_name', 'distance', 'time_start']
+
