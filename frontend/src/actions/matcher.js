@@ -41,3 +41,20 @@ export const nextUser = () => (dispatch) => {
     type: NEXT_USER,
   });
 };
+
+export const askForMatch = () => (dispatch, getState) => {
+  console.log("tu pytam o maaaatch");
+
+  // axios
+  //   .post("api/matcher/answer/", body, tokenConfig(getState))
+  //   .then((res) => {
+  //     console.log("OK");
+  //     dispatch(nextUser());
+  //   })
+  //   .catch((err) => {
+  //     console.log("matcher answer error");
+  //     dispatch(
+  //       createMessage(MESSAGE_ERROR, "Error when connecting to the server")
+  //     );
+  //   });
+};

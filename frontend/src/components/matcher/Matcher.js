@@ -5,6 +5,7 @@ import Geolocator from "./Geolocator";
 import { getGeolocation } from "../../actions/geolocation";
 import { createMessage, MESSAGE_ERROR } from "../../actions/messages";
 import ActualMatcher from "./ActualMatcher";
+import { askForMatch } from "../../actions/matcher";
 
 import WebSocketClient from "../../services/WebSocketClient";
 
@@ -19,6 +20,7 @@ export class Matcher extends Component {
       );
     } else {
       WebSocketClient.waitForSocketConnection(() => {
+        WebSocketClient.addCallback(this.props.askForMatch);
         console.log(
           "To funkcja ktora przekazuje do modulu obslugujacego polaczenia, wywola sie kiedy uda mi sie je nawiazac"
         );
@@ -85,6 +87,8 @@ const mapStateToProps = (state) => ({
   accepted: state.getIn(["geolocation", "accepted"]),
 });
 
-export default connect(mapStateToProps, { getGeolocation, createMessage })(
-  Matcher
-);
+export default connect(mapStateToProps, {
+  askForMatch,
+  getGeolocation,
+  createMessage,
+})(Matcher);
