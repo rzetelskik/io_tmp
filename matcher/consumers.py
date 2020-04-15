@@ -16,5 +16,8 @@ class MatcherConsumer(WebsocketConsumer):
     def disconnect(self, close_code):
         async_to_sync(self.channel_layer.group_discard)(self.unique_group, self.channel_name)
 
-    def match_notification(self, event):
+    def match_created_notification(self, event):
         self.send("User has a new match.")
+
+    def match_deleted_notification(self, event):
+        self.send("User's current meeting has been terminated.")
