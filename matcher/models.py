@@ -1,6 +1,7 @@
 from django.db import models
 from account.models import CustomUser
 from django.utils import timezone
+from django.db.models import Q
 
 
 class Answer(models.Model):
@@ -24,8 +25,16 @@ class Answer(models.Model):
         try:
             matched = Answer.objects.get(sender=self.recipient, recipient=self.sender, agreed=True)
             matched.delete()
-            Match.objects.get_or_create(user1=self.sender, user2=self.recipient)
-            print("created match")
+        
+            recipient_not_matched = Match.objects.filter(
+                Q(user1=self.recipient) | Q(user2=self.recipient), 
+                time_end__isnull=True
+            ).count() == 0
+
+            if recipient_not_matched:
+                Match.objects.create(user1=self.sender, user2=self.recipient)
+                print("created match")
+
         except Answer.DoesNotExist:
             super(Answer, self).save(*args, **kwargs)
             print("created a new answer {}".format(self.__str__()))

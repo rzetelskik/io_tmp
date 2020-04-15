@@ -10,7 +10,7 @@ from django.contrib.gis.db.models.functions import Distance
 from .serializers import CustomUserSerializer, RegisterSerializer, LoginSerializer, PasswordUpdateSerializer, \
     DetailsUpdateSerializer, CustomUserLocationSerializer, MatchingCustomUserSerializer
 from account.models import CustomUser
-from matcher.models import Answer
+from matcher.models import Answer, Match
 
 
 @api_view(['POST', ])
@@ -100,7 +100,7 @@ class ListMatchingUsersView(generics.ListAPIView):
     # Returns queryset of 10 users.
     # Each of them has shared his localization within a circle of
     # radius equal to user's location_range, not earlier then 1 hour ago.
-    # Users that have been answered are excluded.
+    # Currently matched or answered users are excluded.
     def get_queryset(self):
         # TODO(?) checking timestamp of self.request.user
 
@@ -108,17 +108,31 @@ class ListMatchingUsersView(generics.ListAPIView):
         point = user.location
         radius = user.location_range
 
+        # pk's of users that have been answered by sender
+        answered_pk = Answer.objects.filter(sender=user).values_list('recipient')
+        
+        # pk's of users that are currently matched and are on first position in match
+        matched_user1_pk = Match.objects.filter(time_end__isnull=True).values_list('user1')
+        
+        # pk's of users that are currently matched and are on second position in match
+        matched_user2_pk = Match.objects.filter(time_end__isnull=True).values_list('user2')
+
+        # Users that are not in any of those ^
+        not_answered_and_not_matched = CustomUser.objects.filter(
+            ~Q(pk__in=answered_pk),
+            ~Q(pk__in=matched_user1_pk),
+            ~Q(pk__in=matched_user2_pk)
+        )
+
         delta = timedelta(seconds=3600)
         delta_expression = Value(timezone.now()) - F('location_timestamp')
 
-        answered_pk = Answer.objects.filter(sender=user).values_list('recipient')
-        not_answered = CustomUser.objects.filter(~Q(pk__in=answered_pk))
-
-        return not_answered.annotate(
+        return not_answered_and_not_matched.annotate(
             delta=ExpressionWrapper(delta_expression, DurationField()),
             distance=Distance('location', point)
         ).filter(
             ~Q(pk=user.pk),
-            delta__lte=delta,
-            distance__lte=radius * 1000
+            Q(distance__lte=radius * 1000),
+            Q(distance__lte=F('location_range') * 1000),
+            delta__lte=delta
         )[:10]
