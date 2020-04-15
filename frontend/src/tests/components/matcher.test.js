@@ -16,6 +16,9 @@ describe("Matcher Component", () => {
         timestamp: 0,
         isLoading: false,
         accepted: false,
+        currentMatch: new Object(),
+        endMeeting: jest.fn(),
+        askForMatch: jest.fn(),
       };
       const propsErr = checkProps(Matcher, expectedProps);
       expect(propsErr).toBeUndefined();
@@ -33,9 +36,11 @@ describe("Matcher Component", () => {
         isLoading: true,
         accepted: false,
         createMessage: jest.fn(),
+        currentMatch: null,
+        endMeeting: jest.fn(),
+        askForMatch: jest.fn(),
       };
       wrapper = shallow(<Matcher {...props} />);
-
       const component1 = findByTestAtrr(wrapper, "loading");
       expect(component1.length).toBe(1);
       const component2 = findByTestAtrr(wrapper, "accepted");
@@ -54,9 +59,11 @@ describe("Matcher Component", () => {
         isLoading: false,
         accepted: false,
         createMessage: jest.fn(),
+        currentMatch: null,
+        endMeeting: jest.fn(),
+        askForMatch: jest.fn(),
       };
       wrapper = shallow(<Matcher {...props} />);
-
       const component1 = findByTestAtrr(wrapper, "not-accepted");
       expect(component1.length).toBe(1);
       const component2 = findByTestAtrr(wrapper, "accepted");
@@ -73,6 +80,9 @@ describe("Matcher Component", () => {
         isLoading: false,
         accepted: true,
         createMessage: jest.fn(),
+        currentMatch: null,
+        endMeeting: jest.fn(),
+        askForMatch: jest.fn(),
       };
       wrapper = shallow(<Matcher {...props} />);
 

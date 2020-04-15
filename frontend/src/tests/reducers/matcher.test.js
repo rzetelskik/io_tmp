@@ -8,49 +8,8 @@ describe("matcher reducer", () => {
       fromJS({
         users: [],
         userCount: 0,
+        currentMatch: null,
       })
     );
   });
-
-  // it("should handle GET_USERS", () => {
-  //   expect(
-  //     reducer([], {
-  //       type: GET_USERS,
-  //       text: "Run the tests",
-  //     })
-  //   ).toEqual([
-  //     {
-  //       ...state,
-  //       users: state.users.concat(action.payload),
-  //       userCount: state.userCount + action.payload.length,
-  //     },
-  //   ]);
-
-  //     expect(
-  //       reducer(
-  //         [
-  //           {
-  //             text: "Use Redux",
-  //             completed: false,
-  //             id: 0,
-  //           },
-  //         ],
-  //         {
-  //           type: types.ADD_TODO,
-  //           text: "Run the tests",
-  //         }
-  //       )
-  //     ).toEqual([
-  //       {
-  //         text: "Run the tests",
-  //         completed: false,
-  //         id: 1,
-  //       },
-  //       {
-  //         text: "Use Redux",
-  //         completed: false,
-  //         id: 0,
-  //       },
-  //     ]);
-  //   });
 });
