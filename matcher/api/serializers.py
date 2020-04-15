@@ -21,9 +21,9 @@ class AnswerSerializer(serializers.ModelSerializer):
         return answer
 
 
-class CurrentMatchSerializer(serializers.ModelSerializer):
+class CurrentMatchSerializer(serializers.Serializer):
+    first_name = serializers.CharField(max_length=30)
+    distance = serializers.DecimalField(max_digits=5, decimal_places=2)
+    match_timestamp = serializers.DateTimeField()
 
-    class Meta:
-        model = Match
-        fields = ['first_name', 'distance', 'time_start']
 
