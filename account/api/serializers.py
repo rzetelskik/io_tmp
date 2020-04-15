@@ -117,10 +117,12 @@ class DetailsUpdateSerializer(serializers.ModelSerializer):
 
 
 class CustomUserLocationSerializer(serializers.ModelSerializer):
-    latitude = serializers.DecimalField(max_digits=20, decimal_places=18,
-                                        min_value=0, max_value=90, write_only=True, required=True)
-    longitude = serializers.DecimalField(max_digits=20, decimal_places=18,
-                                         min_value=0, max_value=90, write_only=True, required=True)
+    # latitude = serializers.DecimalField(max_digits=20, decimal_places=18,
+    #                                     min_value=0, max_value=90, write_only=True, required=True)
+    # longitude = serializers.DecimalField(max_digits=20, decimal_places=18,
+    #                                      min_value=0, max_value=90, write_only=True, required=True)
+    latitude = serializers.FloatField(min_value=-90, max_value=90, write_only=True, required=True)
+    longitude = serializers.FloatField(min_value=-90, max_value=90, write_only=True, required=True)
     location_timestamp = serializers.IntegerField(required=True)
 
     class Meta:
@@ -131,8 +133,8 @@ class CustomUserLocationSerializer(serializers.ModelSerializer):
         return data / 1000
 
     def update(self, instance, validated_data):
-        instance.location = Point((validated_data['latitude'], validated_data['longitude']))
+        instance.location = Point(x=validated_data['longitude'], y=validated_data['latitude'])
         instance.location_timestamp = datetime.datetime.utcfromtimestamp(validated_data['location_timestamp'])
 
-        instance.save()
+        instance.save(update_fields=['location', 'location_timestamp'])
         return instance
