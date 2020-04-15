@@ -1,5 +1,4 @@
 from rest_framework import permissions, generics
-from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
 from .serializers import AnswerSerializer, CurrentMatchSerializer
@@ -10,7 +9,7 @@ from django.contrib.gis.db.models.functions import Distance
 
 
 class AnswerView(generics.CreateAPIView):
-    permission_classes = [IsAuthenticated, ]
+    permission_classes = [permissions.IsAuthenticated, ]
     serializer_class = AnswerSerializer
 
 
@@ -21,13 +20,20 @@ class CurrentMatchData:
         self.match_timestamp = match_timestamp
 
 
+def get_current_match(user):
+    return Match.objects.filter(time_end__isnull=True).get(Q(user1=user) | Q(user2=user))
+
+
 @api_view(['GET', ])
 @permission_classes([permissions.IsAuthenticated])
-def currentMatchView(request):
+def current_match_view(request):
     user = request.user
     point = user.location
-        
-    match = Match.objects.filter(time_end__isnull=True).get(Q(user1=user) | Q(user2=user))
+
+    try:
+        match = get_current_match(user)
+    except Match.DoesNotExist:
+        return Response({'response': 'User has no current meeting.'})
 
     matched_user = match.user1 if match.user2 == user else match.user2
         
@@ -43,6 +49,30 @@ def currentMatchView(request):
 
     serializer = CurrentMatchSerializer(data)
     return Response(serializer.data)
+
+@api_view(['DELETE', ])
+@permission_classes([permissions.IsAuthenticated])
+def terminate_current_match_view(request):
+    user = request.user
+    response_data = {}
+
+    try:
+        match = get_current_match(user)
+        match.delete()
+        response_data['response'] = 'Current meeting has been terminated.'
+    except Match.DoesNotExist:
+        response_data['response'] = 'User has no current meeting.'
+    finally:
+        return Response(response_data)
+
+
+
+
+
+
+
+
+
 
     
         
