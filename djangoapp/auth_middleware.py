@@ -10,11 +10,11 @@ from rest_framework.exceptions import AuthenticationFailed
 
 @database_sync_to_async
 def get_user(query_params):
+    close_old_connections()
     knox_auth = TokenAuthentication()
     try:
         token = query_params.get('token', (None,))[0]
         user, auth_token = knox_auth.authenticate_credentials(token.encode(HTTP_HEADER_ENCODING))
-        close_old_connections()
         return user
     except AuthenticationFailed:
         return AnonymousUser()
