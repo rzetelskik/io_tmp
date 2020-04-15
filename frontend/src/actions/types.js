@@ -14,3 +14,5 @@ export const GET_LOCATION_FAILED = "GET_LOCATION_FAILED";
 export const SEND_LOCATION_SUCCESS = "SEND_LOCATION_SUCCESS";
 export const GET_USERS = "GET_USERS";
 export const NEXT_USER = "NEXT_USER";
+export const NEW_MATCH = "NEW_MATCH";
+export const CLEAR_MATCH = "CLEAR_MATCH";

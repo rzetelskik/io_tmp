@@ -1,7 +1,7 @@
 import { createMessage, MESSAGE_ERROR } from "./messages";
 import { tokenConfig } from "./auth";
 import axios from "axios";
-import { GET_USERS, NEXT_USER } from "./types";
+import { GET_USERS, NEXT_USER, NEW_MATCH, CLEAR_MATCH } from "./types";
 
 export const getUserOffers = () => (dispatch, getState) => {
   axios
@@ -45,16 +45,24 @@ export const nextUser = () => (dispatch) => {
 export const askForMatch = () => (dispatch, getState) => {
   console.log("tu pytam o maaaatch");
 
-  // axios
-  //   .post("api/matcher/answer/", body, tokenConfig(getState))
-  //   .then((res) => {
-  //     console.log("OK");
-  //     dispatch(nextUser());
-  //   })
-  //   .catch((err) => {
-  //     console.log("matcher answer error");
-  //     dispatch(
-  //       createMessage(MESSAGE_ERROR, "Error when connecting to the server")
-  //     );
-  //   });
+  axios
+    .get("api/matcher/current-match/", tokenConfig(getState))
+    .then((res) => {
+      if (res.data.first_name) {
+        dispatch({
+          type: NEW_MATCH,
+          payload: res.data,
+        });
+      } else {
+        dispatch({
+          type: CLEAR_MATCH,
+        });
+      }
+    })
+    .catch((err) => {
+      console.log("matcher answer error");
+      dispatch(
+        createMessage(MESSAGE_ERROR, "Error when connecting to the server")
+      );
+    });
 };
