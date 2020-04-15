@@ -65,7 +65,7 @@ export const askForMatch = () => (dispatch, getState) => {
 
 export const endMeeting = () => (dispatch, getState) => {
   axios
-    .delete("api/matcher/terminate-current-match/", tokenConfig(getState))
+    .post("api/matcher/terminate-current-match/", null, tokenConfig(getState))
     .then((res) => {
       dispatch({
         type: CLEAR_MATCH,
