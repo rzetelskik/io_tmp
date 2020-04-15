@@ -10,6 +10,7 @@ from django.contrib.gis.db.models.functions import Distance
 from .serializers import CustomUserSerializer, RegisterSerializer, LoginSerializer, PasswordUpdateSerializer, \
     DetailsUpdateSerializer, CustomUserLocationSerializer, MatchingCustomUserSerializer
 from account.models import CustomUser
+from matcher.models import Answer
 
 
 @api_view(['POST', ])
@@ -99,20 +100,25 @@ class ListMatchingUsersView(generics.ListAPIView):
     # Returns queryset of 10 users.
     # Each of them has shared his localization within a circle of
     # radius equal to user's location_range, not earlier then 1 hour ago.
+    # Users that have been answered are excluded.
     def get_queryset(self):
         # TODO(?) checking timestamp of self.request.user
 
-        point = self.request.user.location
-        radius = self.request.user.location_range
+        user = self.request.user
+        point = user.location
+        radius = user.location_range
 
         delta = timedelta(seconds=3600)
         delta_expression = Value(timezone.now()) - F('location_timestamp')
 
-        return CustomUser.objects.annotate(
+        answered_pk = Answer.objects.filter(sender=user).values_list('recipient')
+        not_answered = CustomUser.objects.filter(~Q(pk__in=answered_pk))
+
+        return not_answered.annotate(
             delta=ExpressionWrapper(delta_expression, DurationField()),
             distance=Distance('location', point)
         ).filter(
-            ~Q(pk=self.request.user.pk),
+            ~Q(pk=user.pk),
             delta__lte=delta,
             distance__lte=radius * 1000
         )[:10]
