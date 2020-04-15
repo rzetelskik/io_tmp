@@ -5,7 +5,8 @@ import Geolocator from "./Geolocator";
 import { getGeolocation } from "../../actions/geolocation";
 import { createMessage, MESSAGE_ERROR } from "../../actions/messages";
 import ActualMatcher from "./ActualMatcher";
-import { askForMatch } from "../../actions/matcher";
+import { askForMatch, endMeeting } from "../../actions/matcher";
+import CurrentMeeting from "./CurrentMeeting";
 
 import WebSocketClient from "../../services/WebSocketClient";
 
@@ -21,9 +22,6 @@ export class Matcher extends Component {
     } else {
       WebSocketClient.waitForSocketConnection(() => {
         WebSocketClient.addCallback(this.props.askForMatch);
-        console.log(
-          "To funkcja ktora przekazuje do modulu obslugujacego polaczenia, wywola sie kiedy uda mi sie je nawiazac"
-        );
       });
     }
   }
@@ -34,16 +32,20 @@ export class Matcher extends Component {
     timestamp: PropTypes.number.isRequired,
     isLoading: PropTypes.bool.isRequired,
     accepted: PropTypes.bool.isRequired,
+    currentMatch: PropTypes.object,
+    endMeeting: PropTypes.func.isRequired,
+    askForMatch: PropTypes.func.isRequired,
   };
 
   componentDidMount() {
     if (this.props.timestamp === -1) {
       this.props.getGeolocation();
     }
+    this.props.askForMatch();
   }
 
   render() {
-    const { accepted, isLoading } = this.props;
+    const { accepted, isLoading, currentMatch } = this.props;
 
     const whenLoading = (
       <Fragment>
@@ -66,8 +68,20 @@ export class Matcher extends Component {
       </Fragment>
     );
 
-    let currentView = {};
-    if (isLoading) {
+    let currentView = null;
+    if (currentMatch) {
+      currentView = (
+        <Fragment>
+          <div className="border-top my-5" data-test="accepted"></div>
+          <CurrentMeeting
+            first_name={currentMatch.get("first_name")}
+            distance={currentMatch.get("distance")}
+            match_timestamp={currentMatch.get("match_timestamp")}
+            end_meeting={this.props.endMeeting}
+          />
+        </Fragment>
+      );
+    } else if (isLoading) {
       currentView = whenLoading;
     } else if (!isLoading && accepted === true) {
       currentView = whenAccepted;
@@ -84,10 +98,12 @@ const mapStateToProps = (state) => ({
   timestamp: state.getIn(["geolocation", "timestamp"]),
   isLoading: state.getIn(["geolocation", "isLoading"]),
   accepted: state.getIn(["geolocation", "accepted"]),
+  currentMatch: state.getIn(["matcher", "currentMatch"]),
 });
 
 export default connect(mapStateToProps, {
   askForMatch,
   getGeolocation,
   createMessage,
+  endMeeting,
 })(Matcher);

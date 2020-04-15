@@ -25,8 +25,10 @@ class Answer(models.Model):
             matched = Answer.objects.get(sender=self.recipient, recipient=self.sender, agreed=True)
             matched.delete()
             Match.objects.get_or_create(user1=self.sender, user2=self.recipient)
+            print("created match")
         except Answer.DoesNotExist:
             super(Answer, self).save(*args, **kwargs)
+            print("created a new answer {}".format(self.__str__()))
 
 
 class Match(models.Model):
