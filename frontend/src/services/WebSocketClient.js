@@ -14,13 +14,17 @@ class WebSocketClient {
     this.socketRef = null;
   }
 
-  addCallbacks = (...callbacks) => (this.callbacks = {...callbacks});
+  addCallback(acceptNotificationCallback) {
+    this.callbacks["accept"] = acceptNotificationCallback;
+  }
 
   connect = () => {
     const token = store.getState().getIn(["auth", "token"], null);
     if (token) {
-      const path = document.location.origin.replace(/^http/, 'ws')
-        + "/ws/matcher/?token=" + token;
+      const path =
+        document.location.origin.replace(/^http/, "ws") +
+        "/ws/matcher/?token=" +
+        token;
       this.socketRef = new WebSocket(path);
       this.socketRef.onopen = () => {
         console.log("WebSocket open");
@@ -28,8 +32,7 @@ class WebSocketClient {
 
       this.socketRef.onmessage = (e) => {
         console.log(e.data);
-
-        // this.socketNewMessage(e.data);
+        this.socketNewMessage(e.data);
       };
 
       this.socketRef.onerror = (e) => {
@@ -47,17 +50,10 @@ class WebSocketClient {
   };
 
   socketNewMessage = (data) => {
-    const parsedData = JSON.parse(data);
-    const command = parsedData.command;
     if (Object.keys(this.callbacks).length === 0) {
       return;
     }
-    if (command === "messages") {
-      this.callbacks[command](parsedData.messages);
-    }
-    if (command === "new_message") {
-      this.callbacks[command](parsedData.message);
-    }
+    this.callbacks["accept"]();
   };
 
   state = () => this.socketRef.readyState;
