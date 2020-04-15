@@ -29,7 +29,6 @@ export const matcherAnswer = (agreed, recipient) => (dispatch, getState) => {
       dispatch(nextUser());
     })
     .catch((err) => {
-      console.log("matcher answer error");
       dispatch(
         createMessage(MESSAGE_ERROR, "Error when connecting to the server")
       );
@@ -43,8 +42,6 @@ export const nextUser = () => (dispatch) => {
 };
 
 export const askForMatch = () => (dispatch, getState) => {
-  console.log("tu pytam o maaaatch");
-
   axios
     .get("api/matcher/current-match/", tokenConfig(getState))
     .then((res) => {
@@ -60,7 +57,21 @@ export const askForMatch = () => (dispatch, getState) => {
       }
     })
     .catch((err) => {
-      console.log("matcher answer error");
+      dispatch(
+        createMessage(MESSAGE_ERROR, "Error when connecting to the server")
+      );
+    });
+};
+
+export const endMeeting = () => (dispatch, getState) => {
+  axios
+    .delete("api/matcher/terminate-current-match/", tokenConfig(getState))
+    .then((res) => {
+      dispatch({
+        type: CLEAR_MATCH,
+      });
+    })
+    .catch((err) => {
       dispatch(
         createMessage(MESSAGE_ERROR, "Error when connecting to the server")
       );

@@ -5,7 +5,8 @@ import Geolocator from "./Geolocator";
 import { getGeolocation } from "../../actions/geolocation";
 import { createMessage, MESSAGE_ERROR } from "../../actions/messages";
 import ActualMatcher from "./ActualMatcher";
-import { askForMatch } from "../../actions/matcher";
+import { askForMatch, endMeeting } from "../../actions/matcher";
+import CurrentMeeting from "./CurrentMeeting";
 
 import WebSocketClient from "../../services/WebSocketClient";
 
@@ -32,6 +33,7 @@ export class Matcher extends Component {
     isLoading: PropTypes.bool.isRequired,
     accepted: PropTypes.bool.isRequired,
     currentMatch: PropTypes.object,
+    endMeeting: PropTypes.func.isRequired,
   };
 
   componentDidMount() {
@@ -65,25 +67,17 @@ export class Matcher extends Component {
       </Fragment>
     );
 
-    // const whenMatch = (
-    //   <Fragment>
-    //     <div className="border-top my-5" data-test="accepted"></div>
-    //     <h1>tu jest panel aktualnego matcha</h1>
-    //     <h2>{currentMatch.get("first_name")}</h2>
-    //     <h2>{currentMatch.get("distance")}</h2>
-    //     <h2>{currentMatch.get("match_timestamp")}</h2>
-    //   </Fragment>
-    // );
-
     let currentView = null;
     if (currentMatch) {
       currentView = (
         <Fragment>
           <div className="border-top my-5" data-test="accepted"></div>
-          <h1>tu jest panel aktualnego matcha</h1>
-          <h2>{currentMatch.get("first_name")}</h2>
-          <h2>{currentMatch.get("distance")}</h2>
-          <h2>{currentMatch.get("match_timestamp")}</h2>
+          <CurrentMeeting
+            first_name={currentMatch.get("first_name")}
+            distance={currentMatch.get("distance")}
+            match_timestamp={currentMatch.get("match_timestamp")}
+            end_meeting={this.props.endMeeting}
+          />
         </Fragment>
       );
     } else if (isLoading) {
@@ -110,4 +104,5 @@ export default connect(mapStateToProps, {
   askForMatch,
   getGeolocation,
   createMessage,
+  endMeeting,
 })(Matcher);

@@ -41,9 +41,9 @@ export class CurrentMeeting extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  username: ownProps.username,
   first_name: ownProps.first_name,
   distance: ownProps.distance,
+  match_timestamp: ownProps.match_timestamp,
   end_meeting: ownProps.end_meeting,
 });
 
