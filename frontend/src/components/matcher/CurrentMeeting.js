@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react";
-import example_img from "../../data/images/example_img.jpeg";
+import meeting from "../../data/images/meeting.png";
 import { connect } from "react-redux";
 
 export class CurrentMeeting extends Component {
@@ -13,23 +13,25 @@ export class CurrentMeeting extends Component {
 
     return (
       <Fragment>
-        <div className="card w-50  border-secondary " data-test="meeting">
-          <h3 className="card-header ">Your meeting with {first_name}</h3>
+        <div className="card w-50 text-white bg-secondary" data-test="meeting">
+          <h3 className="card-header text-white bg-secondary">
+            Your meeting with {first_name}
+          </h3>
           <div className="card-body"></div>
-          <img className="card-img-top" src={example_img} alt="Card" />
+          <img className="card-img-top bg-white" src={meeting} alt="meeting" />
           <div className="card-body"></div>
           <ul className="list-group list-group-flush">
-            <li className="list-group-item"></li>
-            <li className="list-group-item">
-              Distance: {Math.round(distance)}km
+            <li className="list-group-item text-white bg-secondary"></li>
+            <li className="list-group-item text-white bg-secondary">
+              Distance: {Math.round(distance)} km
             </li>
-            <li className="list-group-item">Tags</li>
+            <li className="list-group-item text-white bg-secondary">Tags</li>
           </ul>
-          <div className="modal-footer">
+          <div className="list-group-item text-white bg-secondary">
             <button
               onClick={this.endMeeting}
               type="button"
-              className="btn btn-secondary"
+              className="btn btn-light"
             >
               End meeting
             </button>

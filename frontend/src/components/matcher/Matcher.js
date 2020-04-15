@@ -73,12 +73,14 @@ export class Matcher extends Component {
       currentView = (
         <Fragment>
           <div className="border-top my-5" data-test="accepted"></div>
-          <CurrentMeeting
-            first_name={currentMatch.get("first_name")}
-            distance={currentMatch.get("distance")}
-            match_timestamp={currentMatch.get("match_timestamp")}
-            end_meeting={this.props.endMeeting}
-          />
+          <div className="container d-flex justify-content-center">
+            <CurrentMeeting
+              first_name={currentMatch.get("first_name")}
+              distance={currentMatch.get("distance")}
+              match_timestamp={currentMatch.get("match_timestamp")}
+              end_meeting={this.props.endMeeting}
+            />
+          </div>
         </Fragment>
       );
     } else if (isLoading) {
