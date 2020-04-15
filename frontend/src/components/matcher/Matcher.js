@@ -32,7 +32,7 @@ export class Matcher extends Component {
     timestamp: PropTypes.number.isRequired,
     isLoading: PropTypes.bool.isRequired,
     accepted: PropTypes.bool.isRequired,
-    currentMatch: PropTypes.object.isRequired,
+    currentMatch: PropTypes.object,
   };
 
   componentDidMount() {
@@ -66,19 +66,27 @@ export class Matcher extends Component {
       </Fragment>
     );
 
-    const whenMatch = (
-      <Fragment>
-        <div className="border-top my-5" data-test="accepted"></div>
-        <h1>tu jest panel aktualnego matcha</h1>
-        <h2>{currentMatch.get("first_name")}</h2>
-        <h2>{currentMatch.get("distance")}</h2>
-        <h2>{currentMatch.get("match_timestamp")}</h2>
-      </Fragment>
-    );
+    // const whenMatch = (
+    //   <Fragment>
+    //     <div className="border-top my-5" data-test="accepted"></div>
+    //     <h1>tu jest panel aktualnego matcha</h1>
+    //     <h2>{currentMatch.get("first_name")}</h2>
+    //     <h2>{currentMatch.get("distance")}</h2>
+    //     <h2>{currentMatch.get("match_timestamp")}</h2>
+    //   </Fragment>
+    // );
 
     let currentView = null;
     if (currentMatch) {
-      currentView = whenMatch;
+      currentView = (
+        <Fragment>
+          <div className="border-top my-5" data-test="accepted"></div>
+          <h1>tu jest panel aktualnego matcha</h1>
+          <h2>{currentMatch.get("first_name")}</h2>
+          <h2>{currentMatch.get("distance")}</h2>
+          <h2>{currentMatch.get("match_timestamp")}</h2>
+        </Fragment>
+      );
     } else if (isLoading) {
       currentView = whenLoading;
     } else if (!isLoading && accepted === true) {
