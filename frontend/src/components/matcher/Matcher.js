@@ -24,7 +24,6 @@ export class Matcher extends Component {
       });
     }
   }
-
   static propTypes = {
     getGeolocation: PropTypes.func.isRequired,
     createMessage: PropTypes.func.isRequired,
