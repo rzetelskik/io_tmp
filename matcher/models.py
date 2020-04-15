@@ -1,5 +1,4 @@
 from django.db import models
-from django.db.models.signals import post_save
 from account.models import CustomUser
 from django.utils import timezone
 
@@ -35,3 +34,8 @@ class Match(models.Model):
     user2 = models.ForeignKey(CustomUser, related_name='user2', on_delete=models.CASCADE)
     time_start = models.DateTimeField(name='time_start', default=timezone.now)
     time_end = models.DateTimeField(name='time_end', auto_now=False, auto_now_add=False, null=True, blank=True)
+
+    def terminate(self):
+        if not self.time_end:
+            self.time_end = timezone.now()
+            self.save(update_fields=['time_end'])

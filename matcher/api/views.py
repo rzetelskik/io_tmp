@@ -36,21 +36,22 @@ def current_match_view(request):
         return Response({'response': 'User has no current meeting.'})
 
     matched_user = match.user1 if match.user2 == user else match.user2
-        
+
     distance = CustomUser.objects.annotate(
         distance=Distance('location', point)
     ).get(pk=matched_user.pk).distance.km
 
     data = CurrentMatchData(
-        first_name=matched_user.first_name, 
-        distance=distance, 
+        first_name=matched_user.first_name,
+        distance=distance,
         match_timestamp=match.time_start
     )
 
     serializer = CurrentMatchSerializer(data)
     return Response(serializer.data)
 
-@api_view(['DELETE', ])
+
+@api_view(['POST', ])
 @permission_classes([permissions.IsAuthenticated])
 def terminate_current_match_view(request):
     user = request.user
@@ -58,26 +59,9 @@ def terminate_current_match_view(request):
 
     try:
         match = get_current_match(user)
-        match.delete()
+        match.terminate()
         response_data['response'] = 'Current meeting has been terminated.'
     except Match.DoesNotExist:
         response_data['response'] = 'User has no current meeting.'
     finally:
         return Response(response_data)
-
-
-
-
-
-
-
-
-
-
-    
-        
-    
-
-
-
-
