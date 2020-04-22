@@ -13,7 +13,7 @@ import { fromJS } from "immutable";
 const initialState = fromJS({
   token: localStorage.getItem("token"),
   isAuthenticated: null,
-  isLoading: false,
+  isLoading: true,
   user: null,
 });
 
@@ -48,7 +48,7 @@ export default function (state = initialState, action) {
     case LOGOUT_SUCCESS:
     case REGISTER_FAIL:
       localStorage.removeItem("token");
-      return initialState;
+      return initialState.merge(fromJS({ isLoading: false }));
     default:
       return state;
   }
