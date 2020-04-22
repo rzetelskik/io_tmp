@@ -6,7 +6,7 @@ describe("auth reducer", () => {
   const initialState = fromJS({
     token: localStorage.getItem("token"),
     isAuthenticated: null,
-    isLoading: false,
+    isLoading: true,
     user: null,
   });
 
@@ -17,7 +17,7 @@ describe("auth reducer", () => {
   const initialStateWithToken = fromJS({
     token: "token value",
     isAuthenticated: null,
-    isLoading: false,
+    isLoading: true,
     user: null,
   });
 
@@ -108,12 +108,26 @@ describe("auth reducer", () => {
       reducer(fromJS({}), {
         type: types.LOGIN_FAIL,
       })
-    ).toEqual(initialState);
+    ).toEqual(
+      fromJS({
+        token: localStorage.getItem("token"),
+        isAuthenticated: null,
+        isLoading: false,
+        user: null,
+      })
+    );
 
     expect(
       reducer(initialStateWithToken, {
         type: types.LOGIN_FAIL,
       })
-    ).toEqual(initialState);
+    ).toEqual(
+      fromJS({
+        token: localStorage.getItem("token"),
+        isAuthenticated: null,
+        isLoading: false,
+        user: null,
+      })
+    );
   });
 });
