@@ -11,6 +11,7 @@ See our app on [Heroku](https://adhoc-prod.herokuapp.com/).
 - Yarn available on path.
 - Geodjango dependencies installed ```sudo apt-get install gdal-bin libgdal-dev python3-gdal```
 - PostgreSQL with PostGIS extension as database. You can either install PostgreSQL locally and then add the PostGIS extension or better yet, you can use Docker to quickly create one using the image ```docker run --name=postgis -d -e POSTGRES_USER=user001 -e POSTGRES_PASS=123456789 -e POSTGRES_DBNAME=gis -p 5432:5432 kartoza/postgis:9.6-2.4```
+- Redis database and redis-server installed. You can use Docker to quickly create one using redis:latest image ```docker run -p 6379:6379 --name some-redis -d redis redis-server --appendonly yes```
 
 ### Steps:
 1. Source your virtualenv: ```source dirname/bin/activate```.
