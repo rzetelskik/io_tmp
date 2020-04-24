@@ -13,7 +13,7 @@ jobs:
         - yarn install
         - yarn build
       script:
-        - yarn test
+        - yarn test --coverage --watchAll=false
     - stage: build_deploy
       language: python
       python:
