@@ -9,7 +9,7 @@ export class UpdateDetailsForm extends Component {
   static propTypes = {
     first_name: PropTypes.string.isRequired,
     last_name: PropTypes.string.isRequired,
-    location_range: PropTypes.number.isRequired,
+    location_range: PropTypes.string.isRequired,
     updateDetails: PropTypes.func.isRequired,
     createMessage: PropTypes.func.isRequired,
   };
@@ -22,18 +22,32 @@ export class UpdateDetailsForm extends Component {
   };
 
   detailsUpdated() {
-    return !(
-      this.state.first_name !== this.props.first_name ||
-      this.state.last_name !== this.props.last_name ||
-      this.state.location_range !== this.props.location_range
+    return (
+      this.state.first_name.localeCompare(this.props.first_name) !== 0 ||
+      this.state.last_name.localeCompare(this.props.last_name) !== 0 ||
+      this.state.location_range.localeCompare(this.props.location_range) !== 0
     );
   }
 
-  onChange = (e) =>
+  componentDidUpdate() {
+    if (this.detailsUpdated() && this.state.disabled) {
+      this.setState({
+        disabled: false,
+      });
+    }
+    if (!this.detailsUpdated() && !this.state.disabled) {
+      this.setState({
+        disabled: true,
+      });
+    }
+  }
+
+  onChange = (e) => {
     this.setState({
       [e.target.name]: e.target.value,
       disabled: this.detailsUpdated(),
     });
+  };
 
   onSubmit = (e) => {
     e.preventDefault();
@@ -117,7 +131,7 @@ export class UpdateDetailsForm extends Component {
 const mapStateToProps = (state) => ({
   first_name: state.getIn(["auth", "user", "first_name"]),
   last_name: state.getIn(["auth", "user", "last_name"]),
-  location_range: state.getIn(["auth", "user", "location_range"]),
+  location_range: state.getIn(["auth", "user", "location_range"]).toString(),
 });
 
 export default connect(mapStateToProps, { updateDetails, createMessage })(
