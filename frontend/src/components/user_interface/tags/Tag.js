@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import PropTypes from "prop-types";
 
 export class Tag extends Component {
@@ -16,7 +16,9 @@ export class Tag extends Component {
           type="button"
           onClick={this.props.clickTag(this.props.id)}
           className={
-            this.props.id ? "btn btn-secondary" : "btn btn-outline-secondary"
+            this.props.selected
+              ? "btn btn-secondary"
+              : "btn btn-outline-secondary"
           }
         >
           {this.props.name}

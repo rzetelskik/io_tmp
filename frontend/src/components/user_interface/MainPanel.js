@@ -1,11 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import { Switch, Route, Link, useRouteMatch } from "react-router-dom";
 import PrivateRoute from "../common/PrivateRoute";
 import EditForm from "../auth/ChangePasswordForm";
 import Matcher from "../matcher/Matcher";
+import TagsForm from "./tags/TagsForm";
 
 export default function MainPanel() {
   let match = useRouteMatch();
+  const [showTagsForm, setShowTagsForm] = useState(false);
+
   return (
     <div>
       <Switch>
@@ -15,6 +18,7 @@ export default function MainPanel() {
         />
         <PrivateRoute path={`${match.path}matcher`} component={Matcher} />
         <Route path={match.path}>
+          <TagsForm show={showTagsForm} onHide={() => setShowTagsForm(false)} />
           <div className="border-top my-5"></div>
           <div className="container ">
             <div className="column">
@@ -66,9 +70,12 @@ export default function MainPanel() {
                       Click on the button and change your tags in order to find
                       company for today
                     </p>
-                    <Link to="/matcher" className="btn btn-info btn-lg">
+                    <button
+                      className="btn btn-info btn-lg"
+                      onClick={() => setShowTagsForm(true)}
+                    >
                       <i className="fas fa-clone left"></i> Set tags!
-                    </Link>
+                    </button>
                   </div>
                 </div>
               </div>
