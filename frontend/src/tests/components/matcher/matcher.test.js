@@ -1,9 +1,9 @@
-import { Matcher } from "../../components/matcher/Matcher";
+import { Matcher } from "../../../components/matcher/Matcher";
 import React from "react";
 import Enzyme, { shallow } from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 Enzyme.configure({ adapter: new Adapter() });
-import { findByTestAtrr, checkProps } from "../../../Utils";
+import { findByTestAtrr, checkProps } from "../../../../Utils";
 import { Map, fromJS } from "immutable";
 
 describe("Matcher Component", () => {

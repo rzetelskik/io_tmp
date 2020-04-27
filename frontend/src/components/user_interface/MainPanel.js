@@ -17,7 +17,7 @@ export default function MainPanel() {
         <Route path={match.path}>
           <div className="border-top my-5"></div>
           <div className="container ">
-            <div className="row">
+            <div className="column">
               <div className="col-lg">
                 <div className="jumbotron card">
                   <div className="card-header">
@@ -51,6 +51,23 @@ export default function MainPanel() {
                       className="btn btn-secondary btn-lg"
                     >
                       <i className="fas fa-clone left"></i> Edit profile!
+                    </Link>
+                  </div>
+                </div>
+              </div>
+              <div className="col-lg">
+                <div className="jumbotron card">
+                  <div className="card-header">
+                    <h1>What do you wanna do today?</h1>
+                  </div>
+                  <div className="card-body">
+                    <h4 className="card-title">Change your tags</h4>
+                    <p className="card-text">
+                      Click on the button and change your tags in order to find
+                      company for today
+                    </p>
+                    <Link to="/matcher" className="btn btn-info btn-lg">
+                      <i className="fas fa-clone left"></i> Set tags!
                     </Link>
                   </div>
                 </div>
