@@ -7,6 +7,7 @@ import { createMessage, MESSAGE_ERROR } from "../../actions/messages";
 import ActualMatcher from "./ActualMatcher";
 import { askForMatch, endMeeting } from "../../actions/matcher";
 import CurrentMeeting from "./CurrentMeeting";
+import Loading from "../layout/Loading";
 
 import WebSocketClient from "../../services/WebSocketClient";
 
@@ -50,7 +51,8 @@ export class Matcher extends Component {
     const whenLoading = (
       <Fragment>
         <div className="border-top my-5" data-test="loading"></div>
-        <h1>Loading...</h1>
+
+        <Loading />
       </Fragment>
     );
 
