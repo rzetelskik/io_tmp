@@ -9,14 +9,21 @@ export class Tag extends Component {
     clickTag: PropTypes.func.isRequired,
   };
 
+  state = {
+    selected: this.props.selected,
+  };
+
   render() {
     return (
       <Fragment>
         <button
           type="button"
-          onClick={this.props.clickTag(this.props.id)}
+          onClick={() => {
+            this.setState({ selected: !this.state.selected });
+            this.props.clickTag(this.props.id);
+          }}
           className={
-            this.props.selected
+            this.state.selected
               ? "btn btn-secondary"
               : "btn btn-outline-secondary"
           }
