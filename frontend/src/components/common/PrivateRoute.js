@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { Route, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import Loading from "../layout/Loading";
@@ -8,7 +8,12 @@ const PrivateRoute = ({ component: Component, auth, ...rest }) => (
     {...rest}
     render={(props) => {
       if (auth.get("isLoading")) {
-        return <Loading />;
+        return (
+          <Fragment>
+            <div className="border-top my-5" data-test="loading"></div>
+            <Loading />
+          </Fragment>
+        );
       } else if (!auth.get("isAuthenticated")) {
         return <Redirect to="/login" />;
       } else {
