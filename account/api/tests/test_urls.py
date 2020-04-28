@@ -16,8 +16,8 @@ class TestUrls(APISimpleTestCase):
 
     def test_password_update_url_resolves(self):
         url = reverse('password-update')
-        self.assertEquals(resolve(url).func, password_update)
+        self.assertEqual(resolve(url).func, password_update)
 
     def test_details_update_url_resolves(self):
         url = reverse('details-update')
-        self.assertEquals(resolve(url).func, details_update)
+        self.assertEqual(resolve(url).func, details_update)

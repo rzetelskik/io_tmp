@@ -41,7 +41,7 @@ jobs:
       before_script:
         - sudo psql -U postgres -c "create extension postgis"
       script:
-        - python3 manage.py test
+        - pytest --cov
       deploy:
         provider: heroku
         api_key:
