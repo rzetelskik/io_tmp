@@ -41,7 +41,6 @@ INSTALLED_APPS = [
     'rest_framework',
     'channels',
     'knox',  # Token authentication.
-    'django_nose',
     'app.apps.AppConfig',  # Serving react files.
     'account.apps.AccountConfig',  # Custom user app.
     'matcher.apps.MatcherConfig',  # User matching app.
@@ -171,9 +170,3 @@ CHANNEL_LAYERS = {
 }
 
 
-TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
-
-NOSE_ARGS = [
-    '--with-coverage',
-    '--cover-package=account, app, matcher',
-]
