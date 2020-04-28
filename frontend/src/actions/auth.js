@@ -17,7 +17,7 @@ import WebSocketClient from "../services/WebSocketClient";
 export const loadUser = () => (dispatch, getState) => {
   dispatch({ type: USER_LOADING });
 
-  axios
+  return axios
     .get("/api/account/user", tokenConfig(getState))
     .then((res) => {
       dispatch({
@@ -41,7 +41,7 @@ export const login = (username, password) => (dispatch) => {
 
   const body = JSON.stringify({ username, password });
 
-  axios
+  return axios
     .post("/api/account/login/", body, config)
     .then((res) => {
       dispatch({
@@ -70,7 +70,7 @@ export const register = (user) => (dispatch) => {
 
   const body = JSON.stringify(user);
 
-  axios
+  return axios
     .post("/api/account/register/", body, config)
     .then((res) => {
       dispatch(createMessage(MESSAGE_SUCCESS, "User successfully registered"));
@@ -97,7 +97,7 @@ export const updateDetails = (first_name, last_name, location_range) => (
 ) => {
   const body = JSON.stringify({ first_name, last_name, location_range });
 
-  axios
+  return axios
     .put("/api/account/details-update/", body, tokenConfig(getState))
     .then((res) => {
       dispatch(
@@ -123,7 +123,7 @@ export const changePassword = (password, new_password, new_password_repeat) => (
 ) => {
   const body = JSON.stringify({ password, new_password, new_password_repeat });
 
-  axios
+  return axios
     .put("/api/account/password-update/", body, tokenConfig(getState))
     .then((res) => {
       dispatch(
@@ -140,7 +140,7 @@ export const changePassword = (password, new_password, new_password_repeat) => (
 };
 
 export const logout = () => (dispatch, getState) => {
-  axios
+  return axios
     .post("/api/account/logout/", null, tokenConfig(getState))
     .then((res) => {
       dispatch(createMessage(MESSAGE_INFO, "Logged out."));

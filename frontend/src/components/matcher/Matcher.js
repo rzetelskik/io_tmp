@@ -51,7 +51,6 @@ export class Matcher extends Component {
     const whenLoading = (
       <Fragment>
         <div className="border-top my-5" data-test="loading"></div>
-
         <Loading />
       </Fragment>
     );

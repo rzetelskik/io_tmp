@@ -13,8 +13,9 @@ export class Geolocator extends Component {
   render() {
     const { modalShow } = this.state;
     return (
-      <Fragment data-test="geolocator">
+      <Fragment>
         <Modal
+          data-test="geolocator"
           show={modalShow}
           onHide={this.understood}
           size="lg"

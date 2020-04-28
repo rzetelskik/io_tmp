@@ -41,7 +41,7 @@ class App extends Component {
             <Fragment>
               <Header />
               <Alerts />
-              <div className="container">
+              <div className="container" data-test="app">
                 <Switch>
                   <Route exact path="/register" component={RegisterForm} />
                   <Route exact path="/login" component={LoginForm} />
