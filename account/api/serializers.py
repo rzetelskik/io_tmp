@@ -1,8 +1,9 @@
 from django.contrib.auth import authenticate
 from rest_framework import serializers
-from account.models import CustomUser
+from account.models import CustomUser, Tag
 from django.contrib.gis.geos import Point
 import datetime
+
 
 
 class RegisterSerializer(serializers.ModelSerializer):
@@ -45,23 +46,45 @@ class LoginSerializer(serializers.Serializer):
 
 
 class CustomUserSerializer(serializers.ModelSerializer):
+    tags = serializers.SerializerMethodField()
+
+    def get_tags(self, obj):
+        all_tags = Tag.objects.all()
+        tag_dict = {tag.name: False for tag in all_tags}
+
+        user_tags = obj.tags.all()
+        
+        for tag in user_tags:
+            tag_dict[tag.name] = True
+
+        return tag_dict
+
+
     class Meta:
         model = CustomUser
-        fields = ['username', 'email', 'first_name', 'last_name', 'location_range', 'date_joined']
+        fields = ['username', 'email', 'first_name', 'last_name', 'location_range', 'date_joined', 'tags']
 
 
 class MatchingCustomUserSerializer(serializers.ModelSerializer):
     distance = serializers.SerializerMethodField()
+    common_tags = serializers.SerializerMethodField()
 
     def get_distance(self, obj):
         return obj.distance.km
+
+    def get_common_tags(self, obj):
+        user = self.context['request'].user
+        common_tags = user.tags.all() & obj.tags.all()
+        return [tag.name for tag in common_tags]
+
 
     class Meta:
         model = CustomUser
         fields = [
             'username',
             'first_name', 
-            'distance'
+            'distance',
+            'common_tags'
         ]
 
 

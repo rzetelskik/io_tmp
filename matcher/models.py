@@ -50,3 +50,5 @@ class Match(models.Model):
         if not self.time_end:
             self.time_end = timezone.now()
             self.save(update_fields=['time_end'])
+
+
