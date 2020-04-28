@@ -161,3 +161,40 @@ class CustomUserLocationSerializer(serializers.ModelSerializer):
 
         instance.save(update_fields=['location', 'location_timestamp'])
         return instance
+
+
+class TagsUpdateSerializer(serializers.ModelSerializer):
+    tags = serializers.DictField(child=serializers.BooleanField())
+    
+    class Meta:
+        model = CustomUser
+        fields = ['tags']
+
+    def validate(self, data):
+        all_tags = Tag.objects.all()
+        all_tag_dict = {tag.name: False for tag in all_tags}
+
+        if set(all_tag_dict.keys()) != set(data['tags'].keys()):
+            raise serializers.ValidationError("Set of tags is not valid.")
+
+        return data
+
+    def update(self, instance, validated_data):
+        all_tags = Tag.objects.all()
+        old_tag_dict = {tag.name: False for tag in all_tags}
+        user_tags = instance.tags.all()
+        
+        for tag in user_tags:
+            old_tag_dict[tag.name] = True
+
+        new_tag_dict = validated_data['tags']
+
+        for tag in all_tags:
+            if new_tag_dict[tag.name] is True and old_tag_dict[tag.name] is False:
+                instance.tags.add(tag)
+
+            if new_tag_dict[tag.name] is False and old_tag_dict[tag.name] is True:
+                instance.tags.remove(tag)
+
+        instance.save()
+        return instance

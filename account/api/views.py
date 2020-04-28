@@ -83,6 +83,19 @@ def details_update(request):
 
 @api_view(['PUT', ])
 @permission_classes([permissions.IsAuthenticated])
+def tags_update(request):
+    serializer = TagsUpdateSerializer(instance=request.user, data=request.data)
+    response_data = {}
+
+    serializer.is_valid(raise_exception=True)
+    serializer.save()
+    response_data['response'] = 'User tags updated successfully.'
+
+    return Response(response_data)
+
+
+@api_view(['PUT', ])
+@permission_classes([permissions.IsAuthenticated])
 def custom_user_location_update(request):
     serializer = CustomUserLocationSerializer(instance=request.user, data=request.data)
     response_data = {}
