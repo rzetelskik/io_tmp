@@ -94,7 +94,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         return full_name.strip()
 
     def __str__(self):
-        return '{} <{}>'.format(self.get_full_name(), self.email)
+        return '{} <{}>'.format(self.get_full_name(), self.username)
 
     def has_perm(self, perm, obj=None):
         "Does the user have a specific permission?"

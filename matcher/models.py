@@ -25,9 +25,9 @@ class Answer(models.Model):
         try:
             matched = Answer.objects.get(sender=self.recipient, recipient=self.sender, agreed=True)
             matched.delete()
-        
+
             recipient_not_matched = Match.objects.filter(
-                Q(user1=self.recipient) | Q(user2=self.recipient), 
+                Q(user1=self.recipient) | Q(user2=self.recipient),
                 time_end__isnull=True
             ).count() == 0
 
@@ -50,3 +50,7 @@ class Match(models.Model):
         if not self.time_end:
             self.time_end = timezone.now()
             self.save(update_fields=['time_end'])
+
+    def __str__(self):
+        return "{} AND {} FROM: {} TO: {}".format(self.user1.username, self.user2.username, self.time_start,
+                                                  self.time_end)

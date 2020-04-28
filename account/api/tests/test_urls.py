@@ -3,7 +3,6 @@ from django.urls import reverse, resolve
 from account.api.views import register, login, password_update, details_update
 
 
-
 class TestUrls(APISimpleTestCase):
 
     def test_register_url_resolves(self):
