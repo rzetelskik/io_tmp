@@ -10,7 +10,11 @@ export default function Tag(props) {
           setSelected(!selected);
           props.clickTag(props.id);
         }}
-        className={selected ? "btn btn-secondary" : "btn btn-outline-secondary"}
+        className={
+          selected
+            ? "btn btn-secondary my-1 mx-1"
+            : "btn btn-outline-secondary my-1 mx-1"
+        }
       >
         {props.name}
       </button>
