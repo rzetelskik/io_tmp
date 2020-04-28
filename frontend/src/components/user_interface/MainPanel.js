@@ -1,11 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import { Switch, Route, Link, useRouteMatch } from "react-router-dom";
 import PrivateRoute from "../common/PrivateRoute";
 import EditForm from "../auth/ChangePasswordForm";
 import Matcher from "../matcher/Matcher";
+import TagsForm from "./tags/TagsForm";
 
 export default function MainPanel() {
   let match = useRouteMatch();
+  const [showTagsForm, setShowTagsForm] = useState(false);
+
   return (
     <div>
       <Switch>
@@ -15,9 +18,10 @@ export default function MainPanel() {
         />
         <PrivateRoute path={`${match.path}matcher`} component={Matcher} />
         <Route path={match.path}>
+          <TagsForm show={showTagsForm} onHide={() => setShowTagsForm(false)} />
           <div className="border-top my-5"></div>
           <div className="container ">
-            <div className="row">
+            <div className="column">
               <div className="col-lg">
                 <div className="jumbotron card">
                   <div className="card-header">
@@ -52,6 +56,26 @@ export default function MainPanel() {
                     >
                       <i className="fas fa-clone left"></i> Edit profile!
                     </Link>
+                  </div>
+                </div>
+              </div>
+              <div className="col-lg">
+                <div className="jumbotron card">
+                  <div className="card-header">
+                    <h1>What do you wanna do today?</h1>
+                  </div>
+                  <div className="card-body">
+                    <h4 className="card-title">Change your tags</h4>
+                    <p className="card-text">
+                      Click on the button and change your tags in order to find
+                      company for today
+                    </p>
+                    <button
+                      className="btn btn-info btn-lg"
+                      onClick={() => setShowTagsForm(true)}
+                    >
+                      <i className="fas fa-clone left"></i> Set tags!
+                    </button>
                   </div>
                 </div>
               </div>

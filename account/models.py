@@ -7,6 +7,13 @@ from django.utils import timezone
 from django.core.validators import MaxValueValidator, MinValueValidator
 
 
+class Tag(models.Model):
+    name = models.CharField(max_length=30, unique=True)
+
+    def __str__(self):
+        return self.name
+
+
 class CustomUserManager(BaseUserManager):
     def create_user(
             self, username, email, first_name, last_name, password=None,
@@ -52,6 +59,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     username = models.CharField('username', max_length=30, unique=True)
     email = models.EmailField('email address', max_length=255, unique=True)
     first_name = models.CharField('first name', max_length=30)
+    tags = models.ManyToManyField(Tag, blank=True)
     last_name = models.CharField('last name', max_length=150)
     is_active = models.BooleanField(
         'active',
@@ -105,3 +113,5 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         "Does the user have permissions to view the app `app_label`?"
         # Simplest possible answer: Yes, always
         return True
+
+

@@ -8,6 +8,7 @@ import {
   LOGOUT_SUCCESS,
   REGISTER_SUCCESS,
   REGISTER_FAIL,
+  UPDATE_DETAILS_SUCCESS,
 } from "./types";
 import { createMessage, MESSAGE_SUCCESS, MESSAGE_INFO } from "./messages";
 import { createError } from "./errors";
@@ -102,6 +103,10 @@ export const updateDetails = (first_name, last_name, location_range) => (
       dispatch(
         createMessage(MESSAGE_SUCCESS, "Account details updated successfully.")
       );
+      dispatch({
+        type: UPDATE_DETAILS_SUCCESS,
+        payload: { first_name, last_name, location_range },
+      });
     })
     .catch((err) => {
       const errors = {

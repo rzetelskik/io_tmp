@@ -11,7 +11,7 @@ describe("update details form component", () => {
       const expectedProps = {
         first_name: "",
         last_name: "",
-        location_range: 0,
+        location_range: "",
         updateDetails: jest.fn(),
         createMessage: jest.fn(),
       };
@@ -27,7 +27,7 @@ describe("update details form component", () => {
       const props = {
         first_name: "name",
         last_name: "surname",
-        location_range: 42,
+        location_range: "",
         updateDetails: jest.fn(),
         createMessage: jest.fn(),
       };
@@ -35,6 +35,6 @@ describe("update details form component", () => {
 
       const component = findByTestAtrr(wrapper, "form");
       expect(component.length).toBe(1);
-    });
+    }); //
   });
 });

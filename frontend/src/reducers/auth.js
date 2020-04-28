@@ -7,6 +7,7 @@ import {
   LOGOUT_SUCCESS,
   REGISTER_FAIL,
   REGISTER_SUCCESS,
+  UPDATE_DETAILS_SUCCESS,
 } from "../actions/types";
 import { fromJS } from "immutable";
 
@@ -42,6 +43,10 @@ export default function (state = initialState, action) {
           isAuthenticated: true,
           isLoading: false,
         })
+      );
+    case UPDATE_DETAILS_SUCCESS:
+      return state.merge(
+        fromJS({ user: state.get("user").merge(fromJS(action.payload)) })
       );
     case AUTH_ERROR:
     case LOGIN_FAIL:
