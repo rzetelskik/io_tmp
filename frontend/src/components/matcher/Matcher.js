@@ -78,6 +78,7 @@ export class Matcher extends Component {
             <CurrentMeeting
               first_name={currentMatch.get("first_name")}
               distance={currentMatch.get("distance")}
+              // commonTags={users.first().get("common_tags")}
               match_timestamp={currentMatch.get("match_timestamp")}
               end_meeting={this.props.endMeeting}
             />

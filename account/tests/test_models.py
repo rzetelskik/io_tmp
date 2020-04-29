@@ -22,7 +22,7 @@ class CustomUserTests(TestCase):
         self.assertEqual(self.user1.get_full_name(), "jan kowalski")
 
     def test_str(self):
-        self.assertEqual(self.user1.__str__(), "jan kowalski <jan@kowal.ski>")
+        self.assertEqual(self.user1.__str__(), "jan kowalski <jk>")
 
     def test_longitude(self):
         self.assertEqual(self.user1.longitude, 0.0)

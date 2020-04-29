@@ -33,7 +33,7 @@ class CustomUserSerializerTests(TestCase):
 
     def test_contains_expected_fields(self):
         expected_fields = ['username', 'email', 'first_name', 'last_name',
-                            'location_range', 'date_joined']
+                            'location_range', 'date_joined', 'tags']
         self.assertEqual(set(self.serializer.data.keys()), set(expected_fields))
     
     def test_field_content(self):
