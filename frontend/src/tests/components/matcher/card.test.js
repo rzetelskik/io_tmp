@@ -29,10 +29,10 @@ describe("Header Component", () => {
         first_name: "value3",
         distance: "value4",
       };
-      wrapper = shallow(<Card {...props} />);
+      wrapper = shallow(<Card />);
 
       const component = findByTestAtrr(wrapper, "card");
       expect(component.length).toBe(1);
     });
   });
-});
+}); //
