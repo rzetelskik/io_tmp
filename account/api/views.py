@@ -8,7 +8,7 @@ from django.db.models import Q, F, Value, DateTimeField, DurationField, Expressi
 from django.utils import timezone
 from django.contrib.gis.db.models.functions import Distance
 from .serializers import CustomUserSerializer, RegisterSerializer, LoginSerializer, PasswordUpdateSerializer, \
-    DetailsUpdateSerializer, CustomUserLocationSerializer, MatchingCustomUserSerializer
+    DetailsUpdateSerializer, CustomUserLocationSerializer, MatchingCustomUserSerializer, TagsUpdateSerializer
 from account.models import CustomUser
 from matcher.models import Answer, Match
 
