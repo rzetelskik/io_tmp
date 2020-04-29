@@ -25,7 +25,6 @@ export const matcherAnswer = (agreed, recipient) => (dispatch, getState) => {
   axios
     .post("api/matcher/answer/", body, tokenConfig(getState))
     .then((res) => {
-      console.log("OK");
       dispatch(nextUser());
     })
     .catch((err) => {

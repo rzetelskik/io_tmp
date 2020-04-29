@@ -71,8 +71,6 @@ export class Matcher extends Component {
 
     let currentView = null;
     if (currentMatch) {
-      console.log("match", JSON.stringify(currentMatch, null, 2));
-
       currentView = (
         <Fragment>
           <div className="border-top my-5" data-test="accepted"></div>
