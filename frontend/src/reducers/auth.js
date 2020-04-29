@@ -8,6 +8,7 @@ import {
   REGISTER_FAIL,
   REGISTER_SUCCESS,
   UPDATE_DETAILS_SUCCESS,
+  UPDATE_TAGS_SUCCESS,
 } from "../actions/types";
 import { fromJS } from "immutable";
 
@@ -45,6 +46,10 @@ export default function (state = initialState, action) {
         })
       );
     case UPDATE_DETAILS_SUCCESS:
+      return state.merge(
+        fromJS({ user: state.get("user").merge(fromJS(action.payload)) })
+      );
+    case UPDATE_TAGS_SUCCESS:
       return state.merge(
         fromJS({ user: state.get("user").merge(fromJS(action.payload)) })
       );

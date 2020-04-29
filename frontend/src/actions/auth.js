@@ -9,6 +9,7 @@ import {
   REGISTER_SUCCESS,
   REGISTER_FAIL,
   UPDATE_DETAILS_SUCCESS,
+  UPDATE_TAGS_SUCCESS,
 } from "./types";
 import { createMessage, MESSAGE_SUCCESS, MESSAGE_INFO } from "./messages";
 import { createError } from "./errors";
@@ -118,12 +119,16 @@ export const updateDetails = (first_name, last_name, location_range) => (
 };
 
 export const updateTags = (tags) => (dispatch, getState) => {
-  const body = JSON.stringify(tags);
+  const body = JSON.stringify({ tags: tags });
 
   axios
     .put("/api/account/tags-update/", body, tokenConfig(getState))
     .then((res) => {
       dispatch(createMessage(MESSAGE_SUCCESS, "Tags updated!"));
+      dispatch({
+        type: UPDATE_TAGS_SUCCESS,
+        payload: tags,
+      });
     })
     .catch((err) => {
       const errors = {
