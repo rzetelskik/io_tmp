@@ -10,7 +10,6 @@ export class CurrentMeeting extends Component {
 
   render() {
     const { commonTags, firstName, distance } = this.props;
-    console.log(commonTags);
 
     return (
       <Fragment>

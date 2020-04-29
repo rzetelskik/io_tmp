@@ -27,20 +27,20 @@ class WebSocketClient {
         token;
       this.socketRef = new WebSocket(path);
       this.socketRef.onopen = () => {
-        console.log("WebSocket open");
+        // console.log("WebSocket open");
       };
 
       this.socketRef.onmessage = (e) => {
-        console.log(e.data);
+        // console.log(e.data);
         this.socketNewMessage(e.data);
       };
 
       this.socketRef.onerror = (e) => {
-        console.log(e.message);
+        // console.log(e.message);
       };
 
       this.socketRef.onclose = () => {
-        console.log("WebSocket closed let's reopen");
+        // console.log("WebSocket closed let's reopen");
         this.connect();
       };
       return true;
@@ -63,13 +63,13 @@ class WebSocketClient {
     const recursion = this.waitForSocketConnection;
     setTimeout(() => {
       if (socket.readyState === 1) {
-        console.log("Connection is made");
+        // console.log("Connection is made");
         if (callback != null) {
           callback();
         }
         return;
       } else {
-        console.log("wait for connection...");
+        // console.log("wait for connection...");
         recursion(callback);
       }
     }, 1);
@@ -80,7 +80,7 @@ class WebSocketClient {
       return;
     }
     this.socketRef.onclose = () => {
-      console.log("closing connection - closeConnection()");
+      // console.log("closing connection - closeConnection()");
     };
     if (this.socketRef.readyState === 1 || this.socketRef.readyState === 0) {
       this.socketRef.close();
