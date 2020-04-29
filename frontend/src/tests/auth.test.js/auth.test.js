@@ -4,6 +4,7 @@ import {
   updateDetails,
   changePassword,
   logout,
+  loadUser,
 } from "../../actions/auth";
 import { makeMockStore } from "../../../Utils";
 import moxios from "moxios";
@@ -12,6 +13,9 @@ import {
   REGISTER_SUCCESS,
   CREATE_MESSAGE,
   UPDATE_DETAILS_SUCCESS,
+  USER_LOADED,
+  USER_LOADING,
+  LOGOUT_SUCCESS,
 } from "../../actions/types";
 import { MESSAGE_SUCCESS } from "../../actions/messages";
 
@@ -186,29 +190,78 @@ describe("auth actions", () => {
     });
   });
 
-  // describe("logout", () => {
-  //   const store = makeMockStore({
-  //     auth: {
-  //       token: "token",
-  //       isAuthenticated: true,
-  //       isLoading: false,
-  //       user: {},
-  //     },
-  //   });
-  //   beforeEach(() => moxios.install());
-  //   afterEach(() => moxios.uninstall());
+  describe("logout", () => {
+    const store = makeMockStore({
+      auth: {
+        token: "token",
+        isAuthenticated: true,
+        isLoading: false,
+        user: {},
+      },
+    });
+    beforeEach(() => moxios.install());
+    afterEach(() => moxios.uninstall());
 
-  //   it("successful api request", async () => {
-  //     moxios.wait(() => {
-  //       const request = moxios.requests.mostRecent();
-  //       request.respondWith(mockLogout());
-  //     });
+    it("successful api request", async () => {
+      moxios.wait(() => {
+        const request = moxios.requests.mostRecent();
+        request.respondWith(mockLogout());
+      });
 
-  //     const expected = [];
-  //     await store.dispatch(logout("old", "new", "new")).then(() => {
-  //       const actionsCalled = store.getActions();
-  //       expect(actionsCalled).toEqual(expected);
-  //     });
-  //   });
-  // });
+      const expected = [
+        {
+          payload: {
+            messageType: "MESSAGE_INFO",
+            msg: "Logged out.",
+          },
+          type: CREATE_MESSAGE,
+        },
+        {
+          type: LOGOUT_SUCCESS,
+        },
+      ];
+      await store.dispatch(logout()).then(() => {
+        const actionsCalled = store.getActions();
+        expect(actionsCalled).toEqual(expected);
+      });
+    });
+  });
+
+  describe("loadUser", () => {
+    const store = makeMockStore({
+      auth: {
+        token: "token",
+        isAuthenticated: true,
+        isLoading: false,
+        user: {},
+      },
+    });
+    beforeEach(() => moxios.install());
+    afterEach(() => moxios.uninstall());
+
+    it("successful api request", async () => {
+      const response = {
+        username: "dupa",
+        email: "dupa@dupa.com",
+        first_name: "dupa",
+        last_name: "dupa",
+        location_range: 22,
+        date_joined: "2020-04-12T16:23:16.242473Z",
+        tags: {},
+      };
+      moxios.wait(() => {
+        const request = moxios.requests.mostRecent();
+        request.respondWith(mockSuccess(response));
+      });
+
+      const expected = [
+        { type: USER_LOADING },
+        { payload: { data: response }, type: USER_LOADED },
+      ];
+      await store.dispatch(loadUser()).then(() => {
+        const actionsCalled = store.getActions();
+        expect(actionsCalled).toEqual(expected);
+      });
+    });
+  });
 });
