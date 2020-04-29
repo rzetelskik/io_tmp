@@ -53,9 +53,10 @@ export class ActualMatcher extends Component {
         <div className="container d-flex justify-content-center">
           <Card
             decide={this.props.matcherAnswer}
-            first_name={users.first().get("first_name")}
+            firstName={users.first().get("first_name")}
             distance={users.first().get("distance")}
             username={users.first().get("username")}
+            commonTags={users.first().get("common_tags")}
           />
         </div>
       );

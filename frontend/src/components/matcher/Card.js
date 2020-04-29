@@ -14,11 +14,11 @@ export class Card extends Component {
   };
 
   render() {
-    const { first_name, distance } = this.props;
+    const { firstName, distance, commonTags } = this.props;
     return (
       <Fragment>
         <div className="card w-50  border-secondary " data-test="card">
-          <h3 className="card-header ">{first_name}</h3>
+          <h3 className="card-header ">{firstName}</h3>
           <div className="card-body"></div>
           <img className="card-img-top" src={example_img} alt="Card" />
           <div className="card-body"></div>
@@ -27,7 +27,17 @@ export class Card extends Component {
             <li className="list-group-item">
               Distance: {Math.round(distance)}km
             </li>
-            <li className="list-group-item">Tags</li>
+            <li className="list-group-item">
+              Common tags:
+              {commonTags.map((tagName, id) => {
+                return (
+                  <Fragment>
+                    {" "}
+                    <span className="badge badge-primary">{tagName}</span>{" "}
+                  </Fragment>
+                );
+              })}
+            </li>
           </ul>
           <div className="modal-footer">
             <button
@@ -53,7 +63,7 @@ export class Card extends Component {
 
 const mapStateToProps = (state, ownProps) => ({
   username: ownProps.username,
-  first_name: ownProps.first_name,
+  firstName: ownProps.firstName,
   distance: ownProps.distance,
   decide: ownProps.decide,
 });
