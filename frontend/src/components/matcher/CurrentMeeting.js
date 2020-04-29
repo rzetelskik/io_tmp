@@ -53,12 +53,4 @@ export class CurrentMeeting extends Component {
   }
 }
 
-const mapStateToProps = (state, ownProps) => ({
-  firstName: ownProps.firstName,
-  distance: ownProps.distance,
-  matchTimestamp: ownProps.matchTimestamp,
-  endMeeting: ownProps.endMeeting,
-  commonTags: ownProps.commonTags,
-});
-
-export default connect(mapStateToProps)(CurrentMeeting);
+export default connect()(CurrentMeeting);

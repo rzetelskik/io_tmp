@@ -61,11 +61,4 @@ export class Card extends Component {
   }
 }
 
-const mapStateToProps = (state, ownProps) => ({
-  username: ownProps.username,
-  firstName: ownProps.firstName,
-  distance: ownProps.distance,
-  decide: ownProps.decide,
-});
-
-export default connect(mapStateToProps)(Card);
+export default connect()(Card);

@@ -41,4 +41,4 @@ export class Geolocator extends Component {
   }
 }
 
-export default Geolocator; //
+export default Geolocator;
