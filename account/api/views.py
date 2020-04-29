@@ -4,13 +4,14 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
 from knox.models import AuthToken
-from django.db.models import Q, F, Value, DateTimeField, DurationField, ExpressionWrapper
+from django.db.models import Q, F, Value, DateTimeField, DurationField, ExpressionWrapper, Count
 from django.utils import timezone
 from django.contrib.gis.db.models.functions import Distance
 from .serializers import CustomUserSerializer, RegisterSerializer, LoginSerializer, PasswordUpdateSerializer, \
     DetailsUpdateSerializer, CustomUserLocationSerializer, MatchingCustomUserSerializer, TagsUpdateSerializer
 from account.models import CustomUser
 from matcher.models import Answer, Match
+
 
 
 @api_view(['POST', ])
@@ -147,5 +148,8 @@ class ListMatchingUsersView(generics.ListAPIView):
             ~Q(pk=user.pk),
             Q(distance__lte=radius * 1000),
             Q(distance__lte=F('location_range') * 1000),
-            delta__lte=delta
-        )[:10]
+            delta__lte=delta,
+            tags__in=user.tags.all()
+        ).annotate(
+            tags_count=Count('tags')
+        ).order_by('-tags_count')
