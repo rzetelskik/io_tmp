@@ -160,6 +160,7 @@ export const logout = () => (dispatch, getState) => {
 
 // SETUP CONFIG WITH TOKEN - HELPER
 export const tokenConfig = (getState) => {
+  console.log(JSON.stringify(getState(), null, 2));
   const token = getState().getIn(["auth", "token"], null);
 
   const config = {

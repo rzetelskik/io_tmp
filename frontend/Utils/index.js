@@ -1,6 +1,7 @@
 import checkPropTypes from "check-prop-types";
 import thunk from "redux-thunk";
 import configureStore from "redux-mock-store";
+import { fromJS } from "immutable";
 
 export const findByTestAtrr = (component, attr) => {
   const wrapper = component.find(`[data-test='${attr}']`);
@@ -20,7 +21,9 @@ export const checkProps = (component, expectedProps) => {
 
 const mockStore = configureStore([thunk]);
 export const makeMockStore = (state = {}) => {
-  return mockStore({
-    ...state,
-  });
+  return mockStore(
+    fromJS({
+      ...state,
+    })
+  );
 };
