@@ -6,14 +6,13 @@ Enzyme.configure({ adapter: new Adapter() });
 import { findByTestAtrr, checkProps } from "../../../../Utils";
 
 describe("Header Component", () => {
+  const expectedProps = {
+    firstName: "firstName",
+    distance: "distance",
+    commonTags: [],
+  };
   describe("Checking PropTypes", () => {
     it("Should not throw a warning", () => {
-      const expectedProps = {
-        onUserAccept: "value1",
-        onUserDeny: "value2",
-        first_name: "value3",
-        distance: "value4",
-      };
       const propsErr = checkProps(Card, expectedProps);
       expect(propsErr).toBeUndefined();
     });
@@ -23,16 +22,10 @@ describe("Header Component", () => {
     it("Should render without errors", () => {
       let wrapper;
 
-      const props = {
-        onUserAccept: "value1",
-        onUserDeny: "value2",
-        first_name: "value3",
-        distance: "value4",
-      };
-      wrapper = shallow(<Card />);
+      wrapper = shallow(<Card {...expectedProps} />);
 
       const component = findByTestAtrr(wrapper, "card");
       expect(component.length).toBe(1);
     });
   });
-}); //
+});

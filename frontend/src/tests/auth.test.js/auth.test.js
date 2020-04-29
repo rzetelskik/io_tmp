@@ -4,16 +4,16 @@ import {
   updateDetails,
   changePassword,
   logout,
-} from "../../../actions/auth";
-import { makeMockStore } from "../../../../Utils";
+} from "../../actions/auth";
+import { makeMockStore } from "../../../Utils";
 import moxios from "moxios";
 import { fromJS } from "immutable";
 import {
   REGISTER_SUCCESS,
   CREATE_MESSAGE,
   UPDATE_DETAILS_SUCCESS,
-} from "../../../actions/types";
-import { MESSAGE_SUCCESS } from "../../../actions/messages";
+} from "../../actions/types";
+import { MESSAGE_SUCCESS } from "../../actions/messages";
 
 const mockSuccess = (data) => ({ status: 200, response: { data } });
 const mockError = (error) => ({ status: 400, response: error });
@@ -114,7 +114,6 @@ describe("auth actions", () => {
         user: {},
       },
     });
-    console.log(JSON.stringify(store, null, 2));
     beforeEach(() => moxios.install());
     afterEach(() => moxios.uninstall());
     const response = { response: "User details updated successfully." };
@@ -134,22 +133,55 @@ describe("auth actions", () => {
           type: CREATE_MESSAGE,
         },
         {
-          payload: {},
+          payload: {
+            first_name: "firstname",
+            last_name: "lastname",
+            location_range: "range",
+          },
           type: UPDATE_DETAILS_SUCCESS,
         },
       ];
       await store
-        .dispatch(
-          updateDetails({
-            first_name: "dupa",
-            last_name: "dupa",
-            location_range: "22",
-          })
-        )
+        .dispatch(updateDetails("firstname", "lastname", "range"))
         .then(() => {
           const actionsCalled = store.getActions();
           expect(actionsCalled).toEqual(expected);
         });
+    });
+  });
+
+  describe("changePassword", () => {
+    const store = makeMockStore({
+      auth: {
+        token: "token",
+        isAuthenticated: true,
+        isLoading: false,
+        user: {},
+      },
+    });
+    beforeEach(() => moxios.install());
+    afterEach(() => moxios.uninstall());
+    const response = { response: "Password changed successfully." };
+
+    it("successful api request", async () => {
+      moxios.wait(() => {
+        const request = moxios.requests.mostRecent();
+        request.respondWith(mockSuccess(response));
+      });
+
+      const expected = [
+        {
+          payload: {
+            messageType: MESSAGE_SUCCESS,
+            msg: response.response,
+          },
+          type: CREATE_MESSAGE,
+        },
+      ];
+      await store.dispatch(changePassword("old", "new", "new")).then(() => {
+        const actionsCalled = store.getActions();
+        expect(actionsCalled).toEqual(expected);
+      });
     });
   });
 });
