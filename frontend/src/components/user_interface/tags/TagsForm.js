@@ -1,44 +1,11 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState } from "react";
 import { Modal, Button } from "react-bootstrap";
 import Tag from "./Tag";
+import { connect } from "react-redux";
 
-const dummyTags = [
-  ["beer", false],
-  ["party", false],
-  ["shopping", false],
-  ["skating", false],
-  ["cycling", false],
-  ["coffee", false],
-  ["food", false],
-  ["board games", false],
-  ["gym", false],
-  ["climbing", false],
-  ["swimming", false],
-  ["walking a dog", false],
-  ["walking", false],
-  ["dupa", false],
+function TagsForm(props) {
+  const [tags, setTags] = useState(props.tags.toJS());
 
-  ["dupa", false],
-  ["dupa", false],
-  ["dupa", false],
-  ["dupa", false],
-  ["dupa", false],
-  ["dupa", false],
-  ["dupa", false],
-  ["dupa", false],
-  ["dupa", false],
-  ["dupa", false],
-  ["dupa", false],
-  ["dupa", false],
-  ["dupa", false],
-  ["dupa", false],
-  ["dupa", false],
-  ["dupa", false],
-  ["dupa", false],
-  ["dupa", false],
-];
-
-export default function TagsForm(props) {
   return (
     <Fragment>
       <Modal
@@ -56,19 +23,19 @@ export default function TagsForm(props) {
         <Modal.Body>
           <Fragment>
             <div className="container">
-              {dummyTags.map((tag, id) => (
-                <Tag
-                  key={id}
-                  id={id}
-                  name={tag[0]}
-                  selected={tag[1]}
-                  clickTag={(id) => {
-                    console.log(dummyTags);
-
-                    dummyTags[id][1] = !dummyTags[id][1];
-                  }}
-                />
-              ))}
+              {Object.entries(tags).map(([tagName, tagValue], id) => {
+                return (
+                  <Tag
+                    key={id}
+                    id={id}
+                    name={tagName}
+                    selected={tagValue}
+                    clickTag={(id) => {
+                      setTags({ ...tags, [tagName]: !tagValue });
+                    }}
+                  />
+                );
+              })}
             </div>
           </Fragment>
         </Modal.Body>
@@ -79,3 +46,9 @@ export default function TagsForm(props) {
     </Fragment>
   );
 }
+
+const mapStateToProps = (state) => ({
+  tags: state.getIn(["auth", "user", "tags"]),
+});
+
+export default connect(mapStateToProps)(TagsForm);
