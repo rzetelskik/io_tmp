@@ -5,17 +5,18 @@ import { connect } from "react-redux";
 export class CurrentMeeting extends Component {
   endMeeting = () => {
     const username = this.props.username;
-    this.props.end_meeting(username);
+    this.props.endMeeting(username);
   };
 
   render() {
-    const { first_name, distance } = this.props;
+    const { commonTags, firstName, distance } = this.props;
+    console.log(commonTags);
 
     return (
       <Fragment>
         <div className="card w-50 text-white bg-secondary" data-test="meeting">
           <h3 className="card-header text-white bg-secondary">
-            Your meeting with {first_name}
+            Your meeting with {firstName}
           </h3>
           <div className="card-body"></div>
           <img className="card-img-top bg-white" src={meeting} alt="meeting" />
@@ -25,7 +26,17 @@ export class CurrentMeeting extends Component {
             <li className="list-group-item text-white bg-secondary">
               Distance: {Math.round(distance)} km
             </li>
-            <li className="list-group-item text-white bg-secondary">Tags</li>
+            <li className="list-group-item text-white bg-secondary">
+              Common tags:
+              {commonTags.map((tagName, id) => {
+                return (
+                  <Fragment>
+                    {" "}
+                    <span className="badge badge-primary">{tagName}</span>{" "}
+                  </Fragment>
+                );
+              })}
+            </li>
           </ul>
           <div className="list-group-item text-white bg-secondary">
             <button
@@ -43,10 +54,11 @@ export class CurrentMeeting extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  first_name: ownProps.first_name,
+  firstName: ownProps.firstName,
   distance: ownProps.distance,
-  match_timestamp: ownProps.match_timestamp,
-  end_meeting: ownProps.end_meeting,
+  matchTimestamp: ownProps.matchTimestamp,
+  endMeeting: ownProps.endMeeting,
+  commonTags: ownProps.commonTags,
 });
 
 export default connect(mapStateToProps)(CurrentMeeting);

@@ -72,16 +72,18 @@ export class Matcher extends Component {
 
     let currentView = null;
     if (currentMatch) {
+      console.log("match", JSON.stringify(currentMatch, null, 2));
+
       currentView = (
         <Fragment>
           <div className="border-top my-5" data-test="accepted"></div>
           <div className="container d-flex justify-content-center">
             <CurrentMeeting
-              first_name={currentMatch.get("first_name")}
+              firstName={currentMatch.get("first_name")}
               distance={currentMatch.get("distance")}
-              // commonTags={users.first().get("common_tags")}
-              match_timestamp={currentMatch.get("match_timestamp")}
-              end_meeting={this.props.endMeeting}
+              commonTags={currentMatch.get("common_tags")}
+              matchTimestamp={currentMatch.get("match_timestamp")}
+              endMeeting={this.props.endMeeting}
             />
           </div>
         </Fragment>
