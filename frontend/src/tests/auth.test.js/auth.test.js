@@ -17,6 +17,7 @@ import { MESSAGE_SUCCESS } from "../../actions/messages";
 
 const mockSuccess = (data) => ({ status: 200, response: { data } });
 const mockError = (error) => ({ status: 400, response: error });
+const mockLogout = () => ({ status: 204 });
 
 describe("auth actions", () => {
   describe("login", () => {
@@ -184,4 +185,30 @@ describe("auth actions", () => {
       });
     });
   });
+
+  // describe("logout", () => {
+  //   const store = makeMockStore({
+  //     auth: {
+  //       token: "token",
+  //       isAuthenticated: true,
+  //       isLoading: false,
+  //       user: {},
+  //     },
+  //   });
+  //   beforeEach(() => moxios.install());
+  //   afterEach(() => moxios.uninstall());
+
+  //   it("successful api request", async () => {
+  //     moxios.wait(() => {
+  //       const request = moxios.requests.mostRecent();
+  //       request.respondWith(mockLogout());
+  //     });
+
+  //     const expected = [];
+  //     await store.dispatch(logout("old", "new", "new")).then(() => {
+  //       const actionsCalled = store.getActions();
+  //       expect(actionsCalled).toEqual(expected);
+  //     });
+  //   });
+  // });
 });
