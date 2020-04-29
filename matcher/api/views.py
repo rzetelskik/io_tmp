@@ -14,10 +14,11 @@ class AnswerView(generics.CreateAPIView):
 
 
 class CurrentMatchData:
-    def __init__(self, first_name, distance, match_timestamp):
+    def __init__(self, first_name, distance, match_timestamp, common_tags):
         self.first_name = first_name
         self.distance = distance
         self.match_timestamp = match_timestamp
+        self.common_tags = common_tags
 
 
 def get_current_match(user):
@@ -41,10 +42,13 @@ def current_match_view(request):
         distance=Distance('location', point)
     ).get(pk=matched_user.pk).distance.km
 
+    common_tags = user.tags.all() & matched_user.tags.all()
+
     data = CurrentMatchData(
         first_name=matched_user.first_name,
         distance=distance,
-        match_timestamp=match.time_start
+        match_timestamp=match.time_start,
+        common_tags=[tag.name for tag in common_tags]
     )
 
     serializer = CurrentMatchSerializer(data)
