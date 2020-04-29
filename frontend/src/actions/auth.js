@@ -117,6 +117,23 @@ export const updateDetails = (first_name, last_name, location_range) => (
     });
 };
 
+export const updateTags = (tags) => (dispatch, getState) => {
+  const body = JSON.stringify(tags);
+
+  axios
+    .put("/api/account/tags-update/", body, tokenConfig(getState))
+    .then((res) => {
+      dispatch(createMessage(MESSAGE_SUCCESS, "Tags updated!"));
+    })
+    .catch((err) => {
+      const errors = {
+        msg: err.response.data,
+        status: err.response.status,
+      };
+      dispatch(createError(errors));
+    });
+};
+
 export const changePassword = (password, new_password, new_password_repeat) => (
   dispatch,
   getState

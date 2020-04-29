@@ -2,9 +2,22 @@ import React, { Fragment, useState } from "react";
 import { Modal, Button } from "react-bootstrap";
 import Tag from "./Tag";
 import { connect } from "react-redux";
+import { updateTags } from "../../../actions/auth";
 
 function TagsForm(props) {
-  const [tags, setTags] = useState(props.tags.toJS());
+  const [tags, setTags] = useState(props.tags);
+
+  const tagsDiffer = () => {
+    return JSON.stringify(tags) !== JSON.stringify(props.tags);
+  };
+
+  const apply = () => {
+    if (tagsDiffer()) {
+      props.updateTags(tags);
+    }
+
+    props.onHide();
+  };
 
   return (
     <Fragment>
@@ -40,7 +53,7 @@ function TagsForm(props) {
           </Fragment>
         </Modal.Body>
         <Modal.Footer>
-          <Button onClick={props.onHide}>Apply!</Button>
+          <Button onClick={apply}>Apply!</Button>
         </Modal.Footer>
       </Modal>
     </Fragment>
@@ -48,7 +61,7 @@ function TagsForm(props) {
 }
 
 const mapStateToProps = (state) => ({
-  tags: state.getIn(["auth", "user", "tags"]),
+  tags: state.getIn(["auth", "user", "tags"]).toJS(),
 });
 
-export default connect(mapStateToProps)(TagsForm);
+export default connect(mapStateToProps, { updateTags })(TagsForm);
