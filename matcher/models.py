@@ -52,5 +52,8 @@ class Match(models.Model):
             self.save(update_fields=['time_end'])
 
     def __str__(self):
-        return "{} AND {} FROM: {} TO: {}".format(self.user1.username, self.user2.username, self.time_start,
-                                                  self.time_end)
+        return "{}_{}_{}".format(self.user1.username, self.user2.username, self.time_start)
+
+    @staticmethod
+    def get_user_current_match(user):
+        return Match.objects.filter(time_end__isnull=True).get(Q(user1=user) | Q(user2=user))

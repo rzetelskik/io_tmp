@@ -14,7 +14,8 @@ class AnswerView(generics.CreateAPIView):
 
 
 class CurrentMatchData:
-    def __init__(self, first_name, distance, match_timestamp, common_tags):
+    def __init__(self, match_id, first_name, distance, match_timestamp, common_tags):
+        self.match_id = match_id
         self.first_name = first_name
         self.distance = distance
         self.match_timestamp = match_timestamp
@@ -45,6 +46,7 @@ def current_match_view(request):
     common_tags = user.tags.all() & matched_user.tags.all()
 
     data = CurrentMatchData(
+        match_id=match.pk,
         first_name=matched_user.first_name,
         distance=distance,
         match_timestamp=match.time_start,

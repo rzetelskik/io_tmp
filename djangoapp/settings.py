@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'app.apps.AppConfig',  # Serving react files.
     'account.apps.AccountConfig',  # Custom user app.
     'matcher.apps.MatcherConfig',  # User matching app.
+    'chat.apps.ChatConfig'  # Chat app.
 ]
 
 AUTH_USER_MODEL = 'account.CustomUser'  # Set custom user as default user.
