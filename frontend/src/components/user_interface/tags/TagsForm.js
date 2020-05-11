@@ -34,7 +34,7 @@ function TagsForm(props) {
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Fragment>
+          <Fragment> 
             <div className="container">
               {Object.entries(tags).map(([tagName, tagValue], id) => {
                 return (

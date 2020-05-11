@@ -1,13 +1,12 @@
 import store from "../store";
 
-class WebSocketClient {
+class MatchClient {
   static instance = null;
   callbacks = {};
 
   static getInstance() {
-    if (!WebSocketClient.instance)
-      WebSocketClient.instance = new WebSocketClient();
-    return WebSocketClient.instance;
+    if (!MatchClient.instance) MatchClient.instance = new MatchClient();
+    return MatchClient.instance;
   }
 
   constructor() {
@@ -88,4 +87,4 @@ class WebSocketClient {
   };
 }
 
-export default WebSocketClient.getInstance();
+export default MatchClient.getInstance();

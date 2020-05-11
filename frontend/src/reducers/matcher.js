@@ -34,12 +34,7 @@ export default function (state = initialState, action) {
         fromJS({
           users: [],
           userCount: 0,
-          currentMatch: {
-            first_name: action.payload.first_name,
-            distance: action.payload.distance,
-            match_timestamp: action.payload.match_timestamp,
-            common_tags: action.payload.common_tags,
-          },
+          currentMatch: action.payload,
         })
       );
     case CLEAR_MATCH:

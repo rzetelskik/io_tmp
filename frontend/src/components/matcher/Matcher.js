@@ -9,20 +9,20 @@ import { askForMatch, endMeeting } from "../../actions/matcher";
 import CurrentMeeting from "./CurrentMeeting";
 import Loading from "../layout/Loading";
 
-import WebSocketClient from "../../services/WebSocketClient";
+import MatchClient from "../../services/MatchClient";
 
 export class Matcher extends Component {
   constructor(props) {
     super(props);
 
-    if (WebSocketClient.connect() === false) {
+    if (MatchClient.connect() === false) {
       this.props.createMessage(
         MESSAGE_ERROR,
         "unable to establish update connection with server"
       );
     } else {
-      WebSocketClient.waitForSocketConnection(() => {
-        WebSocketClient.addCallback(this.props.askForMatch);
+      MatchClient.waitForSocketConnection(() => {
+        MatchClient.addCallback(this.props.askForMatch);
       });
     }
   }
