@@ -74,9 +74,9 @@ class Consumer(AsyncWebsocketConsumer):
 
     @database_sync_to_async
     def fetch_messages(self, data):
-        messages = Message.objects.get(match_id=data['match_id']).order_by('-timestamp')
+        messages = Message.objects.filter(match_id=data['match_id']).order_by('-timestamp')
         content = {
-            'command': 'fetch_messages',
+            'command': 'messages',
             'messages': Consumer.messages_to_json(messages)
         }
 
@@ -99,10 +99,16 @@ class Consumer(AsyncWebsocketConsumer):
         await self.send(text_data=json.dumps(event['message']))
 
     async def match_created_notification(self, event):
-        print("match created")
         await self.channel_layer.group_add(get_chat_group_name(event['match_id']), self.channel_name)
-        await self.send("User has a new match.")
+        content = {
+            'command': 'match_created',
+            'message': 'User has a new match.'
+        }
+        await self.send(text_data=content)
 
     async def match_deleted_notification(self, event):
-        print("match terminated")
-        await self.send("User's current meeting has been terminated.")
+        content = {
+            'command': 'match_terminated',
+            'message': 'User\'s current meeting has been terminated.'
+        }
+        await self.send(text_data=content)
