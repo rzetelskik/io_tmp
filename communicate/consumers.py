@@ -54,7 +54,7 @@ class Consumer(AsyncWebsocketConsumer):
 
     async def receive(self, text_data=None, bytes_data=None):
         data = json.loads(text_data)
-        await self.commands[data['command']](self, data)
+        await self.commands[data['command']](data)
 
     @staticmethod
     def message_to_json(message):
@@ -100,15 +100,15 @@ class Consumer(AsyncWebsocketConsumer):
 
     async def match_created_notification(self, event):
         await self.channel_layer.group_add(get_chat_group_name(event['match_id']), self.channel_name)
-        content = {
+        content = """{
             'command': 'match_created',
             'message': 'User has a new match.'
-        }
+        }"""
         await self.send(text_data=content)
 
     async def match_deleted_notification(self, event):
-        content = {
+        content = """{
             'command': 'match_terminated',
-            'message': 'User\'s current meeting has been terminated.'
-        }
+            'message': 'User's current meeting has been terminated.'
+        }"""
         await self.send(text_data=content)
