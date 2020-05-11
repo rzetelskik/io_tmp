@@ -52,7 +52,7 @@ class Consumer(AsyncWebsocketConsumer):
         for match in matches:
             self.channel_layer.group_discard(get_chat_group_name(match.pk), self.channel_name)
 
-    async def receive(self, text_data=None, bytes_data=None):
+    async def receive(text_data=None, bytes_data=None):
         data = json.loads(text_data)
         await self.commands[data['command']](self, data)
 

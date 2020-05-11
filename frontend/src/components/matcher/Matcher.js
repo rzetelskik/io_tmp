@@ -31,14 +31,12 @@ export class Matcher extends Component {
           //   console.log("lista wiadomosci");
           // },
         });
+        MatchClient.newChatMessage({
+          match_id: this.props.currentMatch.get("match_id"),
+          text: "gówno",
+        });
+        // MatchClient.fetchMessages(this.props.match_id);
       });
-      console.log(MatchClient);
-
-      // MatchClient.socketNewMessage({
-      //   match_id: this.props.match_id,
-      //   text: "gówno",
-      // });
-      // MatchClient.fetchMessages(this.props.match_id);
     }
   }
   static propTypes = {

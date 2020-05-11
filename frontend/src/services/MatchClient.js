@@ -22,9 +22,11 @@ class MatchClient {
   }
 
   newChatMessage(message) {
+    console.log(message);
+
     this.sendMessage({
       command: "new_message",
-      from: message.match_id,
+      match_id: message.match_id,
       text: message.text,
     });
   }
@@ -32,6 +34,7 @@ class MatchClient {
   sendMessage(data) {
     try {
       this.socketRef.send(JSON.stringify({ ...data }));
+      console.log(JSON.stringify({ ...data }));
     } catch (err) {
       console.log(err.message);
     }
@@ -67,11 +70,13 @@ class MatchClient {
   };
 
   socketNewMessage = (data) => {
-    const parsedData = JSON.parse(data);
-    const command = parsedData.command;
+    console.log(data);
+
     if (Object.keys(this.callbacks).length === 0) {
       return;
     }
+    const parsedData = JSON.parse(data);
+    const command = parsedData.command;
     if (command === "messages") {
       this.callbacks[command](parsedData);
     }
