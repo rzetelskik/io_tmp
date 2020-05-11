@@ -6,7 +6,7 @@ import { getGeolocation } from "../../actions/geolocation";
 import { createMessage, MESSAGE_ERROR } from "../../actions/messages";
 import ActualMatcher from "./ActualMatcher";
 import { askForMatch, endMeeting } from "../../actions/matcher";
-import CurrentMeeting from "./CurrentMeeting";
+import CurrentMeeting from "../meeting/CurrentMeeting";
 import Loading from "../layout/Loading";
 
 import WebSocketClient from "../../services/WebSocketClient";
