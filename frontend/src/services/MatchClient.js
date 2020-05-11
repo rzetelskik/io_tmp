@@ -22,8 +22,6 @@ class MatchClient {
   }
 
   newChatMessage(message) {
-    console.log(message);
-
     this.sendMessage({
       command: "new_message",
       match_id: message.match_id,
@@ -32,9 +30,10 @@ class MatchClient {
   }
 
   sendMessage(data) {
+    console.log("sendMessage ", JSON.stringify({ ...data }));
+
     try {
       this.socketRef.send(JSON.stringify({ ...data }));
-      console.log(JSON.stringify({ ...data }));
     } catch (err) {
       console.log(err.message);
     }
@@ -70,12 +69,11 @@ class MatchClient {
   };
 
   socketNewMessage = (data) => {
-    console.log(data);
-
     if (Object.keys(this.callbacks).length === 0) {
       return;
     }
     const parsedData = JSON.parse(data);
+    console.log("socketNewMessage", data);
     const command = parsedData.command;
     if (command === "messages") {
       this.callbacks[command](parsedData);

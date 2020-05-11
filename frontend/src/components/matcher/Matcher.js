@@ -24,18 +24,18 @@ export class Matcher extends Component {
         MatchClient.addCallback({
           match_created: this.props.askForMatch,
           match_terminated: this.props.askForMatch,
-          // new_message: (data) => {
-          //   console.log("nowa wiadomosc");
-          // },
-          // messages: (data) => {
-          //   console.log("lista wiadomosci");
-          // },
+          new_message: (data) => {
+            console.log("nowa wiadomosc");
+          },
+          messages: (data) => {
+            console.log("lista wiadomosci");
+          },
         });
-        MatchClient.newChatMessage({
-          match_id: this.props.currentMatch.get("match_id"),
-          text: "gówno",
-        });
-        // MatchClient.fetchMessages(this.props.match_id);
+        // MatchClient.newChatMessage({
+        //   match_id: this.props.currentMatch.get("match_id"),
+        //   text: "gówno",
+        // });
+        // MatchClient.fetchMessages(this.props.currentMatch.get("match_id"));
       });
     }
   }
