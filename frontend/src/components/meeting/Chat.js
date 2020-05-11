@@ -6,15 +6,17 @@ export class Chat extends Component {
     const { firstName } = this.props;
     return (
       <Fragment>
-        <h3 className="card-header ">{firstName}</h3>
-        <div className="card-body"></div>
-        <div className="card-body"></div>
         <ul className="list-group list-group-flush">
-          <li className="list-group-item"></li>
-          <li className="list-group-item"></li>
-          <li className="list-group-item"></li>
+          <li className="list-group-item text-white bg-secondary">
+            <h3 className="">{firstName}</h3>
+          </li>
+
+          <li>
+            <div className="card-body bg-light text-dark">
+              tutaj wsadzimy chat
+            </div>
+          </li>
         </ul>
-        <div className="modal-footer"></div>
       </Fragment>
     );
   }

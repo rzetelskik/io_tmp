@@ -14,15 +14,15 @@ export class CurrentMeeting extends Component {
     return (
       <Fragment>
         <ul className="list-group list-group-flush">
+          <li className="list-group-item text-white bg-secondary">
+            <h3 className="">{firstName}</h3>
+          </li>
           <li>
             <img
               className="card-img-top bg-white"
               src={meeting}
               alt="meeting"
             />
-          </li>
-          <li className="list-group-item text-white bg-secondary">
-            <h3 className="">{firstName}</h3>
           </li>
           <li className="list-group-item text-white bg-secondary">
             Distance: {Math.round(distance)} km
