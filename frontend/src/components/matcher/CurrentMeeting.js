@@ -1,46 +1,8 @@
-import React, { Fragment, useState, useEffect } from "react";
+import React, { Fragment } from "react";
 import meeting from "../../data/images/meeting.png";
 import { connect } from "react-redux";
-import { getChatClientInstance } from "../../services/ChatClient";
-import { createMessage, MESSAGE_ERROR } from "../../actions/messages";
 
 function CurrentMeeting(props) {
-  const [matchId, setMatchId] = useState(null);
-  const [chatSocket, setChatSocket] = useState(null);
-
-  useEffect(() => {
-    console.log("elo zamontowane", props.matchId);
-    if (props.matchId !== matchId) {
-      console.log("new matchid: ", props.matchId);
-      setMatchId(props.matchId);
-      createChatConnection();
-    } else {
-      console.log("still the same matchid: ", matchId);
-    }
-    if (chatSocket && chatSocket.connected() === false) {
-      establishChatConnection();
-    }
-  }, [props.matchId, matchId, chatSocket]);
-
-  const createChatConnection = () => {
-    setChatSocket(getChatClientInstance(props.matchId));
-  };
-
-  const establishChatConnection = () => {
-    if (chatSocket.connect() === false) {
-      props.createMessage(
-        MESSAGE_ERROR,
-        "unable to establish chat connection with server"
-      );
-    } else {
-      chatSocket.waitForSocketConnection(() => {
-        console.log("eldo mam chat");
-
-        // chatSocket.addCallback(this);
-      });
-    }
-  };
-
   const endMeeting = () => {
     const username = props.username;
     props.endMeeting(username);
@@ -84,8 +46,4 @@ function CurrentMeeting(props) {
   );
 }
 
-const mapStateToProps = (state) => ({
-  matchId: state.getIn(["matcher", "currentMatch", "match_id"]),
-});
-
-export default connect(mapStateToProps, { createMessage })(CurrentMeeting);
+export default connect()(CurrentMeeting);

@@ -8,7 +8,6 @@ import ActualMatcher from "./ActualMatcher";
 import { askForMatch, endMeeting } from "../../actions/matcher";
 import CurrentMeeting from "./CurrentMeeting";
 import Loading from "../layout/Loading";
-
 import MatchClient from "../../services/MatchClient";
 
 export class Matcher extends Component {
@@ -22,8 +21,24 @@ export class Matcher extends Component {
       );
     } else {
       MatchClient.waitForSocketConnection(() => {
-        MatchClient.addCallback(this.props.askForMatch);
+        MatchClient.addCallback({
+          match_created: this.props.askForMatch,
+          match_terminated: this.props.askForMatch,
+          // new_message: (data) => {
+          //   console.log("nowa wiadomosc");
+          // },
+          // messages: (data) => {
+          //   console.log("lista wiadomosci");
+          // },
+        });
       });
+      console.log(MatchClient);
+
+      // MatchClient.socketNewMessage({
+      //   match_id: this.props.match_id,
+      //   text: "gówno",
+      // });
+      // MatchClient.fetchMessages(this.props.match_id);
     }
   }
   static propTypes = {

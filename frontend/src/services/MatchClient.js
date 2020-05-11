@@ -13,17 +13,35 @@ class MatchClient {
     this.socketRef = null;
   }
 
-  addCallback(acceptNotificationCallback) {
-    this.callbacks["accept"] = acceptNotificationCallback;
+  addCallback(callbacks) {
+    this.callbacks = callbacks;
+  }
+
+  fetchMessages(match_id) {
+    this.sendMessage({ command: "fetch_messages", match_id: match_id });
+  }
+
+  newChatMessage(message) {
+    this.sendMessage({
+      command: "new_message",
+      from: message.match_id,
+      text: message.text,
+    });
+  }
+
+  sendMessage(data) {
+    try {
+      this.socketRef.send(JSON.stringify({ ...data }));
+    } catch (err) {
+      console.log(err.message);
+    }
   }
 
   connect = () => {
     const token = store.getState().getIn(["auth", "token"], null);
     if (token) {
       const path =
-        document.location.origin.replace(/^http/, "ws") +
-        "/ws/?token=" +
-        token;
+        document.location.origin.replace(/^http/, "ws") + "/ws/?token=" + token;
       this.socketRef = new WebSocket(path);
       this.socketRef.onopen = () => {
         console.log("WebSocket open");
@@ -49,10 +67,23 @@ class MatchClient {
   };
 
   socketNewMessage = (data) => {
+    const parsedData = JSON.parse(data);
+    const command = parsedData.command;
     if (Object.keys(this.callbacks).length === 0) {
       return;
     }
-    this.callbacks["accept"]();
+    if (command === "messages") {
+      this.callbacks[command](parsedData);
+    }
+    if (command === "new_message") {
+      this.callbacks[command](parsedData);
+    }
+    if (command === "match_created") {
+      this.callbacks[command]();
+    }
+    if (command === "match_terminated") {
+      this.callbacks[command]();
+    }
   };
 
   state = () => this.socketRef.readyState;
