@@ -91,7 +91,7 @@ class Consumer(AsyncWebsocketConsumer):
         }
 
         self.channel_layer.group_send(get_chat_group_name(message.match_id), {
-            'type': 'chat_message',
+            'type': 'chat.message',
             'message': content
         })
 

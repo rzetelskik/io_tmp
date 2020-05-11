@@ -50,6 +50,8 @@ class MatchClient {
       };
 
       this.socketRef.onmessage = (e) => {
+        console.log("sadfsadfsadfsadf");
+
         console.log(e.data);
         this.socketNewMessage(e.data);
       };
