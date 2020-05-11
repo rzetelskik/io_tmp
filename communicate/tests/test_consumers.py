@@ -45,7 +45,7 @@ async def test_matcher_consumer_created_notification():
     user_group = "user_{}".format(user.username)
     await channel_layer.group_send(user_group, {"type": "match.created.notification", "match_id": 1})
     response = await communicator.receive_from()
-    assert response == "User has a new match."
+    assert response == '{"command": "match_created", "message": "User has a new match."}'
 
     await communicator.disconnect()
 
@@ -64,6 +64,6 @@ async def test_matcher_consumer_deleted_notification():
     user_group = "user_{}".format(user.username)
     await channel_layer.group_send(user_group, {"type": "match.deleted.notification", "match_id": 1})
     response = await communicator.receive_from()
-    assert response == "User's current meeting has been terminated."
+    assert response == '{"command": "match_terminated", "message": "User\'s current meeting has been terminated."}'
 
     await communicator.disconnect()
