@@ -13,4 +13,4 @@ class Message(models.Model):
     author = models.ForeignKey(CustomUser, related_name="messages_author", blank=False, null=False,
                                on_delete=models.CASCADE)
     content = models.TextField(validators=[validate_message, ])
-    timestamp = models.DateTimeField(name="timestamp", default=timezone.now)
+    timestamp = models.DateTimeField(name="timestamp", default=timezone.now, db_index=True)
