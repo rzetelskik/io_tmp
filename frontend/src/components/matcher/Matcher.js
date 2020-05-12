@@ -32,10 +32,7 @@ export class Matcher extends Component {
           new_message: this.props.newMessage,
           messages: this.props.setMessages,
         });
-<<<<<<< HEAD
-        saveMatchClient(MatchClient);
-=======
->>>>>>> bef8acd8bd62ecbd6140bf0acf5f66fb1d4988a6
+        this.props.saveMatchClient(MatchClient);
         // MatchClient.newChatMessage({
         //   match_id: this.props.currentMatch.get("match_id"),
         //   text: "gówno",
@@ -130,4 +127,5 @@ export default connect(mapStateToProps, {
   endMeeting,
   setMessages,
   newMessage,
+  saveMatchClient,
 })(Matcher);

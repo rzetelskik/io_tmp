@@ -1,7 +1,13 @@
 import { createMessage, MESSAGE_ERROR } from "./messages";
 import { tokenConfig } from "./auth";
 import axios from "axios";
-import { GET_USERS, NEXT_USER, NEW_MATCH, CLEAR_MATCH } from "./types";
+import {
+  GET_USERS,
+  NEXT_USER,
+  NEW_MATCH,
+  CLEAR_MATCH,
+  MATCH_CLIENT,
+} from "./types";
 
 export const getUserOffers = () => (dispatch, getState) => {
   axios
@@ -78,6 +84,8 @@ export const endMeeting = () => (dispatch, getState) => {
 };
 
 export const saveMatchClient = (MatchClient) => (dispatch) => {
+  console.log("duuuupsko");
+
   dispatch({
     type: MATCH_CLIENT,
     payload: MatchClient,

@@ -1,4 +1,4 @@
-import React, { useEffect, Fragment } from "react";
+import React, { Fragment } from "react";
 import meeting from "../../data/images/meeting.png";
 import { connect } from "react-redux";
 
