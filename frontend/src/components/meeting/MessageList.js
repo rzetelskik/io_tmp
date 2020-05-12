@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-export class Message extends Component {
+export class MessageList extends Component {
   render() {
     const { content, owner } = this.props;
     let color;
@@ -14,4 +14,4 @@ export class Message extends Component {
   }
 }
 
-export default connect()(ChatCard);
+export default connect()(MessageList);
