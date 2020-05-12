@@ -12,38 +12,17 @@ export default function (state = initialState, action) {
         })
       );
     case NEW_MESSAGE:
-      //   return state.merge(
-      //     fromJS({
-      //       [action.payload.match_id]: state
-      //         .get(`${action.payload.match_id}`, [])
-      //         .push({
-      //           author: action.payload.author,
-      //           content: action.payload.content,
-      //           timestamp: action.payload.timestamp,
-      //         }),
-      //     })
-      //   );
-      return state.has([action.payload.match_id])
+      return state.has(action.payload.match_id.toString())
         ? state.merge(
             fromJS({
               [action.payload.match_id]: state
                 .get(`${action.payload.match_id}`)
-                .push({
-                  author: action.payload.author,
-                  content: action.payload.content,
-                  timestamp: action.payload.timestamp,
-                }),
+                .push(action.payload),
             })
           )
         : state.merge(
             fromJS({
-              [action.payload.match_id]: [
-                {
-                  author: action.payload.author,
-                  content: action.payload.content,
-                  timestamp: action.payload.timestamp,
-                },
-              ],
+              [action.payload.match_id]: [action.payload],
             })
           );
     default:

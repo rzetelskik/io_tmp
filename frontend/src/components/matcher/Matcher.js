@@ -33,11 +33,6 @@ export class Matcher extends Component {
           messages: this.props.setMessages,
         });
         this.props.saveMatchClient(MatchClient);
-        // MatchClient.newChatMessage({
-        //   match_id: this.props.currentMatch.get("match_id"),
-        //   text: "gówno",
-        // });
-        // MatchClient.fetchMessages(this.props.currentMatch.get("match_id"));
       });
     }
   }

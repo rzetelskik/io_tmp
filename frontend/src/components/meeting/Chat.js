@@ -22,9 +22,16 @@ function Chat(props) {
     console.log(message.author, message.content);
   });
 
+  const click = () => {
+    props.matchClient.newChatMessage({
+      match_id: props.matchId,
+      text: "kiminotede kirisate kyo ko i wo kyo ku wo",
+    });
+  };
+
   return (
     <Fragment>
-      <div className="chat"></div>;
+      <button onClick={click}></button>
       <MessageList messageList={messageList} />
     </Fragment>
   );
