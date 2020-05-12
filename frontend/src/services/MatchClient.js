@@ -30,12 +30,12 @@ class MatchClient {
   }
 
   sendMessage(data) {
-    console.log("sendMessage ", JSON.stringify({ ...data }));
+    // console.log("sendMessage ", JSON.stringify({ ...data }));
 
     try {
       this.socketRef.send(JSON.stringify({ ...data }));
     } catch (err) {
-      console.log(err.message);
+      // console.log(err.message);
     }
   }
 
@@ -46,7 +46,7 @@ class MatchClient {
         document.location.origin.replace(/^http/, "ws") + "/ws/?token=" + token;
       this.socketRef = new WebSocket(path);
       this.socketRef.onopen = () => {
-        console.log("WebSocket open");
+        // console.log("WebSocket open");
       };
 
       this.socketRef.onmessage = (e) => {
@@ -54,11 +54,11 @@ class MatchClient {
       };
 
       this.socketRef.onerror = (e) => {
-        console.log(e.message);
+        // console.log(e.message);
       };
 
       this.socketRef.onclose = () => {
-        console.log("WebSocket closed let's reopen");
+        // console.log("WebSocket closed let's reopen");
         this.connect();
       };
       return true;

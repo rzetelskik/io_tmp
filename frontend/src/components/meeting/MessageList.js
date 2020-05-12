@@ -1,13 +1,16 @@
 import React, { Fragment, Component } from "react";
-import ReactDOM from "react-dom";
 
 class MessageList extends Component {
   render() {
     const messageList = this.props.messageList;
-    const myFirstname = this.props.myFirstname;
     const myUsername = this.props.myUsername;
-    const theirFirstname = this.props.theirFirstname;
+    const theirFirstname = this.props.theirFirstName;
 
+    let box = document.getElementById("scrollBox");
+    let list = document.getElementById("messageList");
+    if (box && list) {
+      box.scroll({ top: list.offsetHeight, behavior: "smooth" });
+    }
     return (
       <Fragment>
         <div
@@ -15,17 +18,22 @@ class MessageList extends Component {
           id="scrollBox"
           style={{ height: "500px", overflow: "auto" }}
         >
-          {messageList.map((message, index) => {
-            let classStr =
-              message.author === myUsername
-                ? "alert alert-primary"
-                : "alert alert-dark";
-            return (
-              <div className={classStr} role="alert">
-                <strong>{message.author}</strong> <br /> {message.content}
-              </div>
-            );
-          })}
+          <div id="messageList">
+            {messageList.map((message, index) => {
+              let classStr =
+                message.author === myUsername
+                  ? "alert alert-primary"
+                  : "alert alert-dark";
+              let id = "singleMessage" + index;
+              let author =
+                message.author === myUsername ? "You" : theirFirstname;
+              return (
+                <div className={classStr} role="alert" key={id}>
+                  <strong>{author}</strong> <br /> {message.content}
+                </div>
+              );
+            })}
+          </div>
         </div>
       </Fragment>
     );
