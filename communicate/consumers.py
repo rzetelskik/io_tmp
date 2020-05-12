@@ -79,6 +79,7 @@ class Consumer(AsyncWebsocketConsumer):
         messages = await self.get_messages(data['match_id'])
         content = {
             'command': 'messages',
+            'match_id': data['match_id'],
             'messages': await self.messages_to_json(messages)
         }
 
