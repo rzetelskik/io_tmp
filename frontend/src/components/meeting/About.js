@@ -10,10 +10,6 @@ function About(props) {
 
   const { commonTags, firstName, distance } = props;
 
-  useEffect(() => {
-    console.log(props.chatMessages.toString());
-  });
-
   return (
     <Fragment>
       <ul className="list-group list-group-flush">
@@ -47,8 +43,4 @@ function About(props) {
   );
 }
 
-const mapStateToProps = (state) => ({
-  chatMessages: state.get("chat"),
-});
-
-export default connect(mapStateToProps)(About);
+export default connect()(About);
