@@ -5,6 +5,12 @@ import { connect } from "react-redux";
 function Chat(props) {
   const [messages, setMessages] = useState(null);
 
+  const [input, setInput] = useState("");
+
+  const onChange = (e) => {
+    setInput(e.target.value);
+  };
+
   useEffect(() => {
     if (!messages && props.matchClient) {
       props.matchClient.fetchMessages(props.matchId);
@@ -22,14 +28,54 @@ function Chat(props) {
     console.log(message.author, message.content);
   });
 
+  const click = (text) => () => {
+    props.matchClient.newChatMessage({
+      match_id: props.matchId,
+      text: text,
+    });
+  };
+
+  const inputForm = (
+    <Fragment>
+      <div className="card-body bg-light text-dark">
+        <div className="input-group mb-3">
+          <input
+            type="text"
+            onChange={onChange}
+            value={input}
+            className="form-control"
+            placeholder="Type your message"
+            aria-label="Type your message"
+            aria-describedby="button-addon2"
+          />
+          <div className="input-group-append">
+            <button
+              onClick={click(input)}
+              className="btn btn-outline-primary"
+              type="button"
+              id="button-addon2"
+            >
+              Send
+            </button>
+          </div>
+        </div>
+      </div>
+    </Fragment>
+  );
+
   return (
     <Fragment>
-      <MessageList
-        messageList={messageList}
-        myFirstName={props.myFirstName}
-        myUsername={props.myUsername}
-        theirFirstName={props.theirFirstName}
-      />
+      <li>
+        <div className="card-body bg-light text-dark">
+          <MessageList
+            messageList={messageList}
+            myFirstName={props.myFirstName}
+            myUsername={props.myUsername}
+            theirFirstName={props.theirFirstName}
+          />
+        </div>
+      </li>
+      <li>{inputForm}</li>
     </Fragment>
   );
 }

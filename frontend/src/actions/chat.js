@@ -13,7 +13,7 @@ export const setMessages = (matchId, messages) => (dispatch) => {
 };
 
 export const newMessage = (message) => (dispatch) => {
-  console.log("nowa wiadomosc");
+  console.log("nowa wiadomosc", message.match_id, message.content);
 
   dispatch({
     type: NEW_MESSAGE,

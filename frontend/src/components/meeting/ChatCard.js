@@ -38,12 +38,7 @@ export class ChatCard extends Component {
             <h3 className="">{firstName}</h3>
           </li>
 
-          <li>
-            <div className="card-body bg-light text-dark">
-              <Chat firstName={this.props.firstName} />
-            </div>
-          </li>
-          <li>{inputForm}</li>
+          <Chat firstName={this.props.firstName} />
         </ul>
       </Fragment>
     );
