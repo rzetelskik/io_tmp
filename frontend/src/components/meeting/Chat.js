@@ -34,6 +34,7 @@ function Chat(props) {
       match_id: props.matchId,
       text: text,
     });
+    setInput("");
   };
 
   const inputForm = (
