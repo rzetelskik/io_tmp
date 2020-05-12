@@ -4,10 +4,12 @@ import {
   LOGOUT_SUCCESS,
   NEW_MATCH,
   CLEAR_MATCH,
+  MATCH_CLIENT,
 } from "../actions/types";
 import { fromJS } from "immutable";
 
 const initialState = fromJS({
+  matchClient: null,
   users: [],
   userCount: 0,
   currentMatch: null,
@@ -41,6 +43,12 @@ export default function (state = initialState, action) {
       return state.merge(
         fromJS({
           currentMatch: null,
+        })
+      );
+    case MATCH_CLIENT:
+      return state.merge(
+        fromJS({
+          matchClient: action.payload,
         })
       );
     case LOGOUT_SUCCESS:

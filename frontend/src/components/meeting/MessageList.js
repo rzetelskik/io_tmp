@@ -1,4 +1,4 @@
-import React, { useEffect, Fragment } from "react";
+import React, { Fragment } from "react";
 
 function MessageList(props) {
   const messageList = props.messageList;
