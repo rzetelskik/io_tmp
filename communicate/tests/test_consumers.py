@@ -2,7 +2,7 @@ import pytest
 from channels.db import database_sync_to_async
 from channels.testing import WebsocketCommunicator
 from channels.layers import get_channel_layer
-from matcher.consumers import MatcherConsumer
+from ..consumers import Consumer
 import factory
 from account.models import CustomUser
 
@@ -24,7 +24,7 @@ class CustomUserFactory(factory.django.DjangoModelFactory):
 async def test_matcher_consumer_connect():
     user = await CustomUserFactory()
 
-    communicator = WebsocketCommunicator(MatcherConsumer, "/ws/matcher/")
+    communicator = WebsocketCommunicator(Consumer, "/ws/")
     communicator.scope["user"] = user
     connected, _ = await communicator.connect()
     assert connected
@@ -37,15 +37,15 @@ async def test_matcher_consumer_created_notification():
     user = await CustomUserFactory()
     channel_layer = get_channel_layer()
 
-    communicator = WebsocketCommunicator(MatcherConsumer, "/ws/matcher/")
+    communicator = WebsocketCommunicator(Consumer, "/ws/")
     communicator.scope["user"] = user
     connected, _ = await communicator.connect()
     assert connected
 
     user_group = "user_{}".format(user.username)
-    await channel_layer.group_send(user_group, {"type": "match.created.notification"})
+    await channel_layer.group_send(user_group, {"type": "match.created.notification", "match_id": 1})
     response = await communicator.receive_from()
-    assert response == "User has a new match."
+    assert response == '{"command": "match_created", "message": "User has a new match."}'
 
     await communicator.disconnect()
 
@@ -56,14 +56,14 @@ async def test_matcher_consumer_deleted_notification():
     user = await CustomUserFactory()
     channel_layer = get_channel_layer()
 
-    communicator = WebsocketCommunicator(MatcherConsumer, "/ws/matcher/")
+    communicator = WebsocketCommunicator(Consumer, "/ws/")
     communicator.scope["user"] = user
     connected, _ = await communicator.connect()
     assert connected
 
     user_group = "user_{}".format(user.username)
-    await channel_layer.group_send(user_group, {"type": "match.deleted.notification"})
+    await channel_layer.group_send(user_group, {"type": "match.deleted.notification", "match_id": 1})
     response = await communicator.receive_from()
-    assert response == "User's current meeting has been terminated."
+    assert response == '{"command": "match_terminated", "message": "User\'s current meeting has been terminated."}'
 
     await communicator.disconnect()

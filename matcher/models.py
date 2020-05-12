@@ -57,3 +57,7 @@ class Match(models.Model):
     @staticmethod
     def get_user_current_match(user):
         return Match.objects.filter(time_end__isnull=True).get(Q(user1=user) | Q(user2=user))
+
+    @staticmethod
+    def get_all_user_matches(user):
+        return Match.objects.filter(Q(user1=user) | Q(user2=user)).order_by('-time_start')

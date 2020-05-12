@@ -1,46 +1,64 @@
 import store from "../store";
 
-class WebSocketClient {
+class MatchClient {
   static instance = null;
   callbacks = {};
 
   static getInstance() {
-    if (!WebSocketClient.instance)
-      WebSocketClient.instance = new WebSocketClient();
-    return WebSocketClient.instance;
+    if (!MatchClient.instance) MatchClient.instance = new MatchClient();
+    return MatchClient.instance;
   }
 
   constructor() {
     this.socketRef = null;
   }
 
-  addCallback(acceptNotificationCallback) {
-    this.callbacks["accept"] = acceptNotificationCallback;
+  addCallback(callbacks) {
+    this.callbacks = callbacks;
+  }
+
+  fetchMessages(match_id) {
+    this.sendMessage({ command: "fetch_messages", match_id: match_id });
+  }
+
+  newChatMessage(message) {
+    this.sendMessage({
+      command: "new_message",
+      match_id: message.match_id,
+      text: message.text,
+    });
+  }
+
+  sendMessage(data) {
+    console.log("sendMessage ", JSON.stringify({ ...data }));
+
+    try {
+      this.socketRef.send(JSON.stringify({ ...data }));
+    } catch (err) {
+      console.log(err.message);
+    }
   }
 
   connect = () => {
     const token = store.getState().getIn(["auth", "token"], null);
     if (token) {
       const path =
-        document.location.origin.replace(/^http/, "ws") +
-        "/ws/matcher/?token=" +
-        token;
+        document.location.origin.replace(/^http/, "ws") + "/ws/?token=" + token;
       this.socketRef = new WebSocket(path);
       this.socketRef.onopen = () => {
-        // console.log("WebSocket open");
+        console.log("WebSocket open");
       };
 
       this.socketRef.onmessage = (e) => {
-        // console.log(e.data);
         this.socketNewMessage(e.data);
       };
 
       this.socketRef.onerror = (e) => {
-        // console.log(e.message);
+        console.log(e.message);
       };
 
       this.socketRef.onclose = () => {
-        // console.log("WebSocket closed let's reopen");
+        console.log("WebSocket closed let's reopen");
         this.connect();
       };
       return true;
@@ -53,7 +71,23 @@ class WebSocketClient {
     if (Object.keys(this.callbacks).length === 0) {
       return;
     }
-    this.callbacks["accept"]();
+    const parsedData = JSON.parse(data);
+    // console.log("socketNewMessage", data);
+    const command = parsedData.command;
+    // console.log(parsedData);
+
+    if (command.localeCompare("messages") === 0) {
+      this.callbacks[command](parsedData.match_id, parsedData.messages);
+    }
+    if (command === "new_message") {
+      this.callbacks[command](parsedData.message);
+    }
+    if (command === "match_created") {
+      this.callbacks[command]();
+    }
+    if (command === "match_terminated") {
+      this.callbacks[command]();
+    }
   };
 
   state = () => this.socketRef.readyState;
@@ -88,4 +122,4 @@ class WebSocketClient {
   };
 }
 
-export default WebSocketClient.getInstance();
+export default MatchClient.getInstance();

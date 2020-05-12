@@ -4,25 +4,35 @@ import PropTypes from "prop-types";
 import Geolocator from "./Geolocator";
 import { getGeolocation } from "../../actions/geolocation";
 import { createMessage, MESSAGE_ERROR } from "../../actions/messages";
+import { newMessage, setMessages } from "../../actions/chat";
 import ActualMatcher from "./ActualMatcher";
 import { askForMatch, endMeeting } from "../../actions/matcher";
 import CurrentMeeting from "../meeting/CurrentMeeting";
 import Loading from "../layout/Loading";
-
-import WebSocketClient from "../../services/WebSocketClient";
+import MatchClient from "../../services/MatchClient";
 
 export class Matcher extends Component {
   constructor(props) {
     super(props);
 
-    if (WebSocketClient.connect() === false) {
+    if (MatchClient.connect() === false) {
       this.props.createMessage(
         MESSAGE_ERROR,
         "unable to establish update connection with server"
       );
     } else {
-      WebSocketClient.waitForSocketConnection(() => {
-        WebSocketClient.addCallback(this.props.askForMatch);
+      MatchClient.waitForSocketConnection(() => {
+        MatchClient.addCallback({
+          match_created: this.props.askForMatch,
+          match_terminated: this.props.askForMatch,
+          new_message: this.props.newMessage,
+          messages: this.props.setMessages,
+        });
+        MatchClient.newChatMessage({
+          match_id: this.props.currentMatch.get("match_id"),
+          text: "gówno",
+        });
+        MatchClient.fetchMessages(this.props.currentMatch.get("match_id"));
       });
     }
   }
@@ -110,4 +120,6 @@ export default connect(mapStateToProps, {
   getGeolocation,
   createMessage,
   endMeeting,
+  setMessages,
+  newMessage,
 })(Matcher);

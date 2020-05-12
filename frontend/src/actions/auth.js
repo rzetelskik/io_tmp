@@ -13,7 +13,7 @@ import {
 } from "./types";
 import { createMessage, MESSAGE_SUCCESS, MESSAGE_INFO } from "./messages";
 import { createError } from "./errors";
-import WebSocketClient from "../services/WebSocketClient";
+import WebSocketClient from "../services/MatchClient";
 
 export const loadUser = () => (dispatch, getState) => {
   dispatch({ type: USER_LOADING });
@@ -138,7 +138,7 @@ export const updateTags = (tags) => (dispatch, getState) => {
       dispatch(createError(errors));
     });
 };
-
+ 
 export const changePassword = (password, new_password, new_password_repeat) => (
   dispatch,
   getState
