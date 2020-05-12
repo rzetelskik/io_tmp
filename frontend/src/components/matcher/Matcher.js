@@ -6,7 +6,11 @@ import { getGeolocation } from "../../actions/geolocation";
 import { createMessage, MESSAGE_ERROR } from "../../actions/messages";
 import { newMessage, setMessages } from "../../actions/chat";
 import ActualMatcher from "./ActualMatcher";
-import { askForMatch, endMeeting } from "../../actions/matcher";
+import {
+  askForMatch,
+  endMeeting,
+  saveMatchClient,
+} from "../../actions/matcher";
 import CurrentMeeting from "../meeting/CurrentMeeting";
 import Loading from "../layout/Loading";
 import MatchClient from "../../services/MatchClient";
@@ -28,11 +32,12 @@ export class Matcher extends Component {
           new_message: this.props.newMessage,
           messages: this.props.setMessages,
         });
-        MatchClient.newChatMessage({
-          match_id: this.props.currentMatch.get("match_id"),
-          text: "gówno",
-        });
-        MatchClient.fetchMessages(this.props.currentMatch.get("match_id"));
+        saveMatchClient(MatchClient);
+        // MatchClient.newChatMessage({
+        //   match_id: this.props.currentMatch.get("match_id"),
+        //   text: "gówno",
+        // });
+        // MatchClient.fetchMessages(this.props.currentMatch.get("match_id"));
       });
     }
   }

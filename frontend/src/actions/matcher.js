@@ -76,3 +76,10 @@ export const endMeeting = () => (dispatch, getState) => {
       );
     });
 };
+
+export const saveMatchClient = (MatchClient) => (dispatch) => {
+  dispatch({
+    type: MATCH_CLIENT,
+    payload: MatchClient,
+  });
+};
