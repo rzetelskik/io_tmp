@@ -7,6 +7,7 @@ export class ChatCard extends Component {
     const { firstName } = this.props;
     return (
       <Fragment>
+        <Chat />
         <ul className="list-group list-group-flush">
           <li className="list-group-item text-white bg-secondary">
             <h3 className="">{firstName}</h3>
@@ -14,7 +15,7 @@ export class ChatCard extends Component {
 
           <li>
             <div className="card-body bg-light text-dark">
-              <Chat />
+              <Chat firstName={this.props.firstName} />
             </div>
           </li>
         </ul>

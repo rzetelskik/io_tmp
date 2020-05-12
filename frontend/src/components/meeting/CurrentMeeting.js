@@ -14,7 +14,7 @@ export class CurrentMeeting extends Component {
               <About {...this.props} />
             </Tab>
             <Tab eventKey="profile" title="Chat">
-              <ChatCard {...this.props} />
+              <ChatCard firstName={this.props.firstName} />
             </Tab>
           </Tabs>
         </div>

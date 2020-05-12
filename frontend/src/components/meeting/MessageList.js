@@ -1,22 +1,13 @@
-import React, { Component } from "react";
+import React, { useEffect, Fragment } from "react";
 
 function MessageList(props) {
-  useEffect(() => {
-    console.log(props.chatMessages.toString());
-  });
-
-  let color;
-  if (owner === "them") {
-    color = "info";
-  } else {
-    color = "dark";
-  }
-  return;
-  <div></div>;
+  // let color;
+  // if (owner === "them") {
+  //   color = "info";
+  // } else {
+  //   color = "dark";
+  // }
+  return <Fragment></Fragment>;
 }
 
-const mapStateToProps = (state) => ({
-  chatMessages: state.get("chat"),
-});
-
-export default connect(mapStateToProps)(MessageList);
+export default MessageList;

@@ -1,90 +1,29 @@
-import React, { Component, Fragment } from "react";
+import React, { useEffect, Fragment } from "react";
+import MessageList from "./MessageList";
+import { connect } from "react-redux";
 
-export class Chat extends Component {
-  // componentDidMount() {
-  //   this.scrollToBottom();
-  // }
-  // componentDidUpdate() {
-  //   this.scrollToBottom();
-  // }
-  // scrollToBottom = () => {
-  //   const chat = this.messagesEnd;
-  //   const scrollHeight = chat.scrollHeight;
-  //   const height = chat.clientHeight;
-  //   const maxScrollTop = scrollHeight - height;
-  //   chat.scrollTop = maxScrollTop > 0 ? maxScrollTop : 0;
-  // };
-  // addMessage(message) {
-  //   this.setState({ messages: [...this.state.messages, message] });
-  // }
-  // setMessages(messages) {
-  //   this.setState({ messages: messages.reverse() });
-  // }
-  // messageChangeHandler = (event) => {
-  //   this.setState({
-  //     message: event.target.value,
-  //   });
-  // };
-  // sendMessageHandler = (e, message) => {
-  //   const messageObject = {
-  //     from: this.props.currentUser,
-  //     text: message,
-  //   };
-  //   WebSocketInstance.newChatMessage(messageObject);
-  //   this.setState({
-  //     message: "",
-  //   });
-  //   e.preventDefault();
-  // };
-  // renderMessages = (messages) => {
-  //   const currentUser = this.props.currentUser;
-  //   return messages.map((message, i) => (
-  //     <li
-  //       key={message.id}
-  //       className={message.author === currentUser ? "me" : "him"}
-  //     >
-  //       {" "}
-  //       <h4 className="author">{message.author} </h4>
-  //       <p>{message.content}</p>
-  //     </li>
-  //   ));
-  // };
-  render() {
-    // const messages = this.state.messages;
-    // const currentUser = this.props.currentUser;
-    return (
-      <div className="chat">
-        {/* <div className="container">
-          <h1>Chatting as {currentUser} </h1>
-          <h3>Displaying only the last 50 messages</h3>
-          <ul
-            ref={(el) => {
-              this.messagesEnd = el;
-            }}
-          >
-            {messages && this.renderMessages(messages)}
-          </ul>
-        </div>
-        <div className="container message-form">
-          <form
-            onSubmit={(e) => this.sendMessageHandler(e, this.state.message)}
-            className="form"
-          >
-            <input
-              type="text"
-              onChange={this.messageChangeHandler}
-              value={this.state.message}
-              placeholder="Type a Message"
-              required
-            />
-            <button className="submit" type="submit" value="Submit">
-              Send
-            </button>
-          </form>
-        </div> */}
-      </div>
-    );
-  }
+function Chat(props) {
+  useEffect(() => {
+    console.log(props.chatMessages.toString());
+  });
+
+  // const matchId = props.getIn(["currentMatch", "match_id"]).toString();
+  // const messageList = props.getIn(["chat", matchId]);
+
+  const matchId = props.currentMatch.match_id.toString();
+  const messageList = props.getIn(["chat", matchId]);
+  console.log("dupa: " + messageList.toString());
+
+  return (
+    <Fragment>
+      <div className="chat"></div>;
+      <MessageList messageList={messageList} />
+    </Fragment>
+  );
 }
 
-export default Chat;
+const mapStateToProps = (state) => ({
+  chatMessages: state.get("chat"),
+});
+
+export default connect(mapStateToProps)(Chat);
