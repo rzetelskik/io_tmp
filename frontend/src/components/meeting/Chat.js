@@ -7,12 +7,10 @@ function Chat(props) {
     console.log(props.chatMessages.toString());
   });
 
-  // const matchId = props.getIn(["currentMatch", "match_id"]).toString();
-  // const messageList = props.getIn(["chat", matchId]);
-
-  const matchId = props.currentMatch.match_id.toString();
-  const messageList = props.getIn(["chat", matchId]);
-  console.log("dupa: " + messageList.toString());
+  // const matchId = props.currentMatch;
+  // const messageList = props.chatMessages;
+  // console.log("dupa: " + messageList.toString());
+  const messageList = ["kupsko", "dupsko", "twoja stara"];
 
   return (
     <Fragment>
@@ -24,6 +22,7 @@ function Chat(props) {
 
 const mapStateToProps = (state) => ({
   chatMessages: state.get("chat"),
+  currentMatch: state.getIn(["matcher", "currentMatch", "match_id"]),
 });
 
 export default connect(mapStateToProps)(Chat);

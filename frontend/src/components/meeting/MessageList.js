@@ -1,13 +1,16 @@
 import React, { useEffect, Fragment } from "react";
 
 function MessageList(props) {
-  // let color;
-  // if (owner === "them") {
-  //   color = "info";
-  // } else {
-  //   color = "dark";
-  // }
-  return <Fragment></Fragment>;
+  const messageList = props.messageList;
+  return (
+    <Fragment>
+      <ul>
+        {messageList.map((message, index) => {
+          return <li>{message}</li>;
+        })}
+      </ul>
+    </Fragment>
+  );
 }
 
 export default MessageList;
