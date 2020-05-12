@@ -80,7 +80,7 @@ class MatchClient {
     console.log(parsedData);
 
     if (command === "messages") {
-      this.callbacks[command](parsedData.match_id, parsedData.);
+      // this.callbacks[command](parsedData.match_id, parsedData.);
     }
     if (command === "new_message") {
       this.callbacks[command](parsedData);
