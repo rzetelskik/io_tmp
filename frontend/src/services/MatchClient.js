@@ -77,8 +77,10 @@ class MatchClient {
     const parsedData = JSON.parse(data);
     console.log("socketNewMessage", data);
     const command = parsedData.command;
+    console.log(parsedData);
+
     if (command === "messages") {
-      this.callbacks[command](parsedData);
+      this.callbacks[command](parsedData.match_id, parsedData.);
     }
     if (command === "new_message") {
       this.callbacks[command](parsedData);

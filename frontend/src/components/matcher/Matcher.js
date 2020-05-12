@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import Geolocator from "./Geolocator";
 import { getGeolocation } from "../../actions/geolocation";
 import { createMessage, MESSAGE_ERROR } from "../../actions/messages";
+import { newMessage, setMessages } from "../../actions/chat";
 import ActualMatcher from "./ActualMatcher";
 import { askForMatch, endMeeting } from "../../actions/matcher";
 import CurrentMeeting from "./CurrentMeeting";
@@ -24,18 +25,14 @@ export class Matcher extends Component {
         MatchClient.addCallback({
           match_created: this.props.askForMatch,
           match_terminated: this.props.askForMatch,
-          new_message: (data) => {
-            console.log("nowa wiadomosc");
-          },
-          messages: (data) => {
-            console.log("lista wiadomosci");
-          },
+          new_message: newMessage,
+          messages: setMessages,
         });
-        // MatchClient.newChatMessage({
-        //   match_id: this.props.currentMatch.get("match_id"),
-        //   text: "gówno",
-        // });
-        // MatchClient.fetchMessages(this.props.currentMatch.get("match_id"));
+        MatchClient.newChatMessage({
+          match_id: this.props.currentMatch.get("match_id"),
+          text: "gówno",
+        });
+        MatchClient.fetchMessages(this.props.currentMatch.get("match_id"));
       });
     }
   }
@@ -123,4 +120,6 @@ export default connect(mapStateToProps, {
   getGeolocation,
   createMessage,
   endMeeting,
+  setMessages,
+  newMessage,
 })(Matcher);
