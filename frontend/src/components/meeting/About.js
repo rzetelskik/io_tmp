@@ -26,7 +26,7 @@ function About(props) {
           Common tags:
           {commonTags.map((tagName, id) => {
             return (
-              <Fragment>
+              <Fragment key={id}>
                 {" "}
                 <span className="badge badge-primary">{tagName}</span>{" "}
               </Fragment>

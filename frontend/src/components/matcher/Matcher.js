@@ -28,11 +28,11 @@ export class Matcher extends Component {
           new_message: this.props.newMessage,
           messages: this.props.setMessages,
         });
-        MatchClient.newChatMessage({
-          match_id: this.props.currentMatch.get("match_id"),
-          text: "gówno",
-        });
-        MatchClient.fetchMessages(this.props.currentMatch.get("match_id"));
+        // MatchClient.newChatMessage({
+        //   match_id: this.props.currentMatch.get("match_id"),
+        //   text: "gówno",
+        // });
+        // MatchClient.fetchMessages(this.props.currentMatch.get("match_id"));
       });
     }
   }
