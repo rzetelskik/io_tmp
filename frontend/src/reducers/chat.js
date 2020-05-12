@@ -8,7 +8,7 @@ export default function (state = initialState, action) {
     case SET_MESSAGES:
       return state.merge(
         fromJS({
-          [action.payload.matchId]: action.payload.messages,
+          [action.payload.matchId]: action.payload.messages.reverse(),
         })
       );
     case NEW_MESSAGE:

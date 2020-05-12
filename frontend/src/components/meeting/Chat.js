@@ -28,7 +28,8 @@ function Chat(props) {
     console.log(message.author, message.content);
   });
 
-  const click = (text) => () => {
+  const onSubmit = (text) => (e) => {
+    e.preventDefault();
     props.matchClient.newChatMessage({
       match_id: props.matchId,
       text: text,
@@ -38,27 +39,15 @@ function Chat(props) {
   const inputForm = (
     <Fragment>
       <div className="card-body bg-light text-dark">
-        <div className="input-group mb-3">
+        <form onSubmit={onSubmit(input)} className="send-message-form">
           <input
-            type="text"
+            className="form-control"
             onChange={onChange}
             value={input}
-            className="form-control"
-            placeholder="Type your message"
-            aria-label="Type your message"
-            aria-describedby="button-addon2"
+            placeholder="Type your message "
+            type="text"
           />
-          <div className="input-group-append">
-            <button
-              onClick={click(input)}
-              className="btn btn-outline-primary"
-              type="button"
-              id="button-addon2"
-            >
-              Send
-            </button>
-          </div>
-        </div>
+        </form>
       </div>
     </Fragment>
   );
@@ -66,14 +55,12 @@ function Chat(props) {
   return (
     <Fragment>
       <li>
-        <div className="card-body bg-light text-dark">
-          <MessageList
-            messageList={messageList}
-            myFirstName={props.myFirstName}
-            myUsername={props.myUsername}
-            theirFirstName={props.theirFirstName}
-          />
-        </div>
+        <MessageList
+          messageList={messageList}
+          myFirstName={props.myFirstName}
+          myUsername={props.myUsername}
+          theirFirstName={props.theirFirstName}
+        />
       </li>
       <li>{inputForm}</li>
     </Fragment>
