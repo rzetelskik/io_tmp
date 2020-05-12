@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import { Tab, Tabs } from "react-bootstrap";
-import Chat from "./Chat";
+import ChatCard from "./ChatCard";
 import About from "./About";
 
 export class CurrentMeeting extends Component {
@@ -15,13 +15,13 @@ export class CurrentMeeting extends Component {
 
     return (
       <Fragment>
-        <div className="card w-50 text-white bg-secondary" data-test="meeting">
-          <Tabs defaultActiveKey="about" id="uncontrolled-tab-example">
+        <div className="card w-50 text-white bg-white" data-test="meeting">
+          <Tabs defaultActiveKey="about">
             <Tab eventKey="about" title="About me">
               <About {...this.props} />
             </Tab>
             <Tab eventKey="profile" title="Chat">
-              <Chat {...this.props} />
+              <ChatCard {...this.props} />
             </Tab>
           </Tabs>
         </div>

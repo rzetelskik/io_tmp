@@ -8,7 +8,6 @@ import {
 } from "../../actions/auth";
 import { makeMockStore } from "../../../Utils";
 import moxios from "moxios";
-import { fromJS } from "immutable";
 import {
   REGISTER_SUCCESS,
   CREATE_MESSAGE,

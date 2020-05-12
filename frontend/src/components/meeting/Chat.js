@@ -1,25 +1,90 @@
 import React, { Component, Fragment } from "react";
-import { connect } from "react-redux";
 
 export class Chat extends Component {
+  // componentDidMount() {
+  //   this.scrollToBottom();
+  // }
+  // componentDidUpdate() {
+  //   this.scrollToBottom();
+  // }
+  // scrollToBottom = () => {
+  //   const chat = this.messagesEnd;
+  //   const scrollHeight = chat.scrollHeight;
+  //   const height = chat.clientHeight;
+  //   const maxScrollTop = scrollHeight - height;
+  //   chat.scrollTop = maxScrollTop > 0 ? maxScrollTop : 0;
+  // };
+  // addMessage(message) {
+  //   this.setState({ messages: [...this.state.messages, message] });
+  // }
+  // setMessages(messages) {
+  //   this.setState({ messages: messages.reverse() });
+  // }
+  // messageChangeHandler = (event) => {
+  //   this.setState({
+  //     message: event.target.value,
+  //   });
+  // };
+  // sendMessageHandler = (e, message) => {
+  //   const messageObject = {
+  //     from: this.props.currentUser,
+  //     text: message,
+  //   };
+  //   WebSocketInstance.newChatMessage(messageObject);
+  //   this.setState({
+  //     message: "",
+  //   });
+  //   e.preventDefault();
+  // };
+  // renderMessages = (messages) => {
+  //   const currentUser = this.props.currentUser;
+  //   return messages.map((message, i) => (
+  //     <li
+  //       key={message.id}
+  //       className={message.author === currentUser ? "me" : "him"}
+  //     >
+  //       {" "}
+  //       <h4 className="author">{message.author} </h4>
+  //       <p>{message.content}</p>
+  //     </li>
+  //   ));
+  // };
   render() {
-    const { firstName } = this.props;
+    // const messages = this.state.messages;
+    // const currentUser = this.props.currentUser;
     return (
-      <Fragment>
-        <ul className="list-group list-group-flush">
-          <li className="list-group-item text-white bg-secondary">
-            <h3 className="">{firstName}</h3>
-          </li>
-
-          <li>
-            <div className="card-body bg-light text-dark">
-              tutaj wsadzimy chat
-            </div>
-          </li>
-        </ul>
-      </Fragment>
+      <div className="chat">
+        {/* <div className="container">
+          <h1>Chatting as {currentUser} </h1>
+          <h3>Displaying only the last 50 messages</h3>
+          <ul
+            ref={(el) => {
+              this.messagesEnd = el;
+            }}
+          >
+            {messages && this.renderMessages(messages)}
+          </ul>
+        </div>
+        <div className="container message-form">
+          <form
+            onSubmit={(e) => this.sendMessageHandler(e, this.state.message)}
+            className="form"
+          >
+            <input
+              type="text"
+              onChange={this.messageChangeHandler}
+              value={this.state.message}
+              placeholder="Type a Message"
+              required
+            />
+            <button className="submit" type="submit" value="Submit">
+              Send
+            </button>
+          </form>
+        </div> */}
+      </div>
     );
   }
 }
 
-export default connect()(Chat);
+export default Chat;
