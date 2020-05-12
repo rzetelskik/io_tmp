@@ -12,14 +12,11 @@ export const setMessages = (matchId, messages) => (dispatch) => {
   });
 };
 
-export const newMessage = (matchId, messages) => (dispatch) => {
+export const newMessage = (message) => (dispatch) => {
   console.log("nowa wiadomosc");
 
   dispatch({
     type: NEW_MESSAGE,
-    payload: {
-      matchId: matchId,
-      messages: messages,
-    },
+    payload: message,
   });
 };

@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect } from "react";
 import meeting from "../../data/images/meeting.png";
 import { connect } from "react-redux";
 
@@ -9,6 +9,10 @@ function CurrentMeeting(props) {
   };
 
   const { commonTags, firstName, distance } = props;
+
+  useEffect(() => {
+    console.log(props.chatMessages.toString());
+  });
 
   return (
     <Fragment>
@@ -46,4 +50,8 @@ function CurrentMeeting(props) {
   );
 }
 
-export default connect()(CurrentMeeting);
+const mapStateToProps = (state) => ({
+  chatMessages: state.get("chat"),
+});
+
+export default connect(mapStateToProps)(CurrentMeeting);

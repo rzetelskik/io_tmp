@@ -25,8 +25,8 @@ export class Matcher extends Component {
         MatchClient.addCallback({
           match_created: this.props.askForMatch,
           match_terminated: this.props.askForMatch,
-          new_message: newMessage,
-          messages: setMessages,
+          new_message: this.props.newMessage,
+          messages: this.props.setMessages,
         });
         MatchClient.newChatMessage({
           match_id: this.props.currentMatch.get("match_id"),

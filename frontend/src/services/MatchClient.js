@@ -50,9 +50,6 @@ class MatchClient {
       };
 
       this.socketRef.onmessage = (e) => {
-        console.log("sadfsadfsadfsadf");
-
-        console.log(e.data);
         this.socketNewMessage(e.data);
       };
 
@@ -75,15 +72,15 @@ class MatchClient {
       return;
     }
     const parsedData = JSON.parse(data);
-    console.log("socketNewMessage", data);
+    // console.log("socketNewMessage", data);
     const command = parsedData.command;
-    console.log(parsedData);
+    // console.log(parsedData);
 
-    if (command === "messages") {
-      // this.callbacks[command](parsedData.match_id, parsedData.);
+    if (command.localeCompare("messages") === 0) {
+      this.callbacks[command](parsedData.match_id, parsedData.messages);
     }
     if (command === "new_message") {
-      this.callbacks[command](parsedData);
+      this.callbacks[command](parsedData.message);
     }
     if (command === "match_created") {
       this.callbacks[command]();
