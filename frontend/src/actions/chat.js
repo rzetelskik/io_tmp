@@ -1,7 +1,7 @@
 import { SET_MESSAGES, NEW_MESSAGE } from "./types";
 
 export const setMessages = (matchId, messages) => (dispatch) => {
-  console.log("lista wiadomosci");
+  // console.log("lista wiadomosci");
 
   dispatch({
     type: SET_MESSAGES,
@@ -13,7 +13,7 @@ export const setMessages = (matchId, messages) => (dispatch) => {
 };
 
 export const newMessage = (message) => (dispatch) => {
-  console.log("nowa wiadomosc", message.match_id, message.content);
+  // console.log("nowa wiadomosc", message.match_id, message.content);
 
   dispatch({
     type: NEW_MESSAGE,
