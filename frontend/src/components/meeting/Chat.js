@@ -24,8 +24,12 @@ function Chat(props) {
 
   return (
     <Fragment>
-      <div className="chat"></div>;
-      <MessageList messageList={messageList} />
+      <MessageList
+        messageList={messageList}
+        myFirstName={props.myFirstName}
+        myUsername={props.myUsername}
+        theirFirstName={props.theirFirstName}
+      />
     </Fragment>
   );
 }
@@ -34,6 +38,9 @@ const mapStateToProps = (state) => ({
   chatMessages: state.get("chat").toJS(),
   matchId: state.getIn(["matcher", "currentMatch", "match_id"]),
   matchClient: state.getIn(["matcher", "matchClient"]),
+  myFirstName: state.getIn(["auth", "user", "first_name"]),
+  myUsername: state.getIn(["auth", "user", "username"]),
+  theirFirstName: state.getIn(["matcher", "currentMatch", "first_name"]),
 });
 
 export default connect(mapStateToProps)(Chat);
