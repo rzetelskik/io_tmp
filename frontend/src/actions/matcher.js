@@ -84,8 +84,6 @@ export const endMeeting = () => (dispatch, getState) => {
 };
 
 export const saveMatchClient = (MatchClient) => (dispatch) => {
-  console.log("duuuupsko");
-
   dispatch({
     type: MATCH_CLIENT,
     payload: MatchClient,

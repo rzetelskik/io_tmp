@@ -26,6 +26,8 @@ export class Matcher extends Component {
       );
     } else {
       MatchClient.waitForSocketConnection(() => {
+        // console.log("sadfsafdsadf");
+
         MatchClient.addCallback({
           match_created: this.props.askForMatch,
           match_terminated: this.props.askForMatch,
@@ -52,7 +54,7 @@ export class Matcher extends Component {
     if (this.props.timestamp === -1) {
       this.props.getGeolocation();
     }
-    this.props.askForMatch();
+    // this.props.askForMatch();
   }
 
   render() {

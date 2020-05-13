@@ -10,7 +10,7 @@ export class CurrentMeeting extends Component {
       <Fragment>
         <div className="card w-50 text-white bg-white" data-test="meeting">
           <Tabs defaultActiveKey="about">
-            <Tab eventKey="about" title="About me">
+            <Tab eventKey="about" title="About your match">
               <About {...this.props} />
             </Tab>
             <Tab eventKey="profile" title="Chat">
