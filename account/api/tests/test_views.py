@@ -3,7 +3,27 @@ from rest_framework.exceptions import ValidationError
 from rest_framework.test import APIClient, APITestCase
 from rest_framework import status
 from knox.models import AuthToken
-from account.models import CustomUser
+from account.models import CustomUser, Tag
+import time, datetime
+from django.contrib.gis.geos import Point
+import factory
+
+class TagFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = Tag
+
+    name = factory.Faker('name')
+
+
+class CustomUserFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = CustomUser
+
+    username = factory.Faker('word')
+    email = factory.Faker('email')
+    first_name = factory.Faker('first_name')
+    last_name = factory.Faker('last_name')
+    password = factory.Faker('password')
 
 
 class TestView(APITestCase):
@@ -12,6 +32,8 @@ class TestView(APITestCase):
     password_update_url = reverse('password-update')
     user_detail_url = reverse('custom-user-detail')
     user_details_update_url = reverse('details-update')
+    user_tags_update_url = reverse('tags-update')
+    list_matching_users_url = reverse('list-matching-users')
     location_update_url = reverse('custom-user-location')
     register_data = {"username": "test1", "email": "test1@test.com",
                      "first_name": "test1", "last_name": "test1",
@@ -19,7 +41,18 @@ class TestView(APITestCase):
     login_data = {"username": "test", "password": "test"}
     password_change_data = {"password": "test", "new_password": "newtest", "new_password_repeat": "newtest"}
     user_details_update_data = {"first_name": "changed", "last_name": "changed", "location_range": 30}
-    location_update_data = {"latitude": "52.1855", "longitude": "21.0269", "location_timestamp": "1585770476638"}
+    
+    location_update_data = {
+        "latitude": "52.1855", 
+        "longitude": "21.0269", 
+        "location_timestamp": str(round(time.time() * 1000))
+    }
+
+    location_update_data_2 = {
+        "latitude": "0.00", 
+        "longitude": "0.00", 
+        "location_timestamp": str(round(time.time() * 1000))
+    }
 
     def setUp(self):
         self.client = APIClient()
@@ -95,3 +128,62 @@ class TestView(APITestCase):
         response = self.client.put(self.location_update_url, self.location_update_data)
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_tags_update(self):
+        tag1 = TagFactory()
+        tag2 = TagFactory()
+        tag3 = TagFactory()
+        
+        user_tags_update_data = {tag.name: True for tag in Tag.objects.all()}
+        user_tags_update_full_data = {'tags': user_tags_update_data}
+
+        self.api_authenticate()
+        response = self.client.put(self.user_tags_update_url, user_tags_update_full_data, format="json")
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+        all_true = len(self.user.tags.all()) == len(Tag.objects.all())
+
+        self.assertEqual(all_true, True)
+
+
+    def test_list_matching_users(self):
+        tag1 = TagFactory()
+        tag2 = TagFactory()
+        tag3 = TagFactory()
+        
+        user_tags_update_data = {tag.name: True for tag in Tag.objects.all()}
+        user_tags_update_full_data = {'tags': user_tags_update_data}
+
+        user1 = CustomUserFactory()
+        user2 = CustomUserFactory()
+        user3 = CustomUserFactory()
+
+        self.client.force_authenticate(user=user1)
+        self.client.put(self.location_update_url, self.location_update_data)
+        self.client.put(self.user_tags_update_url, user_tags_update_full_data, format="json")
+
+        self.client.force_authenticate(user=user2)
+        self.client.put(self.location_update_url, self.location_update_data_2)
+        self.client.put(self.user_tags_update_url, user_tags_update_full_data, format="json")
+
+        self.client.force_authenticate(user=user3)
+        self.client.put(self.location_update_url, self.location_update_data)
+        self.client.put(self.user_tags_update_url, user_tags_update_full_data, format="json")
+
+        response = self.client.get(self.list_matching_users_url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+        matching_list_not_empty = len(response.data) > 0
+        self.assertEqual(matching_list_not_empty, True)
+
+        for another_user_data in response.data:
+            common_tags = another_user_data['common_tags']
+            common_tags_exist = len(common_tags) > 0
+            self.assertEqual(common_tags_exist, True)
+
+
+
+
+
+        
