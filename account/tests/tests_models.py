@@ -1,8 +1,9 @@
 from django.utils import timezone
-from account.models import CustomUser
+from account.models import CustomUser, Tag, CustomUserManager
 from django.test import TestCase
 from django.contrib.gis.db import models
 from django.core.exceptions import ValidationError
+from django.db.utils import IntegrityError
 
 class CustomUserTests(TestCase):
 
@@ -124,3 +125,69 @@ class CustomUserTests(TestCase):
         user3.validate_unique()
         user3.email = "my@e.mail"
         self.assertRaises(ValidationError, user3.validate_unique)
+
+    def test_has_perm(self):
+        self.user1.has_perm("aaa")
+
+    def test_has_module_perms(self):
+        self.user1.has_module_perms("aaa")
+
+
+class TagTests(TestCase):
+
+    def get_string_of_length(self, n):
+        str = ""
+        for i in range(n):
+            str = str + "a"
+        return str
+
+    def setUp(self):
+        self.tag1 = Tag.objects.create(name="jk")
+
+    """Basic tests for methods"""
+    def test_str(self):
+        self.assertEqual(self.tag1.__str__(), "jk")
+
+    def test_name_length(self):
+        self.tag2 = Tag.objects.create(name=self.get_string_of_length(n=30))
+        self.tag2.full_clean()
+
+
+class CustomUserManagerTests(TestCase):
+
+    def setUp(self):
+        self.cos1 = CustomUserManager()
+        # self.user1 = self.cos1.create(username="jk", email="jan@kowal.ski",
+        #                         first_name="jan", last_name="kowalski")
+
+    def test_empty_username(self):
+        self.assertRaises(ValueError, self.cos1.create_user, username="",
+                          email="jan@kowal.ski", first_name="jan", last_name="kowalski")
+
+    def test_empty_email(self):
+        self.assertRaises(ValueError, self.cos1.create_user, username="jk",
+                          email="", first_name="jan", last_name="kowalski")
+
+    def test_empty_first_name(self):
+        self.assertRaises(ValueError, self.cos1.create_user, username="jk",
+                          email="jan@kowal.ski", first_name="", last_name="kowalski")
+
+    def test_empty_last_name(self):
+        self.assertRaises(ValueError, self.cos1.create_user, username="jk",
+                          email="jan@kowal.ski", first_name="jan", last_name="")
+
+    def test_super_empty_username(self):
+        self.assertRaises(ValueError, self.cos1.create_superuser, username="",
+                          email="jan@kowal.ski", first_name="jan", last_name="kowalski", password="janjan")
+
+    def test_super_empty_email(self):
+        self.assertRaises(ValueError, self.cos1.create_superuser, username="jk",
+                          email="", first_name="jan", last_name="kowalski", password="janjan")
+
+    def test_super_empty_first_name(self):
+        self.assertRaises(ValueError, self.cos1.create_superuser, username="jk",
+                          email="jan@kowal.ski", first_name="", last_name="kowalski", password="janjan")
+
+    def test_super_empty_last_name(self):
+        self.assertRaises(ValueError, self.cos1.create_superuser, username="jk",
+                          email="jan@kowal.ski", first_name="jan", last_name="", password="janjan")
