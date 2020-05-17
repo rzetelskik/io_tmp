@@ -1,11 +1,11 @@
 @media (min-width: 768px) {
-    .card {
+    .card-scaled {
         width: 75% !important;
     }
 }
 
 @media (min-width: 1024px) {
-    .card {
+    .card-scaled {
         width: 50% !important;
     }
 }
