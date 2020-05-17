@@ -1,11 +1,15 @@
 @media (min-width: 768px) {
-    .card-scaled {
-        width: 75% !important;
-    }
+  .card-scaled {
+    width: 75% !important;
+  }
 }
 
 @media (min-width: 1024px) {
-    .card-scaled {
-        width: 50% !important;
-    }
+  .card-scaled {
+    width: 50% !important;
+  }
+}
+
+.btn-space {
+  margin: 5px;
 }

@@ -17,18 +17,21 @@ export class Header extends Component {
     const authLinks = (
       <ul className="navbar-nav mr-auto" data-test="authenticated">
         <span className="navbar-text mr-3">
-          <strong>{user ? `Welcome ${user.get("username")}` : ""}</strong>
+          <strong>{user ? `Welcome ${user.get("first_name")}` : ""}</strong>
         </span>
 
         <li className="nav-item active">
-          <Link to="/update-details" className="btn btn-dark btn-sm">
+          <Link to="/update-details" className="btn btn-dark btn-space">
             Edit profile
           </Link>
         </li>
 
         <li className="nav-item active">
           <Link to="/">
-            <button onClick={this.props.logout} className="btn btn-light">
+            <button
+              onClick={this.props.logout}
+              className="btn btn-light btn-space"
+            >
               Logout
             </button>
           </Link>
@@ -39,12 +42,12 @@ export class Header extends Component {
     const guestLinks = (
       <ul className="navbar-nav mr-auto" data-test="guest">
         <li className="nav-item active">
-          <Link to="/register" className="btn btn-light">
+          <Link to="/register" className="btn btn-light btn-space">
             Register
           </Link>
         </li>
         <li className="nav-item active">
-          <Link to="/login" className="btn btn-dark btn-sm">
+          <Link to="/login" className="btn btn-dark btn-space">
             Login
           </Link>
         </li>
@@ -73,7 +76,10 @@ export class Header extends Component {
             <span className="navbar-toggler-icon"></span>
           </button>
 
-          <div className="collapse navbar-collapse" id="navbarSupportedContent">
+          <div
+            className="my-2 my-lg-0 collapse navbar-collapse"
+            id="navbarSupportedContent"
+          >
             {isAuthenticated ? authLinks : guestLinks}
           </div>
         </div>
