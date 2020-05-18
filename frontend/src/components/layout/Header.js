@@ -16,7 +16,7 @@ export class Header extends Component {
 
     const authLinks = (
       <ul className="navbar-nav mr-auto" data-test="authenticated">
-        <span className="navbar-text mr-3">
+        <span className="navbar-text mr-3 btn-space">
           <strong>{user ? `Welcome ${user.get("first_name")}` : ""}</strong>
         </span>
 

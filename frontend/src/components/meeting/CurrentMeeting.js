@@ -3,12 +3,13 @@ import { connect } from "react-redux";
 import { Tab, Tabs } from "react-bootstrap";
 import ChatCard from "./ChatCard";
 import About from "./About";
+import '../App.css';
 
 export class CurrentMeeting extends Component {
   render() {
     return (
       <Fragment>
-        <div className="card card-scaled text-white bg-white" data-test="meeting">
+        <div className="card-scaled card text-white bg-white" data-test="meeting">
           <Tabs defaultActiveKey="about">
             <Tab eventKey="about" title="About your match">
               <About {...this.props} />
