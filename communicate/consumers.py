@@ -94,6 +94,7 @@ class Consumer(AsyncWebsocketConsumer):
         message = await self.create_message(match_id=data['match_id'], content=data['text'])
         content = {
             "command": "new_message",
+            "message_id": message.pk,
             "message": self.message_to_json(message)
         }
 
