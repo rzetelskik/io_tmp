@@ -1,7 +1,7 @@
 from rest_framework import permissions, generics
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
-from .serializers import AnswerSerializer, CurrentMatchSerializer
+from .serializers import AnswerSerializer, CurrentMatchSerializer, TerminatedMatchSerializer
 from account.models import CustomUser
 from matcher.models import Match
 from django.db.models import Q
@@ -43,14 +43,12 @@ def current_match_view(request):
         distance=Distance('location', point)
     ).get(pk=matched_user.pk).distance.km
 
-    common_tags = user.tags.all() & matched_user.tags.all()
-
     data = CurrentMatchData(
         match_id=match.pk,
         first_name=matched_user.first_name,
         distance=distance,
         match_timestamp=match.time_start,
-        common_tags=[tag.name for tag in common_tags]
+        common_tags=[tag.name for tag in match.common_tags.all()]
     )
 
     serializer = CurrentMatchSerializer(data)
@@ -71,3 +69,14 @@ def terminate_current_match_view(request):
         response_data['response'] = 'User has no current meeting.'
     finally:
         return Response(response_data)
+
+
+class TerminatedMatchesListView(generics.ListAPIView):
+    permission_classes = [permissions.IsAuthenticated, ]
+    serializer_class = TerminatedMatchSerializer
+
+    def get_queryset(self):
+        return Match.get_all_user_matches(self.request.user).filter(
+            time_end__isnull=False
+        )
+        

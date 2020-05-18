@@ -3,6 +3,8 @@ from account.models import CustomUser
 from django.utils import timezone
 from django.db.models import Q
 
+from account.models import Tag
+
 
 class Answer(models.Model):
     sender = models.ForeignKey(CustomUser, name='sender', related_name='sender', on_delete=models.CASCADE)
@@ -32,7 +34,9 @@ class Answer(models.Model):
             ).count() == 0
 
             if recipient_not_matched:
-                Match.objects.create(user1=self.sender, user2=self.recipient)
+                common_tags = self.sender.tags.all() & self.recipient.tags.all()
+                new_match = Match.objects.create(user1=self.sender, user2=self.recipient)
+                new_match.common_tags.set(common_tags)
                 print("created match")
 
         except Answer.DoesNotExist:
@@ -45,6 +49,7 @@ class Match(models.Model):
     user2 = models.ForeignKey(CustomUser, related_name='user2', on_delete=models.CASCADE)
     time_start = models.DateTimeField(name='time_start', default=timezone.now)
     time_end = models.DateTimeField(name='time_end', auto_now=False, auto_now_add=False, null=True, blank=True)
+    common_tags = models.ManyToManyField(Tag)
 
     def terminate(self):
         if not self.time_end:
@@ -61,3 +66,5 @@ class Match(models.Model):
     @staticmethod
     def get_all_user_matches(user):
         return Match.objects.filter(Q(user1=user) | Q(user2=user)).order_by('-time_start')
+
+    
