@@ -5,6 +5,7 @@ import {
   NEW_MATCH,
   CLEAR_MATCH,
   MATCH_CLIENT,
+  PREVIOUS_MATCHES,
 } from "../actions/types";
 import { fromJS } from "immutable";
 
@@ -13,6 +14,7 @@ const initialState = fromJS({
   users: [],
   userCount: 0,
   currentMatch: null,
+  previousMatches: null,
 });
 
 export default function (state = initialState, action) {
@@ -37,6 +39,12 @@ export default function (state = initialState, action) {
           users: [],
           userCount: 0,
           currentMatch: action.payload,
+        })
+      );
+    case PREVIOUS_MATCHES:
+      return state.merge(
+        fromJS({
+          previousMatches: action.payload,
         })
       );
     case CLEAR_MATCH:

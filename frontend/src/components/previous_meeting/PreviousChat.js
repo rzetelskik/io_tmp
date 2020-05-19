@@ -1,17 +1,13 @@
 import React, { useState, useEffect, Fragment } from "react";
-import MessageList from "./MessageList";
+import MessageList from "../meeting/MessageList";
 import { connect } from "react-redux";
 
-function Chat(props) {
+function PreviousChat(props) {
   const [messages, setMessages] = useState(null);
 
-  const [input, setInput] = useState("");
-
-  const onChange = (e) => {
-    setInput(e.target.value);
-  };
-
   useEffect(() => {
+    console.log(props.matchId);
+
     if (!messages && props.matchClient) {
       props.matchClient.fetchMessages(props.matchId);
     }
@@ -24,31 +20,18 @@ function Chat(props) {
     ? props.chatMessages[props.matchId.toString()]
     : [];
   // console.log("wiadomosci ");
-  // messageList.forEach((message) => {
+  //   messageList.forEach((message) => {
   // console.log(message.author, message.content);
-  // });
-
-  const onSubmit = (text) => (e) => {
-    e.preventDefault();
-    if (text.trim().length === 0) {
-      return;
-    }
-    props.matchClient.newChatMessage({
-      match_id: props.matchId,
-      text: text,
-    });
-    setInput("");
-  };
+  //   });
 
   const inputForm = (
     <Fragment>
       <div className="card-body bg-light text-dark">
-        <form onSubmit={onSubmit(input)} className="send-message-form">
+        <form className="send-message-form">
           <input
             className="form-control"
-            onChange={onChange}
-            value={input}
-            placeholder="Type your message "
+            value={""}
+            placeholder="You can't message here, this is just a history"
             type="text"
           />
         </form>
@@ -72,10 +55,8 @@ function Chat(props) {
 
 const mapStateToProps = (state) => ({
   chatMessages: state.get("chat").toJS(),
-  matchId: state.getIn(["matcher", "currentMatch", "match_id"]),
   matchClient: state.getIn(["matcher", "matchClient"]),
   myUsername: state.getIn(["auth", "user", "username"]),
-  theirFirstName: state.getIn(["matcher", "currentMatch", "first_name"]),
 });
 
-export default connect(mapStateToProps)(Chat);
+export default connect(mapStateToProps)(PreviousChat);

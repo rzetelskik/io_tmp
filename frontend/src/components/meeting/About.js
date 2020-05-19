@@ -20,7 +20,7 @@ function About(props) {
           <img className="card-img-top bg-white" src={meeting} alt="meeting" />
         </li>
         <li className="list-group-item text-white bg-secondary">
-          Distance: {Math.round(distance)} km
+          {props.aliveMeeting ? "Distance:" + Math.round(distance) + "km" : ""}
         </li>
         <li className="list-group-item text-white bg-secondary">
           Common tags:
@@ -35,9 +35,13 @@ function About(props) {
         </li>
       </ul>
       <div className="list-group-item text-white bg-secondary">
-        <button onClick={endMeeting} type="button" className="btn btn-light">
-          End meeting
-        </button>
+        {props.aliveMeeting ? (
+          <button onClick={endMeeting} type="button" className="btn btn-light">
+            End meeting
+          </button>
+        ) : (
+          ""
+        )}
       </div>
     </Fragment>
   );

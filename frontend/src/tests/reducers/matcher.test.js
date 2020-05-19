@@ -10,6 +10,7 @@ describe("matcher reducer", () => {
         users: [],
         userCount: 0,
         currentMatch: null,
+        previousMatches: null
       })
     );
   });
