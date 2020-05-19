@@ -3,41 +3,13 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import Geolocator from "./Geolocator";
 import { getGeolocation } from "../../actions/geolocation";
-import { createMessage, MESSAGE_ERROR } from "../../actions/messages";
-import { newMessage, setMessages } from "../../actions/chat";
+import { createMessage } from "../../actions/messages";
 import ActualMatcher from "./ActualMatcher";
-import {
-  askForMatch,
-  endMeeting,
-  saveMatchClient,
-} from "../../actions/matcher";
+import { endMeeting } from "../../actions/matcher";
 import CurrentMeeting from "../meeting/CurrentMeeting";
 import Loading from "../layout/Loading";
-import MatchClient from "../../services/MatchClient";
 
 export class Matcher extends Component {
-  constructor(props) {
-    super(props);
-
-    if (MatchClient.connect() === false) {
-      this.props.createMessage(
-        MESSAGE_ERROR,
-        "unable to establish update connection with server"
-      );
-    } else {
-      MatchClient.waitForSocketConnection(() => {
-        // console.log("sadfsafdsadf");
-
-        MatchClient.addCallback({
-          match_created: this.props.askForMatch,
-          match_terminated: this.props.askForMatch,
-          new_message: this.props.newMessage,
-          messages: this.props.setMessages,
-        });
-        this.props.saveMatchClient(MatchClient);
-      });
-    }
-  }
   static propTypes = {
     getGeolocation: PropTypes.func.isRequired,
     createMessage: PropTypes.func.isRequired,
@@ -93,6 +65,7 @@ export class Matcher extends Component {
               commonTags={currentMatch.get("common_tags")}
               matchTimestamp={currentMatch.get("match_timestamp")}
               endMeeting={this.props.endMeeting}
+              aliveMeeting={true}
             />
           </div>
         </Fragment>
@@ -118,11 +91,7 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps, {
-  askForMatch,
   getGeolocation,
   createMessage,
   endMeeting,
-  setMessages,
-  newMessage,
-  saveMatchClient,
 })(Matcher);

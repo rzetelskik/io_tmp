@@ -7,6 +7,7 @@ import {
   NEW_MATCH,
   CLEAR_MATCH,
   MATCH_CLIENT,
+  PREVIOUS_MATCHES,
 } from "./types";
 
 export const getUserOffers = () => (dispatch, getState) => {
@@ -60,6 +61,22 @@ export const askForMatch = () => (dispatch, getState) => {
           type: CLEAR_MATCH,
         });
       }
+    })
+    .catch((err) => {
+      dispatch(
+        createMessage(MESSAGE_ERROR, "Error when connecting to the server")
+      );
+    });
+};
+
+export const previousMatches = () => (dispatch, getState) => {
+  axios
+    .get("api/matcher/terminated-matches/", tokenConfig(getState))
+    .then((res) => {
+      dispatch({
+        type: PREVIOUS_MATCHES,
+        payload: res.data,
+      });
     })
     .catch((err) => {
       dispatch(
