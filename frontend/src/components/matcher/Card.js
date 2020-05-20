@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from "react";
 import example_img from "../../data/images/example_img.jpeg";
 import { connect } from "react-redux";
+import '../App.css';
 
 export class Card extends Component {
   acceptMatch = () => {
@@ -17,7 +18,7 @@ export class Card extends Component {
     const { firstName, distance, commonTags } = this.props;
     return (
       <Fragment>
-        <div className="card card-scaled border-secondary " data-test="card">
+        <div className="card-scaled card border-secondary " data-test="card">
           <h3 className="card-header ">{firstName}</h3>
           <div className="card-body"></div>
           <img className="card-img-top" src={example_img} alt="Card" />

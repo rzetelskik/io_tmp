@@ -2,7 +2,9 @@
 source =
     app,
     account,
-    matcher
+    matcher,
+    chat,
+    communicate
 
 omit =
     */tests/*
