@@ -36,8 +36,8 @@ function PreviousMatchesList(props) {
             <Card.Body>
               <Card.Title>{match.get("first_name")}</Card.Title>
               <Card.Text></Card.Text>
-              <Button variant="danger" onClick={() => setOpenedMeeting(id)}>
-                Look into this meeting!
+              <Button variant="secondary" onClick={() => setOpenedMeeting(id)}>
+                Meeting details
               </Button>
             </Card.Body>
             <Card.Footer className="text-muted">

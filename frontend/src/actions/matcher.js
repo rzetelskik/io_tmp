@@ -73,6 +73,7 @@ export const previousMatches = () => (dispatch, getState) => {
   axios
     .get("api/matcher/terminated-matches/", tokenConfig(getState))
     .then((res) => {
+      // console.log(res.data);
       dispatch({
         type: PREVIOUS_MATCHES,
         payload: res.data,

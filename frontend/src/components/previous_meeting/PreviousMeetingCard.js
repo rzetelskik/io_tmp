@@ -23,7 +23,7 @@ function PreviousMeetingCard(props) {
         <Modal.Header closeButton>
           <Modal.Title id="contained-modal-title-vcenter">
             <h2>
-              {(showChat ? "Chat history with " : "Previous Meeting with") +
+              {(showChat ? "Chat history with " : "Previous Meeting with ") +
                 match.get("first_name")}
             </h2>
           </Modal.Title>
@@ -55,7 +55,7 @@ function PreviousMeetingCard(props) {
           </Button>
 
           <Button
-            variant="danger"
+            variant="primary"
             onClick={() => {
               setShowChat(false);
               props.onHide();
