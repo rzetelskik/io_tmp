@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { previousMatches } from "../../actions/matcher";
 import PreviousMatchesList from "./PreviousMatchesList";
+import Loading from "../layout/Loading";
 
 function PreviousMatches(props) {
   const [matchesLoading, setMatchesLoading] = useState([false, false]);
@@ -19,10 +20,11 @@ function PreviousMatches(props) {
 
   return (
     <div>
+      <div className="border-top my-5" data-test="loading"></div>
       {showMatches ? (
         <PreviousMatchesList list={props.previousMatchesList} />
       ) : (
-        "LOADING"
+        <Loading />
       )}
     </div>
   );
