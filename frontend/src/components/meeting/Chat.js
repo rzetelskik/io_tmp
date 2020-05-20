@@ -24,9 +24,9 @@ function Chat(props) {
     ? props.chatMessages[props.matchId.toString()]
     : [];
   // console.log("wiadomosci ");
-  messageList.forEach((message) => {
-    // console.log(message.author, message.content);
-  });
+  // messageList.forEach((message) => {
+  // console.log(message.author, message.content);
+  // });
 
   const onSubmit = (text) => (e) => {
     e.preventDefault();

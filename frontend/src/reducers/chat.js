@@ -1,7 +1,9 @@
-import { NEW_MESSAGE, SET_MESSAGES } from "../actions/types";
+import { NEW_MESSAGE, SET_MESSAGES, LAST_MESSAGE_ID } from "../actions/types";
 import { fromJS } from "immutable";
 
-const initialState = fromJS({});
+const initialState = fromJS({
+  lastMessageId: -1,
+});
 
 export default function (state = initialState, action) {
   switch (action.type) {
@@ -25,6 +27,12 @@ export default function (state = initialState, action) {
               [action.payload.match_id]: [action.payload],
             })
           );
+    case LAST_MESSAGE_ID:
+      return state.merge(
+        fromJS({
+          lastMessageId: action.payload,
+        })
+      );
     default:
       return state;
   }
