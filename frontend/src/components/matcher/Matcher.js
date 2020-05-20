@@ -19,14 +19,12 @@ export class Matcher extends Component {
     accepted: PropTypes.bool.isRequired,
     currentMatch: PropTypes.object,
     endMeeting: PropTypes.func.isRequired,
-    askForMatch: PropTypes.func.isRequired,
   };
 
   componentDidMount() {
     if (this.props.timestamp === -1) {
       this.props.getGeolocation();
     }
-    // this.props.askForMatch();
   }
 
   render() {
