@@ -4,10 +4,10 @@ import { HashRouter as Router, Route, Switch } from "react-router-dom";
 import { Provider as AlertProvider } from "react-alert";
 import AlertTemplate from "react-alert-template-basic";
 
-import Header from "./layout/Header";
+import HeaderContainer from "./layout/HeaderContainer";
 import LoginFormContainer from "./auth/LoginFormContainer";
 import RegisterForm from "./auth/RegisterForm";
-import Alerts from "./layout/Alerts";
+import AlertsContainer from "./layout/AlertsContainer";
 import PrivateRoute from "./common/PrivateRoute";
 
 import { Provider } from "react-redux";
@@ -39,8 +39,8 @@ class App extends Component {
         <AlertProvider template={AlertTemplate} {...alertOptions}>
           <Router>
             <Fragment>
-              <Header />
-              <Alerts />
+              <HeaderContainer />
+              <AlertsContainer />
               <div className="container" data-test="app">
                 <Switch>
                   <Route exact path="/register" component={RegisterForm} />

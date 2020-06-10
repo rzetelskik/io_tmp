@@ -1,6 +1,4 @@
 import React, { Component, Fragment } from "react";
-import { withAlert } from "react-alert";
-import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import {
   MESSAGE_SUCCESS,
@@ -8,7 +6,7 @@ import {
   MESSAGE_INFO,
 } from "../../actions/action-creators/messages";
 
-export class Alerts extends Component {
+export default class Alerts extends Component {
   static propTypes = {
     errors: PropTypes.object.isRequired,
     message: PropTypes.object.isRequired,
@@ -46,10 +44,3 @@ export class Alerts extends Component {
     return <Fragment />;
   }
 }
-
-const mapStateToProps = (state) => ({
-  errors: state.get("errors"),
-  message: state.get("message"),
-});
-
-export default connect(mapStateToProps)(withAlert()(Alerts));
