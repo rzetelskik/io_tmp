@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { register } from "../../actions/auth";
+import { register } from "../../actions/thunks/auth";
 import { Link, Redirect } from "react-router-dom";
-import { createMessage, MESSAGE_ERROR } from "../../actions/messages";
+import { createMessage, MESSAGE_ERROR } from "../../actions/action-creators/messages";
 
 export class RegisterForm extends Component {
   state = {

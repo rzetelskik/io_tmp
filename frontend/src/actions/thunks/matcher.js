@@ -1,23 +1,20 @@
-import { createMessage, MESSAGE_ERROR } from "./messages";
+import { createMessage, MESSAGE_ERROR } from "../action-creators/messages";
 import { tokenConfig } from "./auth";
 import axios from "axios";
 import {
-  GET_USERS,
-  NEXT_USER,
-  NEW_MATCH,
-  CLEAR_MATCH,
-  MATCH_CLIENT,
-  PREVIOUS_MATCHES,
-} from "./types";
+  actionGetUsers,
+  actionNextUser,
+  actionNewMatch,
+  actionClearMatch,
+  actionPreviousMatches,
+  actionMatchClient,
+} from "../action-creators/matcher";
 
 export const getUserOffers = () => (dispatch, getState) => {
   axios
     .get("/api/account/list-matching-users/", tokenConfig(getState))
     .then((res) => {
-      dispatch({
-        type: GET_USERS,
-        payload: res.data,
-      });
+      dispatch(actionGetUsers(res.data));
     })
     .catch((err) => {
       dispatch(
@@ -42,9 +39,7 @@ export const matcherAnswer = (agreed, recipient) => (dispatch, getState) => {
 };
 
 export const nextUser = () => (dispatch) => {
-  dispatch({
-    type: NEXT_USER,
-  });
+  dispatch(actionNextUser());
 };
 
 export const askForMatch = () => (dispatch, getState) => {
@@ -52,14 +47,9 @@ export const askForMatch = () => (dispatch, getState) => {
     .get("api/matcher/current-match/", tokenConfig(getState))
     .then((res) => {
       if (res.data.first_name) {
-        dispatch({
-          type: NEW_MATCH,
-          payload: res.data,
-        });
+        dispatch(actionNewMatch(res.data));
       } else {
-        dispatch({
-          type: CLEAR_MATCH,
-        });
+        dispatch(actionClearMatch());
       }
     })
     .catch((err) => {
@@ -73,10 +63,7 @@ export const previousMatches = () => (dispatch, getState) => {
   axios
     .get("api/matcher/terminated-matches/", tokenConfig(getState))
     .then((res) => {
-      dispatch({
-        type: PREVIOUS_MATCHES,
-        payload: res.data,
-      });
+      dispatch(actionPreviousMatches(res.data));
     })
     .catch((err) => {
       dispatch(
@@ -89,9 +76,7 @@ export const endMeeting = () => (dispatch, getState) => {
   axios
     .post("api/matcher/terminate-current-match/", null, tokenConfig(getState))
     .then((res) => {
-      dispatch({
-        type: CLEAR_MATCH,
-      });
+      dispatch(actionClearMatch());
     })
     .catch((err) => {
       dispatch(
@@ -101,8 +86,5 @@ export const endMeeting = () => (dispatch, getState) => {
 };
 
 export const saveMatchClient = (MatchClient) => (dispatch) => {
-  dispatch({
-    type: MATCH_CLIENT,
-    payload: MatchClient,
-  });
+  dispatch(actionMatchClient(MatchClient));
 };

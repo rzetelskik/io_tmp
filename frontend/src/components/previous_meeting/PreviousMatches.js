@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { previousMatches } from "../../actions/matcher";
+import { previousMatches } from "../../actions/thunks/matcher";
 import PreviousMatchesList from "./PreviousMatchesList";
 
 function PreviousMatches(props) {

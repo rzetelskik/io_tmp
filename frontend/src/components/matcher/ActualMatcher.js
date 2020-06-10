@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from "react";
 import Card from "./Card";
-import { sendLocation } from "../../actions/geolocation";
-import { getUserOffers, matcherAnswer } from "../../actions/matcher";
+import { sendLocation } from "../../actions/thunks/geolocation";
+import { getUserOffers, matcherAnswer } from "../../actions/thunks/matcher";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 

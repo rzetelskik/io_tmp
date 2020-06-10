@@ -2,10 +2,10 @@ import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import Geolocator from "./Geolocator";
-import { getGeolocation } from "../../actions/geolocation";
-import { createMessage } from "../../actions/messages";
+import { getGeolocation } from "../../actions/thunks/geolocation";
+import { createMessage } from "../../actions/action-creators/messages";
 import ActualMatcher from "./ActualMatcher";
-import { endMeeting } from "../../actions/matcher";
+import { endMeeting } from "../../actions/thunks/matcher";
 import CurrentMeeting from "../meeting/CurrentMeeting";
 import Loading from "../layout/Loading";
 

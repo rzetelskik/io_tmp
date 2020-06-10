@@ -1,35 +1,34 @@
 import axios from "axios";
 import {
-  USER_LOADED,
-  USER_LOADING,
-  AUTH_ERROR,
-  LOGIN_SUCCESS,
-  LOGIN_FAIL,
-  LOGOUT_SUCCESS,
-  REGISTER_SUCCESS,
-  REGISTER_FAIL,
-  UPDATE_DETAILS_SUCCESS,
-  UPDATE_TAGS_SUCCESS,
-} from "./types";
-import { createMessage, MESSAGE_SUCCESS, MESSAGE_INFO } from "./messages";
-import { createError } from "./errors";
-import WebSocketClient from "../services/MatchClient";
+  createMessage,
+  MESSAGE_SUCCESS,
+  MESSAGE_INFO,
+} from "../action-creators/messages";
+import { createError } from "../action-creators/errors";
+import WebSocketClient from "../../services/MatchClient";
+import {
+  userLoaded,
+  authError,
+  loginSuccess,
+  loginFail,
+  registerSuccess,
+  registerFail,
+  updateDetailsSuccess,
+  updateTagsSuccess,
+  logoutSuccess,
+  userLoading,
+} from "../action-creators/auth";
 
 export const loadUser = () => (dispatch, getState) => {
-  dispatch({ type: USER_LOADING });
+  dispatch(userLoading());
 
   return axios
     .get("/api/account/user", tokenConfig(getState))
     .then((res) => {
-      dispatch({
-        type: USER_LOADED,
-        payload: res.data,
-      });
+      return dispatch(userLoaded(res.data));
     })
     .catch((err) => {
-      dispatch({
-        type: AUTH_ERROR,
-      });
+      dispatch(authError());
     });
 };
 
@@ -45,10 +44,7 @@ export const login = (username, password) => (dispatch) => {
   return axios
     .post("/api/account/login/", body, config)
     .then((res) => {
-      dispatch({
-        type: LOGIN_SUCCESS,
-        payload: res.data,
-      });
+      dispatch(loginSuccess(res.data));
     })
     .catch((err) => {
       const errors = {
@@ -56,9 +52,7 @@ export const login = (username, password) => (dispatch) => {
         status: err.response.status,
       };
       dispatch(createError(errors));
-      dispatch({
-        type: LOGIN_FAIL,
-      });
+      dispatch(loginFail());
     });
 };
 
@@ -75,10 +69,7 @@ export const register = (user) => (dispatch) => {
     .post("/api/account/register/", body, config)
     .then((res) => {
       dispatch(createMessage(MESSAGE_SUCCESS, "User successfully registered"));
-      dispatch({
-        type: REGISTER_SUCCESS,
-        payload: res.data,
-      });
+      dispatch(registerSuccess(res.data));
     })
     .catch((err) => {
       const errors = {
@@ -86,9 +77,7 @@ export const register = (user) => (dispatch) => {
         status: err.response.status,
       };
       dispatch(createError(errors));
-      dispatch({
-        type: REGISTER_FAIL,
-      });
+      dispatch(registerFail());
     });
 };
 
@@ -104,10 +93,7 @@ export const updateDetails = (first_name, last_name, location_range) => (
       dispatch(
         createMessage(MESSAGE_SUCCESS, "Account details updated successfully.")
       );
-      dispatch({
-        type: UPDATE_DETAILS_SUCCESS,
-        payload: { first_name, last_name, location_range },
-      });
+      dispatch(updateDetailsSuccess({ first_name, last_name, location_range }));
     })
     .catch((err) => {
       const errors = {
@@ -125,10 +111,7 @@ export const updateTags = (tags) => (dispatch, getState) => {
     .put("/api/account/tags-update/", body, tokenConfig(getState))
     .then((res) => {
       dispatch(createMessage(MESSAGE_SUCCESS, "Tags updated!"));
-      dispatch({
-        type: UPDATE_TAGS_SUCCESS,
-        payload: tags,
-      });
+      dispatch(updateTagsSuccess(tags));
     })
     .catch((err) => {
       const errors = {
@@ -138,7 +121,7 @@ export const updateTags = (tags) => (dispatch, getState) => {
       dispatch(createError(errors));
     });
 };
- 
+
 export const changePassword = (password, new_password, new_password_repeat) => (
   dispatch,
   getState
@@ -167,9 +150,7 @@ export const logout = () => (dispatch, getState) => {
     .then((res) => {
       dispatch(createMessage(MESSAGE_INFO, "Logged out."));
       WebSocketClient.closeConnection();
-      dispatch({
-        type: LOGOUT_SUCCESS,
-      });
+      dispatch(logoutSuccess());
     })
     .catch((err) => {
       const errors = {

@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { changePassword } from "../../actions/auth";
-import { createMessage, MESSAGE_ERROR } from "../../actions/messages";
+import { changePassword } from "../../actions/thunks/auth";
+import { createMessage, MESSAGE_ERROR } from "../../actions/action-creators/messages";
 
 export class ChangePasswordForm extends Component {
   state = {

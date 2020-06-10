@@ -12,7 +12,7 @@ import PrivateRoute from "./common/PrivateRoute";
 
 import { Provider } from "react-redux";
 import store from "../store";
-import { loadUser } from "../actions/auth";
+import { loadUser } from "../actions/thunks/auth";
 import MainPanel from "./user_interface/MainPanel";
 import UserDetailForm from "./auth/UpdateDetailsForm";
 import ChangePasswordForm from "./auth/ChangePasswordForm";

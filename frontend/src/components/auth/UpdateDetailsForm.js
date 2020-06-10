@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { updateDetails } from "../../actions/auth";
-import { createMessage, MESSAGE_ERROR } from "../../actions/messages";
+import { updateDetails } from "../../actions/thunks/auth";
+import { createMessage, MESSAGE_ERROR } from "../../actions/action-creators/messages";
 import { Link } from "react-router-dom";
 
 export class UpdateDetailsForm extends Component {

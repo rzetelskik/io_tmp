@@ -1,17 +1,19 @@
 import {
-  GET_LOCATION_SUCCESS,
-  GET_LOCATION_LOADING,
-  GET_LOCATION_FAILED,
-  SEND_LOCATION_SUCCESS,
-} from "./types";
-import { createMessage, MESSAGE_INFO, MESSAGE_ERROR } from "./messages";
+  createMessage,
+  MESSAGE_INFO,
+  MESSAGE_ERROR,
+} from "../action-creators/messages";
 import { tokenConfig } from "./auth";
 import axios from "axios";
+import {
+  getLocationSuccess,
+  getLocationFail,
+  sendLocationSuccess,
+  getLocationLoading,
+} from "../action-creators/geolocation";
 
 export const getGeolocation = () => (dispatch) => {
-  dispatch({
-    type: GET_LOCATION_LOADING,
-  });
+  dispatch(getLocationLoading());
   const geolocation = navigator.geolocation;
   if (!geolocation) {
     dispatch(
@@ -21,16 +23,11 @@ export const getGeolocation = () => (dispatch) => {
 
   geolocation.getCurrentPosition(
     (position) => {
-      dispatch({
-        type: GET_LOCATION_SUCCESS,
-        payload: position,
-      });
+      dispatch(getLocationSuccess(position));
     },
     () => {
       dispatch(createMessage(MESSAGE_INFO, "Your location cannot be found"));
-      dispatch({
-        type: GET_LOCATION_FAILED,
-      });
+      dispatch(getLocationFail());
     }
   );
 };
@@ -41,7 +38,7 @@ export const sendLocation = (location) => (dispatch, getState) => {
   axios
     .put("/api/account/user-location/", body, tokenConfig(getState))
     .then((res) => {
-      dispatch({ type: SEND_LOCATION_SUCCESS });
+      dispatch(sendLocationSuccess());
     })
     .catch((err) => {
       dispatch(

@@ -9,11 +9,11 @@ import {
   askForMatch,
   endMeeting,
   saveMatchClient,
-} from "../../actions/matcher";
+} from "../../actions/thunks/matcher";
 import { connect } from "react-redux";
 import MatchClient from "../../services/MatchClient";
-import { createMessage, MESSAGE_ERROR } from "../../actions/messages";
-import { newMessage, setMessages } from "../../actions/chat";
+import { createMessage, MESSAGE_ERROR } from "../../actions/action-creators/messages";
+import { newMessage, setMessages } from "../../actions/thunks/chat";
 
 function MainPanel(props) {
   let match = useRouteMatch();

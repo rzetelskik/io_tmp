@@ -1,4 +1,4 @@
-import { CREATE_MESSAGE } from "./types";
+import { CREATE_MESSAGE } from "../types";
 
 export const MESSAGE_INFO = "MESSAGE_INFO";
 export const MESSAGE_SUCCESS = "MESSAGE_SUCCESS";

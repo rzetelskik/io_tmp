@@ -1,4 +1,4 @@
-import { CREATE_ERROR } from "./types";
+import { CREATE_ERROR } from "../types";
 
 export const createError = (msg) => {
   return {

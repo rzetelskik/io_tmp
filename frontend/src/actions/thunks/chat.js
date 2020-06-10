@@ -1,15 +1,16 @@
-import { SET_MESSAGES, NEW_MESSAGE, LAST_MESSAGE_ID } from "./types";
+import {
+  actionSetMessages,
+  actionLastMessage,
+  actionNewMessage,
+} from "../action-creators/chat";
 
 export const setMessages = (matchId, messages) => (dispatch) => {
   // console.log("lista wiadomosci");
-
-  dispatch({
-    type: SET_MESSAGES,
-    payload: {
-      matchId: matchId,
-      messages: messages,
-    },
-  });
+  const m = {
+    matchId: matchId,
+    messages: messages,
+  };
+  return dispatch(actionSetMessages(m));
 };
 
 export const newMessage = (message, messageId) => (dispatch, getState) => {
@@ -22,13 +23,7 @@ export const newMessage = (message, messageId) => (dispatch, getState) => {
     return;
   }
 
-  dispatch({
-    type: LAST_MESSAGE_ID,
-    payload: messageId,
-  });
+  dispatch(actionLastMessage(messageId));
 
-  dispatch({
-    type: NEW_MESSAGE,
-    payload: message,
-  });
+  dispatch(actionNewMessage(message));
 };
