@@ -1,11 +1,9 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { updateDetails } from "../../actions/thunks/auth";
-import { createMessage, MESSAGE_ERROR } from "../../actions/action-creators/messages";
+import { MESSAGE_ERROR } from "../../actions/action-creators/messages";
 import { Link } from "react-router-dom";
 
-export class UpdateDetailsForm extends Component {
+export default class UpdateDetailsForm extends Component {
   static propTypes = {
     first_name: PropTypes.string.isRequired,
     last_name: PropTypes.string.isRequired,
@@ -127,13 +125,3 @@ export class UpdateDetailsForm extends Component {
     );
   }
 }
-
-const mapStateToProps = (state) => ({
-  first_name: state.getIn(["auth", "user", "first_name"]),
-  last_name: state.getIn(["auth", "user", "last_name"]),
-  location_range: state.getIn(["auth", "user", "location_range"]).toString(),
-});
-
-export default connect(mapStateToProps, { updateDetails, createMessage })(
-  UpdateDetailsForm
-);

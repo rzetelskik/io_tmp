@@ -1,10 +1,8 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { Link, Redirect } from "react-router-dom";
-import { login } from "../../actions/thunks/auth";
 
-export class LoginForm extends Component {
+export default class LoginForm extends Component {
   state = {
     username: "",
     password: "",
@@ -74,9 +72,3 @@ export class LoginForm extends Component {
     );
   }
 }
-
-const mapStateToProps = (state) => ({
-  isAuthenticated: state.getIn(["auth", "isAuthenticated"]),
-});
-
-export default connect(mapStateToProps, { login })(LoginForm);

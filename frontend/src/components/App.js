@@ -5,7 +5,7 @@ import { Provider as AlertProvider } from "react-alert";
 import AlertTemplate from "react-alert-template-basic";
 
 import Header from "./layout/Header";
-import LoginForm from "./auth/LoginForm";
+import LoginFormContainer from "./auth/LoginFormContainer";
 import RegisterForm from "./auth/RegisterForm";
 import Alerts from "./layout/Alerts";
 import PrivateRoute from "./common/PrivateRoute";
@@ -14,8 +14,8 @@ import { Provider } from "react-redux";
 import store from "../store";
 import { loadUser } from "../actions/thunks/auth";
 import MainPanel from "./user_interface/MainPanel";
-import UserDetailForm from "./auth/UpdateDetailsForm";
-import ChangePasswordForm from "./auth/ChangePasswordForm";
+import UpdateDetailsContainer from "./auth/UpdateDetailsContainer";
+import ChangePasswordContainer from "./auth/ChangePasswordContainer";
 
 // Alert options
 const alertOptions = {
@@ -44,16 +44,16 @@ class App extends Component {
               <div className="container" data-test="app">
                 <Switch>
                   <Route exact path="/register" component={RegisterForm} />
-                  <Route exact path="/login" component={LoginForm} />
+                  <Route exact path="/login" component={LoginFormContainer} />
                   <PrivateRoute
                     exact
                     path="/update-details"
-                    component={UserDetailForm}
+                    component={UpdateDetailsContainer}
                   />
                   <PrivateRoute
                     exact
                     path="/change-password"
-                    component={ChangePasswordForm}
+                    component={ChangePasswordContainer}
                   />
                   <PrivateRoute path="/" component={MainPanel} />
                 </Switch>

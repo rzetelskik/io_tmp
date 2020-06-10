@@ -1,4 +1,4 @@
-import { UpdateDetailsForm } from "../../../components/auth/UpdateDetailsForm";
+import { UpdateDetailsContainer } from "../../../components/auth/UpdateDetailsContainer";
 import React from "react";
 import Enzyme, { shallow } from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
@@ -15,7 +15,7 @@ describe("update details form component", () => {
         updateDetails: jest.fn(),
         createMessage: jest.fn(),
       };
-      const propsErr = checkProps(UpdateDetailsForm, expectedProps);
+      const propsErr = checkProps(UpdateDetailsContainer, expectedProps);
       expect(propsErr).toBeUndefined();
     });
   });
@@ -31,7 +31,7 @@ describe("update details form component", () => {
         updateDetails: jest.fn(),
         createMessage: jest.fn(),
       };
-      wrapper = shallow(<UpdateDetailsForm {...props} />);
+      wrapper = shallow(<UpdateDetailsContainer {...props} />);
 
       const component = findByTestAtrr(wrapper, "form");
       expect(component.length).toBe(1);

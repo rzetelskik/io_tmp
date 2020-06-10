@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Switch, Route, Link, useRouteMatch } from "react-router-dom";
 import PrivateRoute from "../common/PrivateRoute";
-import EditForm from "../auth/ChangePasswordForm";
+import ChangePasswordContainer from "../auth/ChangePasswordContainer";
 import Matcher from "../matcher/Matcher";
 import TagsForm from "./tags/TagsForm";
 import PreviousMatches from "../previous_meeting/PreviousMatches";
@@ -48,7 +48,7 @@ function MainPanel(props) {
       <Switch>
         <PrivateRoute
           path={`${match.path}change_password`}
-          component={EditForm}
+          component={ChangePasswordContainer}
         />
         <PrivateRoute path={`${match.path}matcher`} component={Matcher} />
         <PrivateRoute

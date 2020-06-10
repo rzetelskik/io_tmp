@@ -1,4 +1,4 @@
-import { ChangePasswordForm } from "../../../components/auth/ChangePasswordForm";
+import { ChangePasswordContainer } from "../../../components/auth/ChangePasswordContainer";
 import React from "react";
 import Enzyme, { shallow } from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
@@ -13,7 +13,7 @@ describe("Change Pawssword Form Component", () => {
         username: "username",
         changePassword: jest.fn(),
       };
-      const propsErr = checkProps(ChangePasswordForm, expectedProps);
+      const propsErr = checkProps(ChangePasswordContainer, expectedProps);
       expect(propsErr).toBeUndefined();
     });
   });
@@ -27,7 +27,7 @@ describe("Change Pawssword Form Component", () => {
         username: "username",
         changePassword: mockFunc,
       };
-      wrapper = shallow(<ChangePasswordForm {...props} />);
+      wrapper = shallow(<ChangePasswordContainer {...props} />);
       //console.log(wrapper.debug());
     });
     it("Should render without errors", () => {

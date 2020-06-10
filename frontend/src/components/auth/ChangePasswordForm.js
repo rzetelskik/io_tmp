@@ -1,10 +1,8 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { changePassword } from "../../actions/thunks/auth";
-import { createMessage, MESSAGE_ERROR } from "../../actions/action-creators/messages";
+import { MESSAGE_ERROR } from "../../actions/action-creators/messages";
 
-export class ChangePasswordForm extends Component {
+export default class ChangePasswordForm extends Component {
   state = {
     password1: "",
     password2: "",
@@ -79,11 +77,3 @@ export class ChangePasswordForm extends Component {
     );
   }
 }
-
-const mapStateToProps = (state) => ({
-  username: state.getIn(["auth", "user", "username"]),
-});
-
-export default connect(mapStateToProps, { changePassword, createMessage })(
-  ChangePasswordForm
-);

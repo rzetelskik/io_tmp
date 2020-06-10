@@ -1,11 +1,9 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { register } from "../../actions/thunks/auth";
 import { Link, Redirect } from "react-router-dom";
-import { createMessage, MESSAGE_ERROR } from "../../actions/action-creators/messages";
+import { MESSAGE_ERROR } from "../../actions/action-creators/messages";
 
-export class RegisterForm extends Component {
+export default class RegisterForm extends Component {
   state = {
     username: "",
     email: "",
@@ -168,11 +166,3 @@ export class RegisterForm extends Component {
     );
   }
 }
-
-const mapStateToProps = (state) => ({
-  isAuthenticated: state.getIn(["auth", "isAuthenticated"]),
-});
-
-export default connect(mapStateToProps, { register, createMessage })(
-  RegisterForm
-);
