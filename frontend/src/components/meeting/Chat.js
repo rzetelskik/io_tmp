@@ -1,8 +1,7 @@
 import React, { useState, useEffect, Fragment } from "react";
 import MessageList from "./MessageList";
-import { connect } from "react-redux";
 
-function Chat(props) {
+export default function Chat(props) {
   const [messages, setMessages] = useState(null);
 
   const [input, setInput] = useState("");
@@ -23,10 +22,6 @@ function Chat(props) {
   const messageList = props.chatMessages[props.matchId]
     ? props.chatMessages[props.matchId.toString()]
     : [];
-  // console.log("wiadomosci ");
-  // messageList.forEach((message) => {
-  // console.log(message.author, message.content);
-  // });
 
   const onSubmit = (text) => (e) => {
     e.preventDefault();
@@ -69,13 +64,3 @@ function Chat(props) {
     </Fragment>
   );
 }
-
-const mapStateToProps = (state) => ({
-  chatMessages: state.get("chat").toJS(),
-  matchId: state.getIn(["matcher", "currentMatch", "match_id"]),
-  matchClient: state.getIn(["matcher", "matchClient"]),
-  myUsername: state.getIn(["auth", "user", "username"]),
-  theirFirstName: state.getIn(["matcher", "currentMatch", "first_name"]),
-});
-
-export default connect(mapStateToProps)(Chat);

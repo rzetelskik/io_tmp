@@ -11,4 +11,4 @@ const mapStateToProps = (state) => ({
   auth: state.get("auth"),
 });
 
-export default connect(mapStateToProps, { logout })(Header);
+export default connect(mapStateToProps, { logout })(HeaderContainer);

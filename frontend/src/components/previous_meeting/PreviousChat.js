@@ -1,6 +1,5 @@
 import React, { useState, useEffect, Fragment } from "react";
 import MessageList from "../meeting/MessageList";
-import { connect } from "react-redux";
 
 function PreviousChat(props) {
   const [messages, setMessages] = useState(null);
@@ -49,10 +48,4 @@ function PreviousChat(props) {
   );
 }
 
-const mapStateToProps = (state) => ({
-  chatMessages: state.get("chat").toJS(),
-  matchClient: state.getIn(["matcher", "matchClient"]),
-  myUsername: state.getIn(["auth", "user", "username"]),
-});
-
-export default connect(mapStateToProps)(PreviousChat);
+export default PreviousChat;

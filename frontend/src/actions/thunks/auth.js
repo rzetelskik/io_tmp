@@ -153,6 +153,8 @@ export const logout = () => (dispatch, getState) => {
       dispatch(logoutSuccess());
     })
     .catch((err) => {
+      console.log("asfdasdf", err);
+
       const errors = {
         msg: err.response.data,
         status: err.response.status,

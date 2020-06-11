@@ -1,11 +1,8 @@
 import React, { Component, Fragment } from "react";
 import Card from "./Card";
-import { sendLocation } from "../../actions/thunks/geolocation";
-import { getUserOffers, matcherAnswer } from "../../actions/thunks/matcher";
-import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
-export class ActualMatcher extends Component {
+export default class ActualMatcher extends Component {
   static propTypes = {
     getUserOffers: PropTypes.func.isRequired,
     sendLocation: PropTypes.func.isRequired,
@@ -65,17 +62,3 @@ export class ActualMatcher extends Component {
     return <Fragment>{currentView}</Fragment>;
   }
 }
-
-const mapStateToProps = (state) => ({
-  coords: state.getIn(["geolocation", "coords"]),
-  locationSent: state.getIn(["geolocation", "locationSent"]),
-  timestamp: state.getIn(["geolocation", "timestamp"]),
-  users: state.getIn(["matcher", "users"]),
-  userCount: state.getIn(["matcher", "userCount"]),
-});
-
-export default connect(mapStateToProps, {
-  getUserOffers,
-  sendLocation,
-  matcherAnswer,
-})(ActualMatcher);

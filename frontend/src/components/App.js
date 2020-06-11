@@ -7,7 +7,7 @@ import AlertTemplate from "react-alert-template-basic";
 import HeaderContainer from "./layout/HeaderContainer";
 import LoginFormContainer from "./auth/LoginFormContainer";
 import RegisterForm from "./auth/RegisterForm";
-import AlertsContainer from "./layout/AlertsContainer";
+import Alerts from "./layout/Alerts";
 import PrivateRoute from "./common/PrivateRoute";
 
 import { Provider } from "react-redux";
@@ -40,7 +40,7 @@ class App extends Component {
           <Router>
             <Fragment>
               <HeaderContainer />
-              <AlertsContainer />
+              <Alerts />
               <div className="container" data-test="app">
                 <Switch>
                   <Route exact path="/register" component={RegisterForm} />

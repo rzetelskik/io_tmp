@@ -2,9 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Switch, Route, Link, useRouteMatch } from "react-router-dom";
 import PrivateRoute from "../common/PrivateRoute";
 import ChangePasswordContainer from "../auth/ChangePasswordContainer";
-import Matcher from "../matcher/Matcher";
 import TagsForm from "./tags/TagsForm";
-import PreviousMatches from "../previous_meeting/PreviousMatches";
+import PreviousMatchesContainer from "../previous_meeting/PreviousMatchesContainer";
 import {
   askForMatch,
   endMeeting,
@@ -12,8 +11,12 @@ import {
 } from "../../actions/thunks/matcher";
 import { connect } from "react-redux";
 import MatchClient from "../../services/MatchClient";
-import { createMessage, MESSAGE_ERROR } from "../../actions/action-creators/messages";
+import {
+  createMessage,
+  MESSAGE_ERROR,
+} from "../../actions/action-creators/messages";
 import { newMessage, setMessages } from "../../actions/thunks/chat";
+import MatcherContainer from "../matcher/MatcherContainer";
 
 function MainPanel(props) {
   let match = useRouteMatch();
@@ -50,10 +53,13 @@ function MainPanel(props) {
           path={`${match.path}change_password`}
           component={ChangePasswordContainer}
         />
-        <PrivateRoute path={`${match.path}matcher`} component={Matcher} />
+        <PrivateRoute
+          path={`${match.path}matcher`}
+          component={MatcherContainer}
+        />
         <PrivateRoute
           path={`${match.path}previous-matches`}
-          component={PreviousMatches}
+          component={PreviousMatchesContainer}
         />
         <Route path={match.path}>
           <TagsForm show={showTagsForm} onHide={() => setShowTagsForm(false)} />

@@ -1,15 +1,11 @@
 import React, { Component, Fragment } from "react";
-import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import Geolocator from "./Geolocator";
-import { getGeolocation } from "../../actions/thunks/geolocation";
-import { createMessage } from "../../actions/action-creators/messages";
-import ActualMatcher from "./ActualMatcher";
-import { endMeeting } from "../../actions/thunks/matcher";
+import ActualMatcherContainer from "./ActualMatcherContainer";
 import CurrentMeeting from "../meeting/CurrentMeeting";
 import Loading from "../layout/Loading";
 
-export class Matcher extends Component {
+export default class Matcher extends Component {
   static propTypes = {
     getGeolocation: PropTypes.func.isRequired,
     createMessage: PropTypes.func.isRequired,
@@ -47,7 +43,7 @@ export class Matcher extends Component {
     const whenAccepted = (
       <Fragment>
         <div className="border-top my-5" data-test="accepted"></div>
-        <ActualMatcher />
+        <ActualMatcherContainer />
       </Fragment>
     );
 
@@ -79,17 +75,3 @@ export class Matcher extends Component {
     return <Fragment>{currentView}</Fragment>;
   }
 }
-
-const mapStateToProps = (state) => ({
-  coords: state.getIn(["geolocation", "coords"]),
-  timestamp: state.getIn(["geolocation", "timestamp"]),
-  isLoading: state.getIn(["geolocation", "isLoading"]),
-  accepted: state.getIn(["geolocation", "accepted"]),
-  currentMatch: state.getIn(["matcher", "currentMatch"]),
-});
-
-export default connect(mapStateToProps, {
-  getGeolocation,
-  createMessage,
-  endMeeting,
-})(Matcher);

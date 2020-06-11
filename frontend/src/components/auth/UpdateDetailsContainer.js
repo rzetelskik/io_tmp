@@ -23,5 +23,5 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps, { updateDetails, createMessage })(
-  UpdateDetailsForm
+  UpdateDetailsContainer
 );

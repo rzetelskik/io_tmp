@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { connect } from "react-redux";
-import { previousMatches } from "../../actions/thunks/matcher";
 import PreviousMatchesList from "./PreviousMatchesList";
 
 function PreviousMatches(props) {
@@ -28,8 +26,4 @@ function PreviousMatches(props) {
   );
 }
 
-const mapStateToProps = (state) => ({
-  previousMatchesList: state.getIn(["matcher", "previousMatches"]),
-});
-
-export default connect(mapStateToProps, { previousMatches })(PreviousMatches);
+export default PreviousMatches;

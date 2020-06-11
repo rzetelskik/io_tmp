@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
-import Chat from "./Chat";
+import ChatContainer from "./ChatContainer";
 
 export class ChatCard extends Component {
   render() {
@@ -13,7 +13,7 @@ export class ChatCard extends Component {
             <h3 className="">{firstName}</h3>
           </li>
 
-          <Chat firstName={this.props.firstName} />
+          <ChatContainer firstName={this.props.firstName} />
         </ul>
       </Fragment>
     );

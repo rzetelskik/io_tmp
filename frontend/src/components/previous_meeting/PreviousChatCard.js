@@ -1,6 +1,5 @@
 import React, { Component, Fragment } from "react";
-import { connect } from "react-redux";
-import PreviousChat from "./PreviousChat";
+import PreviousChatContainer from "./PreviousChatContainer";
 
 export class PreviousChatCard extends Component {
   render() {
@@ -13,11 +12,11 @@ export class PreviousChatCard extends Component {
             <h3 className="">{firstName}</h3>
           </li>
 
-          <PreviousChat matchId={matchId} firstName={firstName} />
+          <PreviousChatContainer matchId={matchId} firstName={firstName} />
         </ul>
       </Fragment>
     );
   }
 }
 
-export default connect()(PreviousChatCard);
+export default PreviousChatCard;

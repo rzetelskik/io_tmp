@@ -1,6 +1,5 @@
 import React, { useState, Fragment } from "react";
 import { Modal, Button } from "react-bootstrap";
-import { connect } from "react-redux";
 
 import About from "../meeting/About";
 import PreviousChatCard from "./PreviousChatCard";
@@ -71,8 +70,4 @@ function PreviousMeetingCard(props) {
   );
 }
 
-const mapStateToProps = (state) => ({
-  previousMatchesList: state.getIn(["matcher", "previousMatches"]),
-});
-
-export default connect(mapStateToProps)(PreviousMeetingCard);
+export default PreviousMeetingCard;

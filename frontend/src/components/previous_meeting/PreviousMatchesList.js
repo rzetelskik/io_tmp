@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Card, Button } from "react-bootstrap";
-import PreviousMeetingCard from "./PreviousMeetingCard";
+import PreviousMeetingCardContainer from "./PreviousMeetingCardContainer";
 
 function PreviousMatchesList(props) {
   const [openedMeeting, setOpenedMeeting] = useState(null);
@@ -21,7 +21,7 @@ function PreviousMatchesList(props) {
   return (
     <div>
       {
-        <PreviousMeetingCard
+        <PreviousMeetingCardContainer
           show={openedMeeting}
           onHide={() => setOpenedMeeting(null)}
         />

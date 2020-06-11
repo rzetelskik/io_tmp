@@ -1,9 +1,8 @@
 import React, { Component, Fragment } from "react";
 import example_img from "../../data/images/example_img.jpeg";
-import { connect } from "react-redux";
-import '../App.css';
+import "../App.css";
 
-export class Card extends Component {
+export default class Card extends Component {
   acceptMatch = () => {
     const username = this.props.username;
     this.props.decide(true, username);
@@ -61,5 +60,3 @@ export class Card extends Component {
     );
   }
 }
-
-export default connect()(Card);

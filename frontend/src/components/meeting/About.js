@@ -1,6 +1,5 @@
 import React, { Fragment } from "react";
 import meeting from "../../data/images/meeting.png";
-import { connect } from "react-redux";
 
 function About(props) {
   const endMeeting = () => {
@@ -47,4 +46,4 @@ function About(props) {
   );
 }
 
-export default connect()(About);
+export default About;
