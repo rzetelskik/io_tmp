@@ -1,8 +1,6 @@
 import React, { Fragment, useState } from "react";
 import { Modal, Button } from "react-bootstrap";
 import Tag from "./Tag";
-import { connect } from "react-redux";
-import { updateTags } from "../../../actions/thunks/auth";
 
 function TagsForm(props) {
   const [tags, setTags] = useState(props.tags);
@@ -60,8 +58,4 @@ function TagsForm(props) {
   );
 }
 
-const mapStateToProps = (state) => ({
-  tags: state.getIn(["auth", "user", "tags"]).toJS(),
-});
-
-export default connect(mapStateToProps, { updateTags })(TagsForm);
+export default TagsForm;

@@ -2,20 +2,10 @@ import React, { useState, useEffect } from "react";
 import { Switch, Route, Link, useRouteMatch } from "react-router-dom";
 import PrivateRoute from "../common/PrivateRoute";
 import ChangePasswordContainer from "../auth/ChangePasswordContainer";
-import TagsForm from "./tags/TagsForm";
+import TagsFormContainer from "./tags/TagsFormContainer";
 import PreviousMatchesContainer from "../previous_meeting/PreviousMatchesContainer";
-import {
-  askForMatch,
-  endMeeting,
-  saveMatchClient,
-} from "../../actions/thunks/matcher";
-import { connect } from "react-redux";
 import MatchClient from "../../services/MatchClient";
-import {
-  createMessage,
-  MESSAGE_ERROR,
-} from "../../actions/action-creators/messages";
-import { newMessage, setMessages } from "../../actions/thunks/chat";
+import { MESSAGE_ERROR } from "../../actions/action-creators/messages";
 import MatcherContainer from "../matcher/MatcherContainer";
 
 function MainPanel(props) {
@@ -62,7 +52,10 @@ function MainPanel(props) {
           component={PreviousMatchesContainer}
         />
         <Route path={match.path}>
-          <TagsForm show={showTagsForm} onHide={() => setShowTagsForm(false)} />
+          <TagsFormContainer
+            show={showTagsForm}
+            onHide={() => setShowTagsForm(false)}
+          />
           <div className="border-top my-5"></div>
           <div className="container ">
             <div className="column">
@@ -165,15 +158,4 @@ function MainPanel(props) {
   );
 }
 
-const mapStateToProps = (state) => ({
-  currentMatch: state.getIn(["matcher", "currentMatch"]),
-});
-
-export default connect(mapStateToProps, {
-  askForMatch,
-  endMeeting,
-  saveMatchClient,
-  createMessage,
-  setMessages,
-  newMessage,
-})(MainPanel);
+export default MainPanel;

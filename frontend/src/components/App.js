@@ -13,7 +13,7 @@ import PrivateRoute from "./common/PrivateRoute";
 import { Provider } from "react-redux";
 import store from "../store";
 import { loadUser } from "../actions/thunks/auth";
-import MainPanel from "./user_interface/MainPanel";
+import MainPanelContainer from "./user_interface/MainPanelContainer";
 import UpdateDetailsContainer from "./auth/UpdateDetailsContainer";
 import ChangePasswordContainer from "./auth/ChangePasswordContainer";
 
@@ -55,7 +55,7 @@ class App extends Component {
                     path="/change-password"
                     component={ChangePasswordContainer}
                   />
-                  <PrivateRoute path="/" component={MainPanel} />
+                  <PrivateRoute path="/" component={MainPanelContainer} />
                 </Switch>
               </div>
             </Fragment>
