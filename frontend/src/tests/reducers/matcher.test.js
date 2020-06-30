@@ -1,4 +1,4 @@
-import reducer from "../../reducers/matcher";
+import reducer from "../../containers/matcher/main-matcher/reducer";
 import { GET_USERS, NEXT_USER } from "../../actions/types";
 import { fromJS } from "immutable";
 

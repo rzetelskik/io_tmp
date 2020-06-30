@@ -6,7 +6,7 @@ import {
   MESSAGE_SUCCESS,
   MESSAGE_ERROR,
   MESSAGE_INFO,
-} from "../../actions/action-creators/messages";
+} from "../../containers/meeting/actions";
 
 export class Alerts extends Component {
   static propTypes = {

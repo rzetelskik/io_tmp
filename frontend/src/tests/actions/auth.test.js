@@ -5,7 +5,7 @@ import {
   changePassword,
   logout,
   loadUser,
-} from "../../actions/action-creators/auth";
+} from "../../containers/auth/register/actions";
 import { makeMockStore } from "../../../Utils";
 import moxios from "moxios";
 import {
@@ -16,7 +16,7 @@ import {
   USER_LOADING,
   LOGOUT_SUCCESS,
 } from "../../actions/types";
-import { MESSAGE_SUCCESS } from "../../actions/action-creators/messages";
+import { MESSAGE_SUCCESS } from "../../containers/meeting/actions";
 
 const mockSuccess = (data) => ({ status: 200, response: { data } });
 const mockError = (error) => ({ status: 400, response: error });

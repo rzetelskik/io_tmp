@@ -1,4 +1,4 @@
-import reducer from "../../reducers/message";
+import reducer from "../../containers/previous-meeting/previous-chat/reducer";
 import * as types from "../../actions/types";
 import { fromJS } from "immutable";
 

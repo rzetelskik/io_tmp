@@ -1,4 +1,4 @@
-import reducer from "../../reducers/geolocation";
+import reducer from "../../containers/matcher/helper-matcher/reducer";
 import * as types from "../../actions/types";
 import { fromJS } from "immutable";
 

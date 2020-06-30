@@ -10,7 +10,7 @@ const PrivateRoute = ({ component: Component, auth, ...rest }) => (
       if (auth.get("isLoading")) {
         return (
           <Fragment>
-            <div className="border-top my-5" data-test="loading"></div>
+            <div className="border-top my-5" data-test="loading"/>
             <Loading />
           </Fragment>
         );

@@ -1,4 +1,4 @@
-import reducer from "../../reducers/errors";
+import reducer from "../../containers/main-panel/reducer";
 import * as types from "../../actions/types";
 import { fromJS } from "immutable";
 
